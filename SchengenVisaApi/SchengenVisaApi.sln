@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchengenVisaApi", "SchengenVisaApi\SchengenVisaApi.csproj", "{BA957CD4-48D1-4B24-A0E0-BA57B84B1DC3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domains", "Domains\Domains.csproj", "{5DC8BC74-5A1F-48E3-9EB8-6C50CD3D7778}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{BA957CD4-48D1-4B24-A0E0-BA57B84B1DC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA957CD4-48D1-4B24-A0E0-BA57B84B1DC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA957CD4-48D1-4B24-A0E0-BA57B84B1DC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DC8BC74-5A1F-48E3-9EB8-6C50CD3D7778}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DC8BC74-5A1F-48E3-9EB8-6C50CD3D7778}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DC8BC74-5A1F-48E3-9EB8-6C50CD3D7778}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DC8BC74-5A1F-48E3-9EB8-6C50CD3D7778}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
