@@ -9,15 +9,7 @@ public class Program
         builder.Services.RegisterServices();
 
         var app = builder.Build();
-            app.UseSwagger();
-            app.UseSwaggerUI();
-
-        app.UseHttpsRedirection();
-
-        app.UseAuthorization();
-
-
-        app.MapControllers();
+        app.ConfigurePipelineRequest();
 
         app.Run();
     }
