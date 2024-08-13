@@ -1,5 +1,4 @@
-﻿using Domains.VisaApplicationDomain;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Database.Configuration.VisaApplication

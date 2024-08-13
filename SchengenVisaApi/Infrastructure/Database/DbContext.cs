@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using Domains;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database

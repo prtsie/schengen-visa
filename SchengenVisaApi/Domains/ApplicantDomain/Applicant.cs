@@ -12,7 +12,7 @@ namespace Domains.ApplicantDomain
         public Name Name { get; set; } = null!;
 
         /// Passport of <see cref="Applicant"/>
-        public Passport Passport { get; set; }
+        public Passport Passport { get; set; } = null!;
 
         /// Date of birth of the <see cref="Applicant"/>
         public DateOnly BirthDate { get; set; }
@@ -42,7 +42,7 @@ namespace Domains.ApplicantDomain
         public Name MotherName { get; set; } = null!;
 
         /// Position of <see cref="Applicant"/>
-        public string JobTitle { get; set; }
+        public string JobTitle { get; set; } = null!;
 
         /// Place of <see cref="Applicant"/>'s work
         public PlaceOfWork PlaceOfWork { get; set; } = null!;
