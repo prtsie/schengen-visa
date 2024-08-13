@@ -1,10 +1,11 @@
 ﻿namespace Domains.VisaApplicationDomain
 {
     /// Permission to enter a country the issuer wants to come from
-    public class ReentryPermit : IEntity
+    /// <remarks>Owned</remarks>
+    public class ReentryPermit
     {
-        /// Unique identifier of <see cref="PastVisa"/>
-        public Guid Id { get; private set; } = Guid.NewGuid();
+        /// Number of <see cref="ReentryPermit"/>
+        public string Number { get; set; } = null!;
 
         /// Date when <see cref="ReentryPermit"/> expires
         public DateOnly ExpirationDate { get; set; }
