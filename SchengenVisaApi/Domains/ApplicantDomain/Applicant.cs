@@ -38,6 +38,9 @@ namespace Domains.ApplicantDomain
         /// Full name of the <see cref="Applicant"/>'s mother
         public Name MotherName { get; set; } = null!;
 
+        /// Position of <see cref="Applicant"/>
+        public string JobTitle { get; set; }
+
         /// Place of <see cref="Applicant"/>'s work
         public PlaceOfWork PlaceOfWork { get; set; } = null!;
 

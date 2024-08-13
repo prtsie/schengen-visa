@@ -1,16 +1,14 @@
 ﻿namespace Domains.ApplicantDomain
 {
     /// Model of passport
-    public class Passport : IEntity
+    /// <remarks>Owned</remarks>
+    public class Passport
     {
-        /// Unique identifier of <see cref="Passport"/>
-        public Guid Id { get; set; } = Guid.NewGuid();
-
         /// Number of <see cref="Passport"/>
-        public string Number { get; set; }
+        public string Number { get; set; } = null!;
 
         /// Issuing authority of <see cref="Passport"/>
-        public string Issuer { get; set; }
+        public string Issuer { get; set; } = null!;
 
         /// Date of issue
         public DateOnly IssueDate { get; set; }

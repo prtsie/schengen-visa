@@ -3,7 +3,7 @@
     /// Model of a city
     public class City : IEntity
     {
-        /// Unique identifier of the city
+        /// Unique identifier of the <see cref="City"/>
         public Guid Id { get; private set; } = Guid.NewGuid();
 
         /// Name of the city

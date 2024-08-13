@@ -29,5 +29,20 @@ namespace Domains.VisaApplicationDomain
         public PermissionToDestCountry? PermissionToDestCountry { get; set; }
 
         public List<PastVisit> PastVisits { get; set; } = null!;
+
+        /// <see cref="Domains.VisaApplicationDomain.VisaCategory"/>
+        public VisaCategory VisaCategory { get; set; }
+
+        /// Is for group
+        public bool ForGroup { get; set; }
+
+        /// <see cref="Domains.VisaApplicationDomain.RequestedNumberOfEntries"/>
+        public RequestedNumberOfEntries RequestedNumberOfEntries { get; set; }
+
+        /// When application was created
+        public DateOnly RequestDate { get; set; }
+
+        /// Valid days requested
+        public int ValidDaysRequested { get; set; }
     }
 }
