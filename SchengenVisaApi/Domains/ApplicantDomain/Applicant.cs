@@ -11,6 +11,9 @@ namespace Domains.ApplicantDomain
         /// Full name of the <see cref="Applicant"/>
         public Name Name { get; set; } = null!;
 
+        /// Passport of <see cref="Applicant"/>
+        public Passport Passport { get; set; }
+
         /// Date of birth of the <see cref="Applicant"/>
         public DateOnly BirthDate { get; set; }
 
