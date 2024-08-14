@@ -1,5 +1,6 @@
-﻿using Domains.ApplicantDomain;
-using Domains.Common;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Domains.ApplicantDomain;
+using Domains.LocationDomain;
 
 namespace Domains.VisaApplicationDomain
 {
@@ -9,8 +10,11 @@ namespace Domains.VisaApplicationDomain
         /// Unique identifier of <see cref="VisaApplication"/>
         public Guid Id { get; private set; } = Guid.NewGuid();
 
+        /// Identifier of the <see cref="Applicant"/>
+        public Guid ApplicantId { get; set; }
+
         /// Applicant of <see cref="VisaApplication"/>
-        public Applicant Applicant { get; set; } = null!;
+        public Applicant Applicant { get; set; }
 
         /// <inheritdoc cref="Domains.VisaApplicationDomain.ReentryPermit"/>
         /// <remarks>always null if <see cref="Applicant"/> is not a non-resident</remarks>

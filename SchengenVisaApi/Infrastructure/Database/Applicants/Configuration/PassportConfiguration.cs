@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Database.Configuration.Applicant
+namespace Infrastructure.Database.Applicants.Configuration
 {
     public class PassportConfiguration : IEntityTypeConfiguration<Passport>
     {

@@ -1,10 +1,10 @@
 ﻿using Domains;
 
-namespace Infrastructure.Database
+namespace Infrastructure.Database.Generic
 {
     /// Writes data to data storage
     /// <remarks><see cref="IUnitOfWork"/> should be used to save changes</remarks>
-    public interface IWriter
+    public interface IGenericWriter
     {
         /// Add <paramref name="entity"/> to data storage
         /// <param name="entity">Entity to add</param>

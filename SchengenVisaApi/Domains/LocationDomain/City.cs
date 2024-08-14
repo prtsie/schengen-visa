@@ -1,4 +1,4 @@
-﻿namespace Domains.Common
+﻿namespace Domains.LocationDomain
 {
     /// Model of a city
     public class City : IEntity
@@ -9,7 +9,7 @@
         /// Name of the city
         public string Name { get; set; } = null!;
 
-        /// <see cref="Domains.Common.Country"/> in which the city is located
+        /// <see cref="LocationDomain.Country"/> in which the city is located
         public Country Country { get; set; } = null!;
     }
 }

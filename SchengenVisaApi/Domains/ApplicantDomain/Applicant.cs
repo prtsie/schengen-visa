@@ -1,4 +1,5 @@
-﻿using Domains.Common;
+﻿using Domains.LocationDomain;
+using Domains.VisaApplicationDomain;
 
 namespace Domains.ApplicantDomain
 {
@@ -49,5 +50,8 @@ namespace Domains.ApplicantDomain
 
         /// Is <see cref="Applicant"/> a non-resident
         public bool IsNonResident { get; set; }
+
+        /// List of <see cref="Applicant"/>'s applications
+        public List<VisaApplication> VisaApplications { get; set; } = null!;
     }
 }

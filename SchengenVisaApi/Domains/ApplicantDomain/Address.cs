@@ -1,4 +1,6 @@
-﻿namespace Domains.Common
+﻿using Domains.LocationDomain;
+
+namespace Domains.ApplicantDomain
 {
     /// Model of address
     /// <remarks>Owned</remarks>

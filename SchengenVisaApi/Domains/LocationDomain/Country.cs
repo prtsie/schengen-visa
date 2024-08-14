@@ -1,4 +1,4 @@
-﻿namespace Domains.Common
+﻿namespace Domains.LocationDomain
 {
     /// Model of a country
     public class Country : IEntity

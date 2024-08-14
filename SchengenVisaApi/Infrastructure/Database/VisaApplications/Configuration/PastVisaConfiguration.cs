@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Database.Configuration.VisaApplication
+namespace Infrastructure.Database.VisaApplications.Configuration
 {
     public class PastVisaConfiguration : IEntityTypeConfiguration<PastVisa>
     {

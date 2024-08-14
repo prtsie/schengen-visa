@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domains.ApplicantDomain;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Database.Configuration.Applicant
+namespace Infrastructure.Database.Applicants.Configuration
 {
-    public class ApplicantConfiguration : IEntityTypeConfiguration<Domains.ApplicantDomain.Applicant>
+    public class ApplicantConfiguration : IEntityTypeConfiguration<Applicant>
     {
-        public void Configure(EntityTypeBuilder<Domains.ApplicantDomain.Applicant> entity)
+        public void Configure(EntityTypeBuilder<Applicant> entity)
         {
             entity.ToTable("Applicants");
 
