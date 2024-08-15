@@ -1,4 +1,5 @@
-﻿using Domains;
+﻿using ApplicationLayer.Common;
+using Domains;
 using Infrastructure.Database.GeneralExceptions;
 using Microsoft.EntityFrameworkCore;
 

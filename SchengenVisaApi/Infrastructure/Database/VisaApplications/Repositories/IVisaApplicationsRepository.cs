@@ -1,5 +1,5 @@
-﻿using Domains.VisaApplicationDomain;
-using Infrastructure.Database.Generic;
+﻿using ApplicationLayer.Common;
+using Domains.VisaApplicationDomain;
 
 namespace Infrastructure.Database.VisaApplications.Repositories;
 

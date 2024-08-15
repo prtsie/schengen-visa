@@ -1,4 +1,5 @@
-﻿using Domains.ApplicantDomain;
+﻿using ApplicationLayer.Common;
+using Domains.ApplicantDomain;
 using Infrastructure.Database.Generic;
 using Microsoft.EntityFrameworkCore;
 

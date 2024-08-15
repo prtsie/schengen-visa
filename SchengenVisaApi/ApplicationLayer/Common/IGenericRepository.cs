@@ -1,6 +1,6 @@
 ﻿using Domains;
 
-namespace Infrastructure.Database.Generic;
+namespace ApplicationLayer.Common;
 
 /// <summary>
 /// Generic repository pattern

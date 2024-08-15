@@ -1,5 +1,5 @@
-﻿using Domains.LocationDomain;
-using Infrastructure.Database.Generic;
+﻿using ApplicationLayer.Common;
+using Domains.LocationDomain;
 
 namespace Infrastructure.Database.Locations.Repositories.Cities;
 

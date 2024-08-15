@@ -1,3 +1,4 @@
+using ApplicationLayer.VisaApplication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SchengenVisaApi.Controllers;
@@ -10,11 +11,11 @@ public class VisaApplicationController : ControllerBase
     public VisaApplicationController()
     {
 
-    }
+        }
 
-    [HttpGet]
-    public void Create()
+    [HttpPost]
+    public void Create(CreateVisaApplicationRequest request)
     {
-        throw new NotImplementedException();
-    }
+            throw new NotImplementedException();
+        }
 }

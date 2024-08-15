@@ -1,7 +1,6 @@
 ﻿using Domains.ApplicantDomain;
-using Infrastructure.Database.Generic;
 
-namespace Infrastructure.Database.Applicants.Repositories;
+namespace ApplicationLayer.Common;
 
 /// Repository pattern for <see cref="Applicant"/>
 public interface IApplicantsRepository : IGenericRepository<Applicant> { }

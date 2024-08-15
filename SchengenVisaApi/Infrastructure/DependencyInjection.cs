@@ -1,4 +1,5 @@
-﻿using Infrastructure.Database;
+﻿using ApplicationLayer.Common;
+using Infrastructure.Database;
 using Infrastructure.Database.Applicants.Repositories;
 using Infrastructure.Database.Generic;
 using Infrastructure.Database.Locations.Repositories.Cities;
