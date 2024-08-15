@@ -1,6 +1,6 @@
-﻿using ApplicationLayer.Applicants;
-using ApplicationLayer.Locations;
-using ApplicationLayer.VisaApplications;
+﻿using ApplicationLayer.Applicants.NeededServices;
+using ApplicationLayer.Locations.NeededServices;
+using ApplicationLayer.VisaApplications.NeededServices;
 using Infrastructure.Database;
 using Infrastructure.Database.Applicants.Repositories;
 using Infrastructure.Database.Generic;
@@ -20,7 +20,7 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
         //TODO строка подключения
-        services.AddDbContext<DbContext>(opts =>
+        services.AddDbContextFactory<DbContext>(opts =>
             opts.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=visadb;Integrated Security=True;"));
 
         services.AddScoped<IGenericReader>(serviceProvider => serviceProvider.GetRequiredService<DbContext>());

@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using ApplicationLayer;
 using Infrastructure;
 
 namespace SchengenVisaApi;
@@ -11,6 +12,7 @@ public static class DependencyInjection
     {
         services
             .AddInfrastructure()
+            .AddApplicationLayer()
             .AddPresentation();
 
         return services;

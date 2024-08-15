@@ -1,4 +1,5 @@
 ﻿using Domains.ApplicantDomain;
+using Domains.LocationDomain;
 
 namespace Domains.VisaApplicationDomain;
 
@@ -11,4 +12,7 @@ public class PastVisit
 
     /// Last day of <see cref="PastVisit"/>
     public DateTime EndDate { get; set; }
+
+    /// Destination country of <see cref="PastVisit"/>
+    public Country DestinationCountry { get; set; } = null!;
 }

@@ -2,11 +2,8 @@
 
 public class AddressModel
 {
-    /// Country part of address
-    public string Country { get; set; } = null!;
-
     /// City part of address
-    public string City { get; set; } = null!;
+    public Guid CityId { get; set; }
 
     /// Street part of address
     public string Street { get; set; } = null!;

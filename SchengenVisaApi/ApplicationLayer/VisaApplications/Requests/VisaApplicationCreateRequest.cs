@@ -5,12 +5,11 @@ using Domains.VisaApplicationDomain;
 namespace ApplicationLayer.VisaApplications.Requests;
 
 /// Model of visa request from user
-public record CreateVisaApplicationRequest(
+public record VisaApplicationCreateRequest(
     Name FullName,
     Passport Passport,
     DateTime BirthDate,
-    string BirthCity,
-    string BirthCountry,
+    Guid BirthCityId,
     string CitizenShip,
     string CitizenshipByBirth,
     Gender Gender,
@@ -21,12 +20,12 @@ public record CreateVisaApplicationRequest(
     ReentryPermit ReentryPermit,
     string JobTitle,
     PlaceOfWorkModel PlaceOfWork,
-    string DestinationCountry,
+    Guid DestinationCountryId,
     VisaCategory VisaCategory,
     bool IsForGroup,
     RequestedNumberOfEntries RequestedNumberOfEntries,
     int ValidDaysRequested,
     PastVisa[] PastVisas,
     PermissionToDestCountry? PermissionToDestCountry,
-    PastVisit[] PastVisits
+    PastVisitModel[] PastVisits
 );

@@ -1,6 +1,6 @@
-﻿using ApplicationLayer.Common;
+﻿using ApplicationLayer.GeneralNeededServices;
 using Domains.LocationDomain;
 
-namespace ApplicationLayer.Locations;
+namespace ApplicationLayer.Locations.NeededServices;
 
 public interface ICountriesRepository : IGenericRepository<Country> { }

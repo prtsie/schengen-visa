@@ -1,3 +1,4 @@
+using ApplicationLayer.VisaApplications.Handlers;
 using ApplicationLayer.VisaApplications.Requests;
 using Microsoft.AspNetCore.Mvc;
 
@@ -5,17 +6,18 @@ namespace SchengenVisaApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class VisaApplicationController : ControllerBase
+public class VisaApplicationController(IVisaApplicationsRequestHandler visaApplicationsRequestHandler) : ControllerBase
 {
-
-    public VisaApplicationController()
+    [HttpGet]
+    public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
-
-        }
+        var result = await visaApplicationsRequestHandler.Get(cancellationToken);
+        return Ok(result);
+    }
 
     [HttpPost]
-    public void Create(CreateVisaApplicationRequest request)
+    public void Create(VisaApplicationCreateRequest request, CancellationToken cancellationToken)
     {
-            throw new NotImplementedException();
-        }
+        visaApplicationsRequestHandler.HandleCreateRequest(request, cancellationToken);
+    }
 }

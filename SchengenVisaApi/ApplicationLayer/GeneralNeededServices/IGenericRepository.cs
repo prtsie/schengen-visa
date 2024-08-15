@@ -1,6 +1,6 @@
 ﻿using Domains;
 
-namespace ApplicationLayer.Common;
+namespace ApplicationLayer.GeneralNeededServices;
 
 /// <summary>
 /// Generic repository pattern
@@ -15,7 +15,7 @@ public interface IGenericRepository<T> where T : class, IEntity
     /// Get one entity with specific id
     /// <param name="id">Identifier of entity</param>
     /// <param name="cancellationToken">Cancellation token</param>
-    Task<T> GetOneAsync(Guid id, CancellationToken cancellationToken);
+    Task<T> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 
     /// Add entity to storage
     /// <param name="entity">Entity to add</param>
