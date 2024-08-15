@@ -10,8 +10,8 @@ namespace SchengenVisaApi
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
             services
-                .AddPresentation()
-                .AddInfrastructure();
+                .AddInfrastructure()
+                .AddPresentation();
 
             return services;
         }
