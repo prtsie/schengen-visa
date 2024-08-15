@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Infrastructure;
 
 namespace SchengenVisaApi
 {
@@ -7,6 +8,15 @@ namespace SchengenVisaApi
     {
         /// Add needed services
         public static IServiceCollection RegisterServices(this IServiceCollection services)
+        {
+            services
+                .AddPresentation()
+                .AddInfrastructure();
+
+            return services;
+        }
+
+        private static IServiceCollection AddPresentation(this IServiceCollection services)
         {
             services.AddControllers();
             services.AddEndpointsApiExplorer();
