@@ -8,6 +8,6 @@
         public string Number { get; set; } = null!;
 
         /// Date when <see cref="ReentryPermit"/> expires
-        public DateOnly ExpirationDate { get; set; }
+        public DateTime ExpirationDate { get; set; }
     }
 }

@@ -5,7 +5,7 @@
     public class PermissionToDestCountry
     {
         /// Date when <see cref="PermissionToDestCountry"/> expires
-        public DateOnly ExpirationDate { get; set; }
+        public DateTime ExpirationDate { get; set; }
 
         /// Issuing authority
         public string Issuer { get; set; } = null!;

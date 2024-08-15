@@ -9,9 +9,9 @@ namespace Domains.VisaApplicationDomain
         public Guid Id { get; private set; } = Guid.NewGuid();
 
         /// First day of <see cref="PastVisit"/>
-        public DateOnly StartDate { get; set; }
+        public DateTime StartDate { get; set; }
 
         /// Last day of <see cref="PastVisit"/>
-        public DateOnly EndDate { get; set; }
+        public DateTime EndDate { get; set; }
     }
 }
