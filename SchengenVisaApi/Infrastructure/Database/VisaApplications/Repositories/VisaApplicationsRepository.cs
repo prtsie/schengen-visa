@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database.VisaApplications.Repositories
 {
-    public class VisaApplicationsRepository(IGenericReader reader, IGenericWriter writer, IUnitOfWork unitOfWork)
-        : GenericRepository<VisaApplication>(writer, unitOfWork), IVisaApplicationsRepository
+    public sealed class VisaApplicationsRepository(IGenericReader reader, IGenericWriter writer, IUnitOfWork unitOfWork)
+        : GenericRepository<VisaApplication>(reader, writer, unitOfWork), IVisaApplicationsRepository
     {
         protected override IQueryable<VisaApplication> LoadDomain()
         {
-            return reader.GetAll<VisaApplication>()
+            return base.LoadDomain()
                 .Include(a => a.DestinationCountry)
                 .Include(a => a.PastVisas)
                 .Include(a => a.PastVisits);

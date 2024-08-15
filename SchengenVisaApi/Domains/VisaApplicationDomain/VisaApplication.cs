@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using Domains.ApplicantDomain;
+﻿using Domains.ApplicantDomain;
 using Domains.LocationDomain;
 
 namespace Domains.VisaApplicationDomain
@@ -14,7 +13,7 @@ namespace Domains.VisaApplicationDomain
         public Guid ApplicantId { get; set; }
 
         /// Applicant of <see cref="VisaApplication"/>
-        public Applicant Applicant { get; set; }
+        public Applicant Applicant { get; set; } = null!;
 
         /// <inheritdoc cref="Domains.VisaApplicationDomain.ReentryPermit"/>
         /// <remarks>always null if <see cref="Applicant"/> is not a non-resident</remarks>

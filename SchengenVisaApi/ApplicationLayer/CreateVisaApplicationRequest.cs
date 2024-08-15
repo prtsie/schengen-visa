@@ -3,6 +3,7 @@ using Domains.VisaApplicationDomain;
 
 namespace ApplicationLayer;
 
+/// Model of visa request from user
 public record CreateVisaApplicationRequest(
     Name FullName,
     Passport Passport,

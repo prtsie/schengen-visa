@@ -4,12 +4,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database.Applicants.Repositories
 {
-    public class ApplicantsRepository(IGenericReader reader, IGenericWriter writer, IUnitOfWork unitOfWork)
-        : GenericRepository<Applicant>(writer, unitOfWork), IApplicantsRepository
+    /// Repository pattern for <see cref="Applicant"/>
+    /// <param name="reader"><inheritdoc cref="IGenericReader"/></param>
+    /// <param name="writer"><inheritdoc cref="IGenericWriter"/></param>
+    /// <param name="unitOfWork"><inheritdoc cref="IUnitOfWork"/></param>
+    public sealed class ApplicantsRepository(IGenericReader reader, IGenericWriter writer, IUnitOfWork unitOfWork)
+        : GenericRepository<Applicant>(reader, writer, unitOfWork), IApplicantsRepository
     {
         protected override IQueryable<Applicant> LoadDomain()
         {
-            return reader.GetAll<Applicant>()
+            return base.LoadDomain()
                 .Include(a => a.CountryOfBirth)
                 .Include(a => a.CityOfBirth)
                 .Include(a => a.PlaceOfWork);

@@ -16,6 +16,7 @@ namespace SchengenVisaApi
             return services;
         }
 
+        /// Add services needed for Presentation layer
         private static IServiceCollection AddPresentation(this IServiceCollection services)
         {
             services.AddControllers();

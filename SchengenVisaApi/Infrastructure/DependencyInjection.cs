@@ -10,8 +10,10 @@ using DbContext = Infrastructure.Database.DbContext;
 
 namespace Infrastructure
 {
+    /// Provides methods to add services to DI-container
     public static class DependencyInjection
     {
+        /// Add services needed for Infrastructure layer
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
             //TODO строка подключения

@@ -3,7 +3,7 @@
     /// Provides methods for configuring middleware
     public static class PipelineRequest
     {
-        /// Configure general middleware
+        /// Configure middleware
         public static WebApplication ConfigurePipelineRequest(this WebApplication app)
         {
             app.UseSwagger()
