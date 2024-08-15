@@ -8,7 +8,7 @@ public class PlaceOfWorkConfiguration : IEntityTypeConfiguration<PlaceOfWork>
 {
     public void Configure(EntityTypeBuilder<PlaceOfWork> entity)
     {
-        entity.OwnsOne(p => p.Address);
+        entity.OwnsOne(p => p.Address, AddressConfiguration<PlaceOfWork>.Configure);
 
         entity.Property(p => p.Name)
             .IsUnicode(false)

@@ -1,12 +1,12 @@
-﻿using Domains.VisaApplicationDomain;
-using Microsoft.EntityFrameworkCore;
+﻿using Domains;
+using Domains.VisaApplicationDomain;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Database.VisaApplications.Configuration;
 
-public class PermissionToDestCountryConfiguration : IEntityTypeConfiguration<PermissionToDestCountry>
+public static class PermissionToDestCountryConfiguration<T> where T : class, IEntity
 {
-    public void Configure(EntityTypeBuilder<PermissionToDestCountry> entity)
+    public static void Configure(OwnedNavigationBuilder<T, PermissionToDestCountry> entity)
     {
         entity.Property(p => p.Issuer)
             .IsUnicode(false)

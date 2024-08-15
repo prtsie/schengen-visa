@@ -1,12 +1,12 @@
-﻿using Domains.ApplicantDomain;
-using Microsoft.EntityFrameworkCore;
+﻿using Domains;
+using Domains.ApplicantDomain;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Database.Applicants.Configuration;
 
-public class PassportConfiguration : IEntityTypeConfiguration<Passport>
+public static class PassportConfiguration<T> where T : class, IEntity
 {
-    public void Configure(EntityTypeBuilder<Passport> entity)
+    public static void Configure(OwnedNavigationBuilder<T, Passport> entity)
     {
         entity.Property(p => p.Number)
             .IsUnicode(false)

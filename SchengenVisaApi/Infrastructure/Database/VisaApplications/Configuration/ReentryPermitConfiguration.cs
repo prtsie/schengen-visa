@@ -1,12 +1,12 @@
-﻿using Domains.VisaApplicationDomain;
-using Microsoft.EntityFrameworkCore;
+﻿using Domains;
+using Domains.VisaApplicationDomain;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Database.VisaApplications.Configuration;
 
-public class ReentryPermitConfiguration : IEntityTypeConfiguration<ReentryPermit>
+public static class ReentryPermitConfiguration<T> where T : class, IEntity
 {
-    public void Configure(EntityTypeBuilder<ReentryPermit> entity)
+    public static void Configure(OwnedNavigationBuilder<T, ReentryPermit> entity)
     {
         entity.Property(p => p.Number)
             .IsUnicode(false)

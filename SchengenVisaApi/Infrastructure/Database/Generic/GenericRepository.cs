@@ -1,4 +1,4 @@
-﻿using ApplicationLayer.Common;
+﻿using ApplicationLayer.GeneralNeededServices;
 using Domains;
 using Infrastructure.Database.GeneralExceptions;
 using Microsoft.EntityFrameworkCore;
@@ -17,8 +17,8 @@ public abstract class GenericRepository<T>(IGenericReader reader, IGenericWriter
     public async Task<List<T>> GetAllAsync(CancellationToken cancellationToken)
         => await LoadDomain().ToListAsync(cancellationToken);
 
-    /// <inheritdoc cref="IGenericRepository{T}.GetOneAsync"/>
-    public async Task<T> GetOneAsync(Guid id, CancellationToken cancellationToken)
+    /// <inheritdoc cref="IGenericRepository{T}.GetByIdAsync"/>
+    public async Task<T> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         var result = await LoadDomain().SingleOrDefaultAsync(a => a.Id == id, cancellationToken);
         return result ?? throw new EntityNotFoundByIdException<T>(id);
@@ -31,7 +31,7 @@ public abstract class GenericRepository<T>(IGenericReader reader, IGenericWriter
     /// <inheritdoc cref="IGenericRepository{T}.UpdateAsync"/>
     public async Task UpdateAsync(T entity, CancellationToken cancellationToken)
     {
-        await GetOneAsync(entity.Id, cancellationToken);
+        await GetByIdAsync(entity.Id, cancellationToken);
         writer.Update(entity);
     }
 

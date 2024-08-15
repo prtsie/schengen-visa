@@ -1,12 +1,12 @@
-﻿using Domains.VisaApplicationDomain;
-using Microsoft.EntityFrameworkCore;
+﻿using Domains;
+using Domains.VisaApplicationDomain;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Database.VisaApplications.Configuration;
 
-public class PastVisaConfiguration : IEntityTypeConfiguration<PastVisa>
+public static class PastVisaConfiguration<T> where T : class, IEntity
 {
-    public void Configure(EntityTypeBuilder<PastVisa> entity)
+    public static void Configure(OwnedNavigationBuilder<T, PastVisa> entity)
     {
         entity.Property(p => p.Name)
             .IsUnicode(false)

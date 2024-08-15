@@ -1,12 +1,12 @@
-﻿using Domains.ApplicantDomain;
-using Microsoft.EntityFrameworkCore;
+﻿using Domains;
+using Domains.ApplicantDomain;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Database.Applicants.Configuration;
 
-public class NameConfiguration : IEntityTypeConfiguration<Name>
+public static class NameConfiguration<T> where T : class, IEntity
 {
-    public void Configure(EntityTypeBuilder<Name> entity)
+    public static void Configure(OwnedNavigationBuilder<T, Name> entity)
     {
         entity.Property(p => p.FirstName)
             .IsUnicode(false)
