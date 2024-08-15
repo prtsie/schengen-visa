@@ -9,12 +9,12 @@ namespace Domains.VisaApplicationDomain
         public Guid Id { get; private set; } = Guid.NewGuid();
 
         /// Date of issue
-        public DateOnly IssueDate { get; set; }
+        public DateTime IssueDate { get; set; }
 
         /// Name of visa
         public string Name { get; set; } = null!;
 
         /// Date when visa expires
-        public DateOnly ExpirationDate { get; set; }
+        public DateTime ExpirationDate { get; set; }
     }
 }

@@ -1,13 +1,13 @@
 ﻿using Domains.ApplicantDomain;
 using Domains.VisaApplicationDomain;
 
-namespace ApplicationLayer;
+namespace ApplicationLayer.VisaApplication;
 
 /// Model of visa request from user
 public record CreateVisaApplicationRequest(
     Name FullName,
     Passport Passport,
-    DateOnly BirthDate,
+    DateTime BirthDate,
     string BirthCity,
     string BirthCountry,
     string CitizenShip,

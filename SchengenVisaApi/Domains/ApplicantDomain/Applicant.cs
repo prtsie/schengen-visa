@@ -16,7 +16,7 @@ namespace Domains.ApplicantDomain
         public Passport Passport { get; set; } = null!;
 
         /// Date of birth of the <see cref="Applicant"/>
-        public DateOnly BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
 
         /// <see cref="Country"/> of birth of the <see cref="Applicant"/>
         public Country CountryOfBirth { get; set; } = null!;

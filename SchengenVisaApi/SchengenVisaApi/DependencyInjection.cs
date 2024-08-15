@@ -17,7 +17,7 @@ namespace SchengenVisaApi
         }
 
         /// Add services needed for Presentation layer
-        private static IServiceCollection AddPresentation(this IServiceCollection services)
+        private static void AddPresentation(this IServiceCollection services)
         {
             services.AddControllers();
             services.AddEndpointsApiExplorer();
@@ -26,8 +26,6 @@ namespace SchengenVisaApi
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
-
-            return services;
         }
     }
 }

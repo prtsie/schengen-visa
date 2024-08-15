@@ -11,9 +11,9 @@
         public string Issuer { get; set; } = null!;
 
         /// Date of issue
-        public DateOnly IssueDate { get; set; }
+        public DateTime IssueDate { get; set; }
 
         /// Date when the <see cref="Passport"/> expires
-        public DateOnly ExpirationDate { get; set; }
+        public DateTime ExpirationDate { get; set; }
     }
 }

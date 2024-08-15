@@ -43,7 +43,7 @@ namespace Domains.VisaApplicationDomain
         public RequestedNumberOfEntries RequestedNumberOfEntries { get; set; }
 
         /// When application was created
-        public DateOnly RequestDate { get; set; }
+        public DateTime RequestDate { get; set; }
 
         /// Valid days requested
         public int ValidDaysRequested { get; set; }
