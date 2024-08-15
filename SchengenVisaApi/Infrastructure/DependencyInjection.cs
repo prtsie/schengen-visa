@@ -1,4 +1,7 @@
-﻿using ApplicationLayer.Common;
+﻿using ApplicationLayer.Applicants;
+using ApplicationLayer.Common;
+using ApplicationLayer.Locations;
+using ApplicationLayer.VisaApplications;
 using Infrastructure.Database;
 using Infrastructure.Database.Applicants.Repositories;
 using Infrastructure.Database.Generic;

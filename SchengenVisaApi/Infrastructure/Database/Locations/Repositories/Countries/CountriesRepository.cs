@@ -1,4 +1,5 @@
-﻿using Domains.LocationDomain;
+﻿using ApplicationLayer.Locations;
+using Domains.LocationDomain;
 using Infrastructure.Database.Generic;
 using Microsoft.EntityFrameworkCore;
 

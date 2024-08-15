@@ -1,6 +1,6 @@
 ﻿using ApplicationLayer.Common;
 using Domains.VisaApplicationDomain;
 
-namespace Infrastructure.Database.VisaApplications.Repositories;
+namespace ApplicationLayer.VisaApplications;
 
 public interface IVisaApplicationsRepository : IGenericRepository<VisaApplication> { }

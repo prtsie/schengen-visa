@@ -1,8 +1,8 @@
-﻿using ApplicationLayer.VisaApplication.Models;
+﻿using ApplicationLayer.VisaApplications.Models;
 using Domains.ApplicantDomain;
 using Domains.VisaApplicationDomain;
 
-namespace ApplicationLayer.VisaApplication;
+namespace ApplicationLayer.VisaApplications.Requests;
 
 /// Model of visa request from user
 public record CreateVisaApplicationRequest(

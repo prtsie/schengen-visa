@@ -1,6 +1,6 @@
 ﻿using ApplicationLayer.Common;
 using Domains.LocationDomain;
 
-namespace Infrastructure.Database.Locations.Repositories.Countries;
+namespace ApplicationLayer.Locations;
 
 public interface ICountriesRepository : IGenericRepository<Country> { }

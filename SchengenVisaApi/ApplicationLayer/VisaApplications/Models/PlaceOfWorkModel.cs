@@ -1,4 +1,4 @@
-﻿namespace ApplicationLayer.VisaApplication.Models;
+﻿namespace ApplicationLayer.VisaApplications.Models;
 
 public class PlaceOfWorkModel
 {
