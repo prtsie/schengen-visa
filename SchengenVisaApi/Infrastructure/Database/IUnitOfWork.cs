@@ -2,7 +2,7 @@
 {
     public interface IUnitOfWork
     {
-        /// Save changes in data storage
+        /// Saves changes in data storage
         /// <param name="cancellationToken">Cancellation Token</param>
         Task SaveAsync(CancellationToken cancellationToken);
     }

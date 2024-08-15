@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database.Locations.Repositories.Countries
 {
-    public class CountriesRepository(IGenericReader reader, IGenericWriter writer, IUnitOfWork unitOfWork)
-        : GenericRepository<Country>(writer, unitOfWork), ICountriesRepository
+    public sealed class CountriesRepository(IGenericReader reader, IGenericWriter writer, IUnitOfWork unitOfWork)
+        : GenericRepository<Country>(reader, writer, unitOfWork), ICountriesRepository
     {
         protected override IQueryable<Country> LoadDomain()
         {
-            return reader.GetAll<Country>().Include(c => c.Cities);
+            return base.LoadDomain().Include(c => c.Cities);
         }
     }
 }
