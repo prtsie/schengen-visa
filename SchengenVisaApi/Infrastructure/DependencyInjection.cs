@@ -1,5 +1,4 @@
 ﻿using ApplicationLayer.Applicants;
-using ApplicationLayer.Common;
 using ApplicationLayer.Locations;
 using ApplicationLayer.VisaApplications;
 using Infrastructure.Database;

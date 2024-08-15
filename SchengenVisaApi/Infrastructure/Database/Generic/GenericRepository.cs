@@ -21,7 +21,7 @@ public abstract class GenericRepository<T>(IGenericReader reader, IGenericWriter
     public async Task<T> GetOneAsync(Guid id, CancellationToken cancellationToken)
     {
         var result = await LoadDomain().SingleOrDefaultAsync(a => a.Id == id, cancellationToken);
-        return result ?? throw new EntityNotFoundException<T>(id);
+        return result ?? throw new EntityNotFoundByIdException<T>(id);
     }
 
     /// <inheritdoc cref="IGenericRepository{T}.AddAsync"/>
