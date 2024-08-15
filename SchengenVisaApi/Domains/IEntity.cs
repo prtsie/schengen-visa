@@ -1,8 +1,7 @@
-﻿namespace Domains
+﻿namespace Domains;
+
+/// Interface that every entity should inherit from
+public interface IEntity
 {
-    /// Interface that every entity should inherit from
-    public interface IEntity
-    {
-        public Guid Id { get; }
-    }
+    public Guid Id { get; }
 }

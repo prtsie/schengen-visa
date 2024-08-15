@@ -1,4 +1,5 @@
-﻿using Domains.ApplicantDomain;
+﻿using ApplicationLayer.VisaApplication.Models;
+using Domains.ApplicantDomain;
 using Domains.VisaApplicationDomain;
 
 namespace ApplicationLayer.VisaApplication;
@@ -19,7 +20,7 @@ public record CreateVisaApplicationRequest(
     bool IsNonResident,
     ReentryPermit ReentryPermit,
     string JobTitle,
-    PlaceOfWork PlaceOfWork,
+    PlaceOfWorkModel PlaceOfWork,
     string DestinationCountry,
     VisaCategory VisaCategory,
     bool IsForGroup,
@@ -28,4 +29,4 @@ public record CreateVisaApplicationRequest(
     PastVisa[] PastVisas,
     PermissionToDestCountry? PermissionToDestCountry,
     PastVisit[] PastVisits
-    );
+);

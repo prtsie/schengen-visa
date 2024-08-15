@@ -1,10 +1,9 @@
-﻿namespace Domains.VisaApplicationDomain
+﻿namespace Domains.VisaApplicationDomain;
+
+/// Requested number of entries
+public enum RequestedNumberOfEntries
 {
-    /// Requested number of entries
-    public enum RequestedNumberOfEntries
-    {
-        Many,
-        One,
-        Two
-    }
+    Many,
+    One,
+    Two
 }

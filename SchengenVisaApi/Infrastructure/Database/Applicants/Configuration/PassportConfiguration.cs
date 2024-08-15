@@ -2,19 +2,18 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Database.Applicants.Configuration
-{
-    public class PassportConfiguration : IEntityTypeConfiguration<Passport>
-    {
-        public void Configure(EntityTypeBuilder<Passport> entity)
-        {
-            entity.Property(p => p.Number)
-                .IsUnicode(false)
-                .HasMaxLength(20);
+namespace Infrastructure.Database.Applicants.Configuration;
 
-            entity.Property(p => p.Issuer)
-                .IsUnicode(false)
-                .HasMaxLength(200);
-        }
+public class PassportConfiguration : IEntityTypeConfiguration<Passport>
+{
+    public void Configure(EntityTypeBuilder<Passport> entity)
+    {
+        entity.Property(p => p.Number)
+            .IsUnicode(false)
+            .HasMaxLength(20);
+
+        entity.Property(p => p.Issuer)
+            .IsUnicode(false)
+            .HasMaxLength(200);
     }
 }

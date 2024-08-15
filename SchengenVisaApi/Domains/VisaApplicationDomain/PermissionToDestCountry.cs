@@ -1,13 +1,12 @@
-﻿namespace Domains.VisaApplicationDomain
-{
-    /// Permission to enter the destination country
-    /// <remarks>Owned</remarks>
-    public class PermissionToDestCountry
-    {
-        /// Date when <see cref="PermissionToDestCountry"/> expires
-        public DateTime ExpirationDate { get; set; }
+﻿namespace Domains.VisaApplicationDomain;
 
-        /// Issuing authority
-        public string Issuer { get; set; } = null!;
-    }
+/// Permission to enter the destination country
+/// <remarks>Owned</remarks>
+public class PermissionToDestCountry
+{
+    /// Date when <see cref="PermissionToDestCountry"/> expires
+    public DateTime ExpirationDate { get; set; }
+
+    /// Issuing authority
+    public string Issuer { get; set; } = null!;
 }

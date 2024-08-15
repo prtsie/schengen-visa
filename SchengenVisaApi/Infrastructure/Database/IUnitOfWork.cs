@@ -1,9 +1,8 @@
-﻿namespace Infrastructure.Database
+﻿namespace Infrastructure.Database;
+
+public interface IUnitOfWork
 {
-    public interface IUnitOfWork
-    {
-        /// Saves changes in data storage
-        /// <param name="cancellationToken">Cancellation Token</param>
-        Task SaveAsync(CancellationToken cancellationToken);
-    }
+    /// Saves changes in data storage
+    /// <param name="cancellationToken">Cancellation Token</param>
+    Task SaveAsync(CancellationToken cancellationToken);
 }

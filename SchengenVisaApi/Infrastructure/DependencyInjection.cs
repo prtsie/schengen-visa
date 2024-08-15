@@ -8,28 +8,27 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using DbContext = Infrastructure.Database.DbContext;
 
-namespace Infrastructure
+namespace Infrastructure;
+
+/// Provides methods to add services to DI-container
+public static class DependencyInjection
 {
-    /// Provides methods to add services to DI-container
-    public static class DependencyInjection
+    /// Add services needed for Infrastructure layer
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
-        /// Add services needed for Infrastructure layer
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services)
-        {
-            //TODO строка подключения
-            services.AddDbContext<DbContext>(opts =>
-                opts.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=visadb;Integrated Security=True;"));
+        //TODO строка подключения
+        services.AddDbContext<DbContext>(opts =>
+            opts.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=visadb;Integrated Security=True;"));
 
-            services.AddScoped<IGenericReader>(serviceProvider => serviceProvider.GetRequiredService<DbContext>());
-            services.AddScoped<IGenericWriter>(serviceProvider => serviceProvider.GetRequiredService<DbContext>());
-            services.AddScoped<IUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<DbContext>());
+        services.AddScoped<IGenericReader>(serviceProvider => serviceProvider.GetRequiredService<DbContext>());
+        services.AddScoped<IGenericWriter>(serviceProvider => serviceProvider.GetRequiredService<DbContext>());
+        services.AddScoped<IUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<DbContext>());
 
-            services.AddScoped<IApplicantsRepository, ApplicantsRepository>();
-            services.AddScoped<IVisaApplicationsRepository, VisaApplicationsRepository>();
-            services.AddScoped<ICitiesRepository, CitiesRepository>();
-            services.AddScoped<ICountriesRepository, CountriesRepository>();
+        services.AddScoped<IApplicantsRepository, ApplicantsRepository>();
+        services.AddScoped<IVisaApplicationsRepository, VisaApplicationsRepository>();
+        services.AddScoped<ICitiesRepository, CitiesRepository>();
+        services.AddScoped<ICountriesRepository, CountriesRepository>();
 
-            return services;
-        }
+        return services;
     }
 }

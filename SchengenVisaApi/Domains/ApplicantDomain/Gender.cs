@@ -1,10 +1,9 @@
-﻿namespace Domains.ApplicantDomain
+﻿namespace Domains.ApplicantDomain;
+
+public enum Gender
 {
-    public enum Gender
-    {
-        Unknown,
-        Male,
-        Female,
-        Turkish
-    }
+    Unknown,
+    Male,
+    Female,
+    Turkish
 }

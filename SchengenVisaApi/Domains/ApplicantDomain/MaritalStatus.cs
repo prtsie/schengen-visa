@@ -1,11 +1,10 @@
-﻿namespace Domains.ApplicantDomain
+﻿namespace Domains.ApplicantDomain;
+
+public enum MaritalStatus
 {
-    public enum MaritalStatus
-    {
-        Other,
-        Married,
-        Unmarried,
-        Separated,
-        WidowOrWidower
-    }
+    Other,
+    Married,
+    Unmarried,
+    Separated,
+    WidowOrWidower
 }

@@ -1,19 +1,18 @@
-﻿namespace SchengenVisaApi
+﻿namespace SchengenVisaApi;
+
+/// Provides methods for configuring middleware
+public static class PipelineRequest
 {
-    /// Provides methods for configuring middleware
-    public static class PipelineRequest
+    /// Configure middleware
+    public static WebApplication ConfigurePipelineRequest(this WebApplication app)
     {
-        /// Configure middleware
-        public static WebApplication ConfigurePipelineRequest(this WebApplication app)
-        {
-            app.UseSwagger()
-                .UseSwaggerUI();
+        app.UseSwagger()
+            .UseSwaggerUI();
 
-            app.UseHttpsRedirection();
+        app.UseHttpsRedirection();
 
-            app.MapControllers();
+        app.MapControllers();
 
-            return app;
-        }
+        return app;
     }
 }

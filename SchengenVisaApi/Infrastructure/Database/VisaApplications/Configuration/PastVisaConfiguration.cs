@@ -2,15 +2,14 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Database.VisaApplications.Configuration
+namespace Infrastructure.Database.VisaApplications.Configuration;
+
+public class PastVisaConfiguration : IEntityTypeConfiguration<PastVisa>
 {
-    public class PastVisaConfiguration : IEntityTypeConfiguration<PastVisa>
+    public void Configure(EntityTypeBuilder<PastVisa> entity)
     {
-        public void Configure(EntityTypeBuilder<PastVisa> entity)
-        {
-            entity.Property(p => p.Name)
-                .IsUnicode(false)
-                .HasMaxLength(70);
-        }
+        entity.Property(p => p.Name)
+            .IsUnicode(false)
+            .HasMaxLength(70);
     }
 }

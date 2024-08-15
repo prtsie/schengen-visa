@@ -2,21 +2,22 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Database.VisaApplications.Configuration
+namespace Infrastructure.Database.VisaApplications.Configuration;
+
+public class VisaApplicationConfiguration : IEntityTypeConfiguration<VisaApplication>
 {
-    public class VisaApplicationConfiguration : IEntityTypeConfiguration<VisaApplication>
+    public void Configure(EntityTypeBuilder<VisaApplication> entity)
     {
-        public void Configure(EntityTypeBuilder<VisaApplication> entity)
-        {
-            entity.ToTable("VisaApplications");
+        entity.ToTable("VisaApplications");
 
-            entity.HasOne(va => va.Applicant)
-                .WithMany(a => a.VisaApplications)
-                .HasForeignKey(va => va.ApplicantId)
-                .IsRequired();
+        entity.HasOne(va => va.Applicant)
+            .WithMany(a => a.VisaApplications)
+            .HasForeignKey(va => va.ApplicantId)
+            .IsRequired();
 
-            entity.OwnsOne(p => p.ReentryPermit);
-            entity.OwnsOne(p => p.PermissionToDestCountry);
-        }
+        entity.OwnsOne(p => p.ReentryPermit);
+        entity.OwnsOne(p => p.PermissionToDestCountry);
+        entity.OwnsMany(p => p.PastVisits).ToTable("PastVisits");
+        entity.OwnsMany(p => p.PastVisas).ToTable("PastVisas");
     }
 }
