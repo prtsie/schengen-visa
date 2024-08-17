@@ -1,7 +1,7 @@
 ﻿using ApplicationLayer.GeneralNeededServices;
 using Domains.Users;
 
-namespace ApplicationLayer.AuthServices.NeededServices
+namespace ApplicationLayer.DataAccessingServices.AuthServices.NeededServices
 {
     /// Repository pattern for <see cref="User"/>
     public interface IUsersRepository : IGenericRepository<User>

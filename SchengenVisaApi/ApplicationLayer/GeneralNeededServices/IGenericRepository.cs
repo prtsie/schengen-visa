@@ -34,7 +34,4 @@ public interface IGenericRepository<T> where T : class, IEntity
     /// </summary>
     /// <param name="entity">Entity to remove</param>
     void Remove(T entity);
-
-    /// Save changes in storage
-    Task SaveAsync(CancellationToken cancellationToken);
 }

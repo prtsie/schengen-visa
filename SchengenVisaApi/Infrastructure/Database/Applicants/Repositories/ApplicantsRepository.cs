@@ -1,5 +1,6 @@
 ﻿using ApplicationLayer.DataAccessingServices.Applicants.NeededServices;
 using Domains.ApplicantDomain;
+using Infrastructure.Database.Applicants.Repositories.Exceptions;
 using Infrastructure.Database.Generic;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,9 +9,8 @@ namespace Infrastructure.Database.Applicants.Repositories;
 /// Repository pattern for <see cref="Applicant"/>
 /// <param name="reader"><inheritdoc cref="IGenericReader"/></param>
 /// <param name="writer"><inheritdoc cref="IGenericWriter"/></param>
-/// <param name="unitOfWork"><inheritdoc cref="IUnitOfWork"/></param>
-public sealed class ApplicantsRepository(IGenericReader reader, IGenericWriter writer, IUnitOfWork unitOfWork)
-    : GenericRepository<Applicant>(reader, writer, unitOfWork), IApplicantsRepository
+public sealed class ApplicantsRepository(IGenericReader reader, IGenericWriter writer)
+    : GenericRepository<Applicant>(reader, writer), IApplicantsRepository
 {
     protected override IQueryable<Applicant> LoadDomain()
     {
@@ -18,5 +18,11 @@ public sealed class ApplicantsRepository(IGenericReader reader, IGenericWriter w
             .Include(a => a.CountryOfBirth)
             .Include(a => a.CityOfBirth)
             .Include(a => a.PlaceOfWork);
+    }
+
+    async Task<Applicant> IApplicantsRepository.FindByUserIdAsync(Guid userId, CancellationToken cancellationToken)
+    {
+        var result = await LoadDomain().SingleOrDefaultAsync(a => a.UserId == userId, cancellationToken);
+        return result ?? throw new ApplicantNotFoundByUserIdException(userId);
     }
 }

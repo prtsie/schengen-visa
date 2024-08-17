@@ -1,6 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using ApplicationLayer.AuthServices.NeededServices;
+using ApplicationLayer.DataAccessingServices.AuthServices.NeededServices;
 using ApplicationLayer.GeneralNeededServices;
 using Domains.Users;
 
@@ -14,7 +14,7 @@ namespace Infrastructure.Auth
             var claims = new List<Claim>
             {
                 new(ClaimTypes.Role, user.Role.ToString()),
-                new(ClaimTypes.Email, user.Email)
+                new(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
 
             var token = new JwtSecurityToken(

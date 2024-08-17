@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database.VisaApplications.Repositories;
 
-public sealed class VisaApplicationsRepository(IGenericReader reader, IGenericWriter writer, IUnitOfWork unitOfWork)
-    : GenericRepository<VisaApplication>(reader, writer, unitOfWork), IVisaApplicationsRepository
+public sealed class VisaApplicationsRepository(IGenericReader reader, IGenericWriter writer)
+    : GenericRepository<VisaApplication>(reader, writer), IVisaApplicationsRepository
 {
     protected override IQueryable<VisaApplication> LoadDomain()
     {

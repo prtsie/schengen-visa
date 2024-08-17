@@ -1,10 +1,16 @@
 ﻿using System.Reflection;
+using System.Security.Claims;
 using System.Text;
 using ApplicationLayer;
+using Domains.Users;
 using Infrastructure;
 using Infrastructure.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using SchengenVisaApi.Common;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace SchengenVisaApi;
 
@@ -19,7 +25,7 @@ public static class DependencyInjection
 
         builder.Services
             .AddInfrastructure(config, environment.IsDevelopment())
-            .AddApplicationLayer()
+            .AddApplicationLayer(environment.IsDevelopment())
             .AddAuth(config)
             .AddPresentation(environment);
     }
@@ -52,7 +58,7 @@ public static class DependencyInjection
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(opts => opts.TokenValidationParameters = parameters);
-        services.AddAuthorization();
+        services.AddAuthorizationBuilder().ConfigureAuthorizationPolicies();
 
         services.AddTokenGenerator(new TokenGeneratorOptions(
             Issuer: parameters.ValidIssuer!,
@@ -64,9 +70,24 @@ public static class DependencyInjection
         return services;
     }
 
+    /// Configure roles
+    private static void ConfigureAuthorizationPolicies(this AuthorizationBuilder builder)
+    {
+        builder.AddPolicy(
+                PolicyConstants.AdminPolicy,
+                p => p.RequireClaim(ClaimTypes.Role, Role.Admin.ToString()))
+            .AddPolicy(
+                PolicyConstants.ApprovingAuthorityPolicy,
+                p => p.RequireClaim(ClaimTypes.Role, Role.ApprovingAuthority.ToString()))
+            .AddPolicy(
+                PolicyConstants.ApplicantPolicy,
+                p => p.RequireClaim(ClaimTypes.Role, Role.Applicant.ToString()));
+    }
+
     /// Add swagger
     private static void AddSwagger(this IServiceCollection services)
     {
+        services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
         services.AddSwaggerGen(options =>
         {
             var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";

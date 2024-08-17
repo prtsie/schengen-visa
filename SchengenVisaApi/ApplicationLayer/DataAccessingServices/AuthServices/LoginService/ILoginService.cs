@@ -1,6 +1,6 @@
-﻿using ApplicationLayer.AuthServices.Requests;
+﻿using ApplicationLayer.DataAccessingServices.AuthServices.Requests;
 
-namespace ApplicationLayer.AuthServices.LoginService
+namespace ApplicationLayer.DataAccessingServices.AuthServices.LoginService
 {
     /// Handles <see cref="UserLoginRequest"/>
     public interface ILoginService

@@ -8,8 +8,10 @@ public class CountryConfiguration : IEntityTypeConfiguration<Country>
 {
     public void Configure(EntityTypeBuilder<Country> entity)
     {
-        entity.Property(p => p.Name)
+        entity.Property(c => c.Name)
             .IsUnicode(false)
             .HasMaxLength(70);
+
+        entity.HasIndex(c => c.Name).IsUnique();
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Database;
+﻿namespace ApplicationLayer.GeneralNeededServices;
 
 public interface IUnitOfWork
 {

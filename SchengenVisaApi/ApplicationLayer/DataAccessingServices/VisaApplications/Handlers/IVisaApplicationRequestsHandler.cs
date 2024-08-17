@@ -3,9 +3,9 @@ using Domains.VisaApplicationDomain;
 
 namespace ApplicationLayer.DataAccessingServices.VisaApplications.Handlers;
 
-public interface IVisaApplicationsRequestHandler
+public interface IVisaApplicationRequestsHandler
 {
     Task<List<VisaApplication>> Get(CancellationToken cancellationToken);
 
-    void HandleCreateRequest(VisaApplicationCreateRequest request, CancellationToken cancellationToken);
+    void HandleCreateRequest(Guid userId, VisaApplicationCreateRequest request, CancellationToken cancellationToken);
 }

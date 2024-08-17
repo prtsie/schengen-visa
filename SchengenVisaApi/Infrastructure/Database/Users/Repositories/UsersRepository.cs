@@ -1,4 +1,4 @@
-﻿using ApplicationLayer.AuthServices.NeededServices;
+﻿using ApplicationLayer.DataAccessingServices.AuthServices.NeededServices;
 using Domains.Users;
 using Infrastructure.Database.Generic;
 using Microsoft.EntityFrameworkCore;
@@ -6,8 +6,8 @@ using Microsoft.EntityFrameworkCore;
 namespace Infrastructure.Database.Users.Repositories
 {
     /// <inheritdoc cref="IUsersRepository"/>
-    public class UsersRepository(IGenericReader reader, IGenericWriter writer, IUnitOfWork unitOfWork)
-        : GenericRepository<User>(reader, writer, unitOfWork), IUsersRepository
+    public class UsersRepository(IGenericReader reader, IGenericWriter writer)
+        : GenericRepository<User>(reader, writer), IUsersRepository
     {
         async Task<User?> IUsersRepository.FindByEmailAsync(string email, CancellationToken cancellationToken)
         {

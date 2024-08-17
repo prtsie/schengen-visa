@@ -1,6 +1,6 @@
-﻿using ApplicationLayer.AuthServices.Requests;
+﻿using ApplicationLayer.DataAccessingServices.AuthServices.Requests;
 
-namespace ApplicationLayer.AuthServices.RegisterService
+namespace ApplicationLayer.DataAccessingServices.AuthServices.RegisterService
 {
     /// Handles <see cref="RegisterApplicantRequest"/>
     public interface IRegisterService

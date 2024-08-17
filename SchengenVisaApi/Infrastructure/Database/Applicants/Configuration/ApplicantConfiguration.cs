@@ -1,4 +1,5 @@
 ﻿using Domains.ApplicantDomain;
+using Domains.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -16,6 +17,7 @@ public class ApplicantConfiguration : IEntityTypeConfiguration<Applicant>
 
         entity.HasOne(a => a.CityOfBirth).WithMany().OnDelete(DeleteBehavior.Restrict);
         entity.HasOne(a => a.CountryOfBirth).WithMany().OnDelete(DeleteBehavior.Restrict);
+        entity.HasOne<User>().WithOne().HasForeignKey<Applicant>(a => a.UserId);
 
         entity.Property(p => p.Citizenship)
             .IsUnicode(false)

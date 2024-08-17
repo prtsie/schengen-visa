@@ -1,8 +1,8 @@
-﻿using ApplicationLayer.AuthServices.LoginService.Exceptions;
-using ApplicationLayer.AuthServices.NeededServices;
-using ApplicationLayer.AuthServices.Requests;
+﻿using ApplicationLayer.DataAccessingServices.AuthServices.LoginService.Exceptions;
+using ApplicationLayer.DataAccessingServices.AuthServices.NeededServices;
+using ApplicationLayer.DataAccessingServices.AuthServices.Requests;
 
-namespace ApplicationLayer.AuthServices.LoginService
+namespace ApplicationLayer.DataAccessingServices.AuthServices.LoginService
 {
     /// <inheritdoc cref="ILoginService"/>
     public class LoginService(IUsersRepository users, ITokenGenerator tokenGenerator) : ILoginService

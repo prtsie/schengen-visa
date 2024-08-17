@@ -1,6 +1,6 @@
 ﻿using Domains.Users;
 
-namespace ApplicationLayer.AuthServices.NeededServices
+namespace ApplicationLayer.DataAccessingServices.AuthServices.NeededServices
 {
     public interface ITokenGenerator
     {

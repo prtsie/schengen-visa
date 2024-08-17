@@ -1,14 +1,13 @@
-﻿using ApplicationLayer.AuthServices.LoginService;
-using ApplicationLayer.AuthServices.RegisterService;
-using ApplicationLayer.AuthServices.Requests;
-using Microsoft.AspNetCore.Identity.Data;
+﻿using ApplicationLayer.DataAccessingServices.AuthServices.LoginService;
+using ApplicationLayer.DataAccessingServices.AuthServices.RegisterService;
+using ApplicationLayer.DataAccessingServices.AuthServices.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SchengenVisaApi.Controllers
 {
     [ApiController]
     [Route("auth")]
-    public class UsersController(IRegisterService registerService, ILoginService loginService) : Controller
+    public class UsersController(IRegisterService registerService, ILoginService loginService) : ControllerBase
     {
         [HttpPost]
         public async Task<IActionResult> Register(RegisterApplicantRequest request, CancellationToken cancellationToken)

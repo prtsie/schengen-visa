@@ -6,7 +6,9 @@ namespace Domains.ApplicantDomain;
 public class Applicant : IEntity
 {
     /// Unique identifier of the <see cref="Applicant"/>
-    public Guid Id { get; set; }
+    public Guid Id { get; private set; } = Guid.NewGuid();
+
+    public Guid UserId { get; set; }
 
     /// Full name of the <see cref="Applicant"/>
     public Name Name { get; set; } = null!;

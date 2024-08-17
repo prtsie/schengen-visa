@@ -1,4 +1,4 @@
-﻿namespace ApplicationLayer.DataAccessingServices.VisaApplications.Models;
+﻿namespace ApplicationLayer.DataAccessingServices.Applicants.Models;
 
 public class AddressModel
 {

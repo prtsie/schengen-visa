@@ -1,11 +1,9 @@
-﻿using ApplicationLayer.AuthServices.NeededServices;
-using ApplicationLayer.DataAccessingServices.Applicants.NeededServices;
+﻿using ApplicationLayer.DataAccessingServices.Applicants.NeededServices;
+using ApplicationLayer.DataAccessingServices.AuthServices.NeededServices;
 using ApplicationLayer.DataAccessingServices.Locations.NeededServices;
 using ApplicationLayer.DataAccessingServices.VisaApplications.NeededServices;
 using ApplicationLayer.GeneralNeededServices;
-using Infrastructure.Auth;
 using Infrastructure.Common;
-using Infrastructure.Database;
 using Infrastructure.Database.Applicants.Repositories;
 using Infrastructure.Database.Generic;
 using Infrastructure.Database.Locations.Repositories.Cities;
