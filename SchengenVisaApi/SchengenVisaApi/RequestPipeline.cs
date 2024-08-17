@@ -11,6 +11,9 @@ public static class PipelineRequest
 
         app.UseHttpsRedirection();
 
+        app.UseAuthentication()
+            .UseAuthorization();
+
         app.MapControllers();
 
         return app;

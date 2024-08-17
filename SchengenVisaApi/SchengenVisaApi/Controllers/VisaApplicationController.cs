@@ -1,5 +1,5 @@
-using ApplicationLayer.VisaApplications.Handlers;
-using ApplicationLayer.VisaApplications.Requests;
+using ApplicationLayer.DataAccessingServices.VisaApplications.Handlers;
+using ApplicationLayer.DataAccessingServices.VisaApplications.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SchengenVisaApi.Controllers;

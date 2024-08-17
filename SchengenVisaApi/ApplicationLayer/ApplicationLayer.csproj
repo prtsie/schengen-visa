@@ -14,4 +14,8 @@
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0-preview.7.24405.7" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="DataAccessingServices\" />
+    </ItemGroup>
+
 </Project>
