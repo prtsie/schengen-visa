@@ -8,8 +8,6 @@ public class VisaApplicationConfiguration : IEntityTypeConfiguration<VisaApplica
 {
     public void Configure(EntityTypeBuilder<VisaApplication> entity)
     {
-        entity.ToTable("VisaApplications");
-
         entity.OwnsOne(va => va.ReentryPermit, ReentryPermitConfiguration<VisaApplication>.Configure);
         entity.OwnsOne(va => va.PermissionToDestCountry, PermissionToDestCountryConfiguration<VisaApplication>.Configure);
         entity.OwnsMany(va => va.PastVisits, PastVisitConfiguration<VisaApplication>.Configure).ToTable("PastVisits");

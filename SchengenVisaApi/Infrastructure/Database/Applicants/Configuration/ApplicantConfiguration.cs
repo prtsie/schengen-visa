@@ -9,7 +9,6 @@ public class ApplicantConfiguration : IEntityTypeConfiguration<Applicant>
 {
     public void Configure(EntityTypeBuilder<Applicant> entity)
     {
-        entity.ToTable("Applicants");
         entity.OwnsOne(p => p.Name, NameConfiguration<Applicant>.Configure);
         entity.OwnsOne(p => p.FatherName, NameConfiguration<Applicant>.Configure);
         entity.OwnsOne(p => p.MotherName, NameConfiguration<Applicant>.Configure);
