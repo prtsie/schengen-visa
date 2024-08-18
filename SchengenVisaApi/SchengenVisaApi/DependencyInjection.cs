@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SchengenVisaApi.Common;
+using SchengenVisaApi.ExceptionFilters;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace SchengenVisaApi;
@@ -39,7 +40,9 @@ public static class DependencyInjection
             services.AddSwagger();
         }
 
-        services.AddControllers();
+        services.AddProblemDetails();
+
+        services.AddControllers(opts => opts.Filters.Add<GlobalExceptionsFilter>());
     }
 
     /// Adds authentication, authorization and token generator

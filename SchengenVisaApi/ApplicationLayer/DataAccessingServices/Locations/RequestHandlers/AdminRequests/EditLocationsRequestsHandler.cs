@@ -18,7 +18,7 @@ namespace ApplicationLayer.DataAccessingServices.Locations.RequestHandlers.Admin
 
             if (request.Cities.Distinct().Count() < request.Cities.Length)
             {
-                throw new MultipleIdenticalCitiesInCountry();
+                throw new MultipleIdenticalCitiesInCountryException();
             }
 
             var country = new Country

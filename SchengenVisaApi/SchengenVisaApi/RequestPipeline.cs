@@ -11,6 +11,8 @@ public static class PipelineRequest
 
         app.UseHttpsRedirection();
 
+        app.UseStatusCodePages();
+
         app.UseAuthentication()
             .UseAuthorization();
 
