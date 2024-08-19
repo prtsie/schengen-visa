@@ -3,5 +3,5 @@ using ApplicationLayer.Services.AuthServices.Requests;
 
 namespace ApplicationLayer.Services.AuthServices.RegisterService.Exceptions
 {
-    public class UserAlreadyExistsException(RegisterApplicantRequest request) : AlreadyExistsException($"User with email '{request.Email}' already exists");
+    public class UserAlreadyExistsException(RegisterRequest request) : AlreadyExistsException($"User with email '{request.Email}' already exists");
 }

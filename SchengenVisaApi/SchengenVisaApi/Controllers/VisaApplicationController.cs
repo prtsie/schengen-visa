@@ -9,11 +9,10 @@ namespace SchengenVisaApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-[Authorize(policy: PolicyConstants.ApplicantPolicy)]
 public class VisaApplicationController(IVisaApplicationRequestsHandler visaApplicationRequestsHandler) : ControllerBase
 {
-    //TODO remove
     [HttpGet]
+    [Authorize(policy: PolicyConstants.ApprovingAuthorityPolicy)]
     public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
         var result = await visaApplicationRequestsHandler.Get(cancellationToken);
@@ -21,6 +20,7 @@ public class VisaApplicationController(IVisaApplicationRequestsHandler visaAppli
     }
 
     [HttpPost]
+    [Authorize(policy: PolicyConstants.ApplicantPolicy)]
     public void Create(VisaApplicationCreateRequest request, CancellationToken cancellationToken)
     {
         var userId = Guid.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);

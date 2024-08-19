@@ -1,7 +1,6 @@
 ﻿using ApplicationLayer.Services.AuthServices.LoginService;
 using ApplicationLayer.Services.AuthServices.RegisterService;
-using ApplicationLayer.Services.Locations.RequestHandlers.AdminRequests;
-using ApplicationLayer.Services.Locations.RequestHandlers.ApplicantRequests;
+using ApplicationLayer.Services.Locations.RequestHandlers;
 using ApplicationLayer.Services.VisaApplications.Handlers;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,7 +14,6 @@ public static class DependencyInjection
     {
         services.AddScoped<IVisaApplicationRequestsHandler, VisaApplicationRequestsHandler>();
         services.AddScoped<ILocationRequestsHandler, LocationRequestsHandler>();
-        services.AddScoped<IEditLocationsRequestsHandler, EditLocationsRequestsHandler>();
 
         services.AddScoped<IRegisterService, RegisterService>();
 

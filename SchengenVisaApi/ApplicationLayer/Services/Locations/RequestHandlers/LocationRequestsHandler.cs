@@ -1,15 +1,20 @@
 ﻿using ApplicationLayer.GeneralNeededServices;
 using ApplicationLayer.Services.Locations.NeededServices;
-using ApplicationLayer.Services.Locations.RequestHandlers.AdminRequests.Exceptions;
+using ApplicationLayer.Services.Locations.RequestHandlers.Exceptions;
 using ApplicationLayer.Services.Locations.Requests;
 using Domains.LocationDomain;
 
-namespace ApplicationLayer.Services.Locations.RequestHandlers.AdminRequests
+namespace ApplicationLayer.Services.Locations.RequestHandlers
 {
-    /// <inheritdoc cref="IEditLocationsRequestsHandler"/>
-    public class EditLocationsRequestsHandler(ICountriesRepository countries, IUnitOfWork unitOfWork) : IEditLocationsRequestsHandler
+    /// <inheritdoc cref="ILocationRequestsHandler"/>
+    public class LocationRequestsHandler(ICountriesRepository countries, IUnitOfWork unitOfWork) : ILocationRequestsHandler
     {
-        async Task IEditLocationsRequestsHandler.AddCountryAsync(AddCountryRequest request, CancellationToken cancellationToken)
+        async Task<List<Country>> ILocationRequestsHandler.HandleGetRequestAsync(CancellationToken cancellationToken)
+        {
+            return await countries.GetAllAsync(cancellationToken);
+        }
+
+        async Task ILocationRequestsHandler.AddCountryAsync(AddCountryRequest request, CancellationToken cancellationToken)
         {
             if (await countries.FindByName(request.CountryName, cancellationToken) is not null)
             {
@@ -21,6 +26,7 @@ namespace ApplicationLayer.Services.Locations.RequestHandlers.AdminRequests
                 throw new MultipleIdenticalCitiesInCountryException();
             }
 
+            //todo mapper
             var country = new Country
             {
                 Name = request.CountryName,

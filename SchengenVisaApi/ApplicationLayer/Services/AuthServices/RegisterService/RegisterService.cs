@@ -18,6 +18,7 @@ namespace ApplicationLayer.Services.AuthServices.RegisterService
     {
         async Task IRegisterService.Register(RegisterApplicantRequest request, CancellationToken cancellationToken)
         {
+            //todo move to validation layer
             if (await users.FindByEmailAsync(request.Email, cancellationToken) is not null)
             {
                 throw new UserAlreadyExistsException(request);
@@ -38,9 +39,7 @@ namespace ApplicationLayer.Services.AuthServices.RegisterService
 
             var placeOfWork = new PlaceOfWork
             {
-                Name = request.PlaceOfWork.Name,
-                Address = placeOfWorkAddress,
-                PhoneNum = request.PlaceOfWork.PhoneNum
+                Name = request.PlaceOfWork.Name, Address = placeOfWorkAddress, PhoneNum = request.PlaceOfWork.PhoneNum
             };
 
             var applicant = new Applicant
@@ -64,6 +63,22 @@ namespace ApplicationLayer.Services.AuthServices.RegisterService
 
             await users.AddAsync(user, cancellationToken);
             await applicants.AddAsync(applicant, cancellationToken);
+
+            await unitOfWork.SaveAsync(cancellationToken);
+        }
+
+        async Task IRegisterService.RegisterAuthority(RegisterRequest request, CancellationToken cancellationToken)
+        {
+            //todo move to validation layer
+            if (await users.FindByEmailAsync(request.Email, cancellationToken) is not null)
+            {
+                throw new UserAlreadyExistsException(request);
+            }
+
+            //TODO mapper
+            var user = new User { Email = request.Email, Password = request.Password, Role = Role.ApprovingAuthority };
+
+            await users.AddAsync(user, cancellationToken);
 
             await unitOfWork.SaveAsync(cancellationToken);
         }

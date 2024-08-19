@@ -18,5 +18,5 @@ namespace ApplicationLayer.Services.AuthServices.Requests
         Name MotherName,
         string JobTitle,
         PlaceOfWorkModel PlaceOfWork,
-        bool IsNonResident);
+        bool IsNonResident) : RegisterRequest(Email, Password);
 }
