@@ -1,6 +1,0 @@
-﻿using ApplicationLayer.GeneralNeededServices;
-using Domains.VisaApplicationDomain;
-
-namespace ApplicationLayer.DataAccessingServices.VisaApplications.NeededServices;
-
-public interface IVisaApplicationsRepository : IGenericRepository<VisaApplication>;

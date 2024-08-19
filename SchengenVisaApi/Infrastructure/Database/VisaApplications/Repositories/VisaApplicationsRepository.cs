@@ -1,4 +1,4 @@
-﻿using ApplicationLayer.DataAccessingServices.VisaApplications.NeededServices;
+﻿using ApplicationLayer.Services.VisaApplications.NeededServices;
 using Domains.VisaApplicationDomain;
 using Infrastructure.Database.Generic;
 using Microsoft.EntityFrameworkCore;

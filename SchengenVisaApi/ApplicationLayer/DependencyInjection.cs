@@ -1,8 +1,8 @@
-﻿using ApplicationLayer.DataAccessingServices.AuthServices.LoginService;
-using ApplicationLayer.DataAccessingServices.AuthServices.RegisterService;
-using ApplicationLayer.DataAccessingServices.Locations.RequestHandlers.AdminRequests;
-using ApplicationLayer.DataAccessingServices.Locations.RequestHandlers.ApplicantRequests;
-using ApplicationLayer.DataAccessingServices.VisaApplications.Handlers;
+﻿using ApplicationLayer.Services.AuthServices.LoginService;
+using ApplicationLayer.Services.AuthServices.RegisterService;
+using ApplicationLayer.Services.Locations.RequestHandlers.AdminRequests;
+using ApplicationLayer.Services.Locations.RequestHandlers.ApplicantRequests;
+using ApplicationLayer.Services.VisaApplications.Handlers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ApplicationLayer;

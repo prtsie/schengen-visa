@@ -1,6 +1,6 @@
-﻿using ApplicationLayer.DataAccessingServices.AuthServices.LoginService;
-using ApplicationLayer.DataAccessingServices.AuthServices.RegisterService;
-using ApplicationLayer.DataAccessingServices.AuthServices.Requests;
+﻿using ApplicationLayer.Services.AuthServices.LoginService;
+using ApplicationLayer.Services.AuthServices.RegisterService;
+using ApplicationLayer.Services.AuthServices.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SchengenVisaApi.Controllers

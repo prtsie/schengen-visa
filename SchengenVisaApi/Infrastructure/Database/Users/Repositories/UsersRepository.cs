@@ -1,4 +1,4 @@
-﻿using ApplicationLayer.DataAccessingServices.AuthServices.NeededServices;
+﻿using ApplicationLayer.Services.AuthServices.NeededServices;
 using Domains.Users;
 using Infrastructure.Database.Generic;
 using Microsoft.EntityFrameworkCore;

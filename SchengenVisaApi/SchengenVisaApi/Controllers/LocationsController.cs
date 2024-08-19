@@ -1,4 +1,4 @@
-﻿using ApplicationLayer.DataAccessingServices.Locations.RequestHandlers.ApplicantRequests;
+﻿using ApplicationLayer.Services.Locations.RequestHandlers.ApplicantRequests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SchengenVisaApi.Controllers

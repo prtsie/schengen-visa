@@ -1,6 +1,6 @@
 using System.Security.Claims;
-using ApplicationLayer.DataAccessingServices.VisaApplications.Handlers;
-using ApplicationLayer.DataAccessingServices.VisaApplications.Requests;
+using ApplicationLayer.Services.VisaApplications.Handlers;
+using ApplicationLayer.Services.VisaApplications.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SchengenVisaApi.Common;

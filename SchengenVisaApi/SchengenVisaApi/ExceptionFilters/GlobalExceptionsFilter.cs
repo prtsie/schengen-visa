@@ -1,6 +1,6 @@
-﻿using ApplicationLayer.DataAccessingServices.AuthServices.LoginService.Exceptions;
-using ApplicationLayer.DataAccessingServices.Locations.RequestHandlers.AdminRequests.Exceptions;
-using ApplicationLayer.GeneralExceptions;
+﻿using ApplicationLayer.GeneralExceptions;
+using ApplicationLayer.Services.AuthServices.LoginService.Exceptions;
+using ApplicationLayer.Services.Locations.RequestHandlers.AdminRequests.Exceptions;
 using Domains;
 using Infrastructure.Database.GeneralExceptions;
 using Microsoft.AspNetCore.Mvc;

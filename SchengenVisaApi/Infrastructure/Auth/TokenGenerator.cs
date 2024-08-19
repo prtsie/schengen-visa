@@ -1,7 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using ApplicationLayer.DataAccessingServices.AuthServices.NeededServices;
 using ApplicationLayer.GeneralNeededServices;
+using ApplicationLayer.Services.AuthServices.NeededServices;
 using Domains.Users;
 
 namespace Infrastructure.Auth

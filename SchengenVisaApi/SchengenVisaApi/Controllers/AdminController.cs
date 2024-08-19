@@ -1,5 +1,5 @@
-﻿using ApplicationLayer.DataAccessingServices.Locations.RequestHandlers.AdminRequests;
-using ApplicationLayer.DataAccessingServices.Locations.Requests;
+﻿using ApplicationLayer.Services.Locations.RequestHandlers.AdminRequests;
+using ApplicationLayer.Services.Locations.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SchengenVisaApi.Common;
@@ -14,6 +14,14 @@ namespace SchengenVisaApi.Controllers
         [HttpPost]
         [Route("country")]
         public async Task<IActionResult> AddCountry(AddCountryRequest request, CancellationToken cancellationToken)
+        {
+            await requestsHandler.AddCountryAsync(request, cancellationToken);
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("authorities")]
+        public async Task<IActionResult> AddAuthority(AddCountryRequest request, CancellationToken cancellationToken)
         {
             await requestsHandler.AddCountryAsync(request, cancellationToken);
             return Ok();

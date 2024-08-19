@@ -1,4 +1,4 @@
-﻿using ApplicationLayer.DataAccessingServices.Applicants.NeededServices;
+﻿using ApplicationLayer.Services.Applicants.NeededServices;
 using Domains.ApplicantDomain;
 using Infrastructure.Database.Applicants.Repositories.Exceptions;
 using Infrastructure.Database.Generic;

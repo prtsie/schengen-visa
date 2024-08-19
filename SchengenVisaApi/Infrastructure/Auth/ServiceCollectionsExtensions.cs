@@ -1,6 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
-using ApplicationLayer.DataAccessingServices.AuthServices.NeededServices;
 using ApplicationLayer.GeneralNeededServices;
+using ApplicationLayer.Services.AuthServices.NeededServices;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.Auth
