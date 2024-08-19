@@ -27,7 +27,7 @@ public static class DependencyInjection
     {
         var databaseName = isDevelopment ? "developmentDB" : "normal'naya database";
 
-        services.AddDbContextFactory<DbContext>(opts =>
+        services.AddDbContext<DbContext>(opts =>
             opts.UseSqlServer(configurationManager.GetConnectionString(databaseName)));
 
         services.AddScoped<IGenericReader>(serviceProvider => serviceProvider.GetRequiredService<DbContext>());

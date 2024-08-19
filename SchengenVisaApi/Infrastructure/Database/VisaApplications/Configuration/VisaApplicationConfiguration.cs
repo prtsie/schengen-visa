@@ -10,8 +10,8 @@ public class VisaApplicationConfiguration : IEntityTypeConfiguration<VisaApplica
     {
         entity.OwnsOne(va => va.ReentryPermit, ReentryPermitConfiguration<VisaApplication>.Configure);
         entity.OwnsOne(va => va.PermissionToDestCountry, PermissionToDestCountryConfiguration<VisaApplication>.Configure);
-        entity.OwnsMany(va => va.PastVisits, PastVisitConfiguration<VisaApplication>.Configure).ToTable("PastVisits");
-        entity.OwnsMany(va => va.PastVisas).ToTable("PastVisas");
+        entity.OwnsMany(va => va.PastVisits, PastVisitConfiguration<VisaApplication>.Configure);
+        entity.OwnsMany(va => va.PastVisas);
 
         entity.HasOne(va => va.DestinationCountry).WithMany().OnDelete(DeleteBehavior.Restrict);
 
