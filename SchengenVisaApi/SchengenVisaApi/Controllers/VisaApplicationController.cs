@@ -19,11 +19,24 @@ public class VisaApplicationController(IVisaApplicationRequestsHandler visaAppli
         return Ok(result);
     }
 
+    [HttpGet]
+    [Authorize(policy: PolicyConstants.ApplicantPolicy)]
+    [Route("OfApplicant")]
+    public async Task<IActionResult> GetForApplicant(CancellationToken cancellationToken)
+    {
+        var userId = GetUserId();
+        var result = await visaApplicationRequestsHandler.GetForApplicant(userId, cancellationToken);
+        return Ok(result);
+    }
+
     [HttpPost]
     [Authorize(policy: PolicyConstants.ApplicantPolicy)]
-    public void Create(VisaApplicationCreateRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Create(VisaApplicationCreateRequest request, CancellationToken cancellationToken)
     {
-        var userId = Guid.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
-        visaApplicationRequestsHandler.HandleCreateRequest(userId, request, cancellationToken);
+        var userId = GetUserId();
+        await visaApplicationRequestsHandler.HandleCreateRequest(userId, request, cancellationToken);
+        return Created();
     }
+
+    private Guid GetUserId() => Guid.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
 }

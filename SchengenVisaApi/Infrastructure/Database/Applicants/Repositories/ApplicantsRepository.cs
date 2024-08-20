@@ -25,4 +25,10 @@ public sealed class ApplicantsRepository(IGenericReader reader, IGenericWriter w
         var result = await LoadDomain().SingleOrDefaultAsync(a => a.UserId == userId, cancellationToken);
         return result ?? throw new ApplicantNotFoundByUserIdException(userId);
     }
+
+    async Task<Guid> IApplicantsRepository.GetApplicantIdByUserId(Guid userId, CancellationToken cancellationToken)
+    {
+        var result = await base.LoadDomain().SingleOrDefaultAsync(a => a.UserId == userId, cancellationToken);
+        return result?.Id ?? throw new ApplicantNotFoundByUserIdException(userId);
+    }
 }

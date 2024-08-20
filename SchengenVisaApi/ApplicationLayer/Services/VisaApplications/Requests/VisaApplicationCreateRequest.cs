@@ -13,5 +13,5 @@ public record VisaApplicationCreateRequest(
     int ValidDaysRequested,
     PastVisa[] PastVisas,
     PermissionToDestCountry? PermissionToDestCountry,
-    PastVisitModel[] PastVisits
+    PastVisitModelForRequest[] PastVisits
 );

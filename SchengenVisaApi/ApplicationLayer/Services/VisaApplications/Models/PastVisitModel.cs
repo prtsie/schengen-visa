@@ -1,14 +1,18 @@
-﻿namespace ApplicationLayer.Services.VisaApplications.Models
+﻿using Domains.LocationDomain;
+using Domains.VisaApplicationDomain;
+
+namespace ApplicationLayer.Services.VisaApplications.Models
 {
+    /// Model of <see cref="PastVisit"/> with only name of the destination country
     public class PastVisitModel
     {
-        /// First day of <see cref="PastVisitModel"/>
+        /// <inheritdoc cref="PastVisit.StartDate"/>
         public DateTime StartDate { get; set; }
 
-        /// Last day of <see cref="PastVisitModel"/>
+        /// <inheritdoc cref="PastVisit.EndDate"/>
         public DateTime EndDate { get; set; }
 
-        /// Identifier of destination country of <see cref="PastVisitModel"/>
-        public Guid DestinationCountryId { get; set; }
+        /// <inheritdoc cref="PastVisit.DestinationCountry"/>
+        public string DestinationCountry { get; set; } = null!;
     }
 }
