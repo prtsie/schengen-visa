@@ -1,4 +1,4 @@
-﻿using ApplicationLayer.GeneralNeededServices;
+﻿using ApplicationLayer.InfrastructureServicesInterfaces;
 using Domains.Users;
 
 namespace ApplicationLayer.Services.AuthServices.NeededServices

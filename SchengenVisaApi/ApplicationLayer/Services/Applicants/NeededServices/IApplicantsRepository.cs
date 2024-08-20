@@ -1,4 +1,4 @@
-﻿using ApplicationLayer.GeneralNeededServices;
+﻿using ApplicationLayer.InfrastructureServicesInterfaces;
 using Domains.ApplicantDomain;
 
 namespace ApplicationLayer.Services.Applicants.NeededServices;

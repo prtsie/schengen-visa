@@ -1,6 +1,6 @@
 ﻿using Domains;
 
-namespace ApplicationLayer.GeneralNeededServices;
+namespace ApplicationLayer.InfrastructureServicesInterfaces;
 
 /// <summary>
 /// Generic repository pattern

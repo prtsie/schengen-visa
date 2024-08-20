@@ -1,4 +1,4 @@
-﻿namespace ApplicationLayer.GeneralNeededServices;
+﻿namespace ApplicationLayer.InfrastructureServicesInterfaces;
 
 public interface IUnitOfWork
 {

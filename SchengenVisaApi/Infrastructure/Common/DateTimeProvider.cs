@@ -1,4 +1,4 @@
-﻿using ApplicationLayer.GeneralNeededServices;
+﻿using ApplicationLayer.InfrastructureServicesInterfaces;
 
 namespace Infrastructure.Common
 {

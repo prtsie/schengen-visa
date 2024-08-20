@@ -1,4 +1,4 @@
-﻿using ApplicationLayer.GeneralNeededServices;
+﻿using ApplicationLayer.InfrastructureServicesInterfaces;
 using Domains;
 
 namespace Infrastructure.Database.Generic;

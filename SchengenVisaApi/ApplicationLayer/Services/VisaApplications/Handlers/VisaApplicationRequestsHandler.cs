@@ -1,4 +1,4 @@
-﻿using ApplicationLayer.GeneralNeededServices;
+﻿using ApplicationLayer.InfrastructureServicesInterfaces;
 using ApplicationLayer.Services.Applicants.NeededServices;
 using ApplicationLayer.Services.Locations.NeededServices;
 using ApplicationLayer.Services.VisaApplications.Models;

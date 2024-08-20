@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using ApplicationLayer.GeneralNeededServices;
+using ApplicationLayer.InfrastructureServicesInterfaces;
 using Infrastructure.Database.Generic;
 using Microsoft.EntityFrameworkCore;
 

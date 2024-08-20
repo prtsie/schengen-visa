@@ -1,5 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
-using ApplicationLayer.GeneralNeededServices;
+using ApplicationLayer.InfrastructureServicesInterfaces;
 using ApplicationLayer.Services.AuthServices.NeededServices;
 using Microsoft.Extensions.DependencyInjection;
 
