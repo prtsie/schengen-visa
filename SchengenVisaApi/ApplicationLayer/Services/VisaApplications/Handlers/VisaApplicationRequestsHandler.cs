@@ -40,7 +40,6 @@ public class VisaApplicationRequestsHandler(
 
     public async Task HandleCreateRequest(Guid userId, VisaApplicationCreateRequest request, CancellationToken cancellationToken)
     {
-        //TODO fix
         //TODO mapper
 
         var applicant = await applicants.FindByUserIdAsync(userId, cancellationToken);
