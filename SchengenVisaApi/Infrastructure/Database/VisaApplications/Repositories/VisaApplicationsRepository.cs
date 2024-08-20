@@ -9,10 +9,12 @@ public sealed class VisaApplicationsRepository(IGenericReader reader, IGenericWr
     : GenericRepository<VisaApplication>(reader, writer), IVisaApplicationsRepository
 {
     protected override IQueryable<VisaApplication> LoadDomain()
-    {
-        return base.LoadDomain()
-            .Include(a => a.DestinationCountry)
-            .Include(a => a.PastVisas)
-            .Include(a => a.PastVisits);
-    }
+        => base.LoadDomain()
+            .Include(va => va.DestinationCountry)
+            .Include(va => va.PastVisas)
+            .Include(va => va.PastVisits);
+
+
+    async Task<List<VisaApplication>> IVisaApplicationsRepository.GetOfApplicantAsync(Guid applicantId, CancellationToken cancellationToken)
+        => await LoadDomain().Where(va => va.ApplicantId == applicantId).ToListAsync(cancellationToken);
 }
