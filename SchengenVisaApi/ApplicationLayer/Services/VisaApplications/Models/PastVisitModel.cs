@@ -1,5 +1,4 @@
-﻿using Domains.LocationDomain;
-using Domains.VisaApplicationDomain;
+﻿using Domains.VisaApplicationDomain;
 
 namespace ApplicationLayer.Services.VisaApplications.Models
 {

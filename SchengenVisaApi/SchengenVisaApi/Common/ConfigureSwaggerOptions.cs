@@ -4,6 +4,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace SchengenVisaApi.Common
 {
+    /// Adds auth for swagger
     public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
     {
         void IConfigureOptions<SwaggerGenOptions>.Configure(SwaggerGenOptions options)
