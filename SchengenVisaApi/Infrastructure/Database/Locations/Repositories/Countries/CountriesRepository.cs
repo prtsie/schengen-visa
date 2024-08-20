@@ -13,9 +13,15 @@ public sealed class CountriesRepository(IGenericReader reader, IGenericWriter wr
         return base.LoadDomain().Include(c => c.Cities);
     }
 
-    async Task<Country?> ICountriesRepository.FindByName(string countryName, CancellationToken cancellationToken)
+    async Task<Country?> ICountriesRepository.FindByNameAsync(string countryName, CancellationToken cancellationToken)
     {
         var result = await LoadDomain().SingleOrDefaultAsync(c => c.Name == countryName, cancellationToken);
+        return result;
+    }
+
+    async Task<Country?> ICountriesRepository.FindByIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var result = await LoadDomain().SingleOrDefaultAsync(c => c.Id == id, cancellationToken);
         return result;
     }
 }

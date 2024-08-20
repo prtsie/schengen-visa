@@ -12,4 +12,7 @@ public sealed class CitiesRepository(IGenericReader reader, IGenericWriter write
     {
         return base.LoadDomain().Include(c => c.Country);
     }
+
+    Task<City?> ICitiesRepository.GetByNameAsync(Guid countryId, string cityName, CancellationToken cancellationToken)
+        => LoadDomain().SingleOrDefaultAsync(c => c.Country.Id == countryId && c.Name == cityName, cancellationToken);
 }

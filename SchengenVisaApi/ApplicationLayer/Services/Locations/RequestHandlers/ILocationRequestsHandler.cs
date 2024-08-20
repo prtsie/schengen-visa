@@ -10,7 +10,10 @@ namespace ApplicationLayer.Services.Locations.RequestHandlers
         /// <returns>List of available countries</returns>
         Task<List<Country>> HandleGetRequestAsync(CancellationToken cancellationToken);
 
-        /// Handles add country requests
+        /// Handles <see cref="AddCountryRequest"/>
         Task AddCountryAsync(AddCountryRequest request, CancellationToken cancellationToken);
+
+        /// Handles <see cref="UpdateCountryRequest"/>
+        Task UpdateCountryAsync(UpdateCountryRequest request, CancellationToken cancellationToken);
     }
 }

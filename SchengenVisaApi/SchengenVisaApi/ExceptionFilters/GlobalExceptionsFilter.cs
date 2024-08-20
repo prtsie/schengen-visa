@@ -42,6 +42,11 @@ namespace SchengenVisaApi.ExceptionFilters
                         problemDetails.Title = "Can not add cities with one name to one country";
                         problemDetails.Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1";
                         break;
+                    case EntityUsedInDatabaseException:
+                        problemDetails.Status = StatusCodes.Status409Conflict;
+                        problemDetails.Title = "entity is used by someone";
+                        problemDetails.Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.8";
+                        break;
                     default:
                         problemDetails.Status = StatusCodes.Status400BadRequest;
                         problemDetails.Title = "Bad request";

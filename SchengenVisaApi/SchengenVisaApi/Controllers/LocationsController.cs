@@ -10,7 +10,7 @@ namespace SchengenVisaApi.Controllers
 {
     /// Controller for <see cref="Domains.LocationDomain"/>
     [ApiController]
-    [Route("countries")]
+    [Route("locations")]
     public class LocationsController(ILocationRequestsHandler requestsHandler) : ControllerBase
     {
         /// Return countries with cities from DB
@@ -33,6 +33,20 @@ namespace SchengenVisaApi.Controllers
         public async Task<IActionResult> AddCountry(AddCountryRequest request, CancellationToken cancellationToken)
         {
             await requestsHandler.AddCountryAsync(request, cancellationToken);
+            return Ok();
+        }
+
+        /// Updates country with cities in DB
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Route("country")]
+        [Authorize(policy: PolicyConstants.AdminPolicy)]
+        public async Task<IActionResult> UpdateCountry(UpdateCountryRequest request, CancellationToken cancellationToken)
+        {
+            await requestsHandler.UpdateCountryAsync(request, cancellationToken);
             return Ok();
         }
     }
