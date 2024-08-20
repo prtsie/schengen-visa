@@ -48,7 +48,7 @@ public class VisaApplicationController(IVisaApplicationRequestsHandler visaAppli
     /// Adds new <see cref="VisaApplication"/> to DB
     /// <remarks>Adds application for authorized applicant</remarks>
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -57,7 +57,7 @@ public class VisaApplicationController(IVisaApplicationRequestsHandler visaAppli
     {
         var userId = GetUserId();
         await visaApplicationRequestsHandler.HandleCreateRequest(userId, request, cancellationToken);
-        return Created();
+        return Ok();
     }
 
     private Guid GetUserId() => Guid.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);

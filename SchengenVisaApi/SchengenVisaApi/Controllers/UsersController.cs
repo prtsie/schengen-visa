@@ -15,19 +15,19 @@ namespace SchengenVisaApi.Controllers
     {
         /// Adds applicant with user account to DB
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [Route("applicant")]
         public async Task<IActionResult> Register(RegisterApplicantRequest request, CancellationToken cancellationToken)
         {
             await registerService.Register(request, cancellationToken);
-            return Created();
+            return Ok();
         }
 
         /// Adds approving authority with user account to DB
         /// <remarks>Accessible only for <see cref="Role.Admin"/></remarks>
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -36,7 +36,7 @@ namespace SchengenVisaApi.Controllers
         public async Task<IActionResult> RegisterAuthority(RegisterRequest request, CancellationToken cancellationToken)
         {
             await registerService.RegisterAuthority(request, cancellationToken);
-            return Created();
+            return Ok();
         }
 
         /// Returns JWT-token for authentication

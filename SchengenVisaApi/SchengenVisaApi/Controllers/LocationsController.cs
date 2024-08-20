@@ -24,7 +24,7 @@ namespace SchengenVisaApi.Controllers
         /// Adds country with cities to DB
         /// <remarks>Accessible only for <see cref="Role.Admin"/></remarks>
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -33,7 +33,7 @@ namespace SchengenVisaApi.Controllers
         public async Task<IActionResult> AddCountry(AddCountryRequest request, CancellationToken cancellationToken)
         {
             await requestsHandler.AddCountryAsync(request, cancellationToken);
-            return Created();
+            return Ok();
         }
     }
 }
