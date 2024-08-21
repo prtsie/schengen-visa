@@ -1,7 +1,7 @@
 ﻿using ApplicationLayer.GeneralExceptions;
 using Domains;
 
-namespace Infrastructure.Database.GeneralExceptions;
+namespace ApplicationLayer.Services.GeneralExceptions;
 
 /// Exception to throw when entity not found
 /// <typeparam name="T">Not found entity type</typeparam>

@@ -1,4 +1,4 @@
-﻿using Infrastructure.Database.GeneralExceptions;
+﻿using ApplicationLayer.Services.GeneralExceptions;
 
 namespace ApplicationLayer.Services.Locations.RequestHandlers.Exceptions
 {

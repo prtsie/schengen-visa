@@ -1,5 +1,5 @@
-﻿using Domains.LocationDomain;
-using Infrastructure.Database.GeneralExceptions;
+﻿using ApplicationLayer.Services.GeneralExceptions;
+using Domains.LocationDomain;
 
 namespace ApplicationLayer.Services.Locations.RequestHandlers.Exceptions
 {

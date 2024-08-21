@@ -1,6 +1,6 @@
 ﻿using ApplicationLayer.InfrastructureServicesInterfaces;
+using ApplicationLayer.Services.GeneralExceptions;
 using Domains;
-using Infrastructure.Database.GeneralExceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database.Generic;

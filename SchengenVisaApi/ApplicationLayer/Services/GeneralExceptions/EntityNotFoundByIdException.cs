@@ -1,6 +1,6 @@
 ﻿using Domains;
 
-namespace Infrastructure.Database.GeneralExceptions;
+namespace ApplicationLayer.Services.GeneralExceptions;
 
 /// Exception to throw when entity not found
 /// <param name="id">Identifier of entity</param>

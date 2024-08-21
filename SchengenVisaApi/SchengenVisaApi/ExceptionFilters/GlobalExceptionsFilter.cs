@@ -1,8 +1,8 @@
 ﻿using ApplicationLayer.GeneralExceptions;
 using ApplicationLayer.Services.AuthServices.LoginService.Exceptions;
+using ApplicationLayer.Services.GeneralExceptions;
 using ApplicationLayer.Services.Locations.RequestHandlers.Exceptions;
 using Domains;
-using Infrastructure.Database.GeneralExceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 

@@ -1,5 +1,5 @@
-﻿using Domains.ApplicantDomain;
-using Infrastructure.Database.GeneralExceptions;
+﻿using ApplicationLayer.Services.GeneralExceptions;
+using Domains.ApplicantDomain;
 
 namespace Infrastructure.Database.Applicants.Repositories.Exceptions
 {
