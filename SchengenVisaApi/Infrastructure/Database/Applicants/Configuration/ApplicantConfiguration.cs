@@ -9,21 +9,27 @@ public class ApplicantConfiguration : IEntityTypeConfiguration<Applicant>
 {
     public void Configure(EntityTypeBuilder<Applicant> entity)
     {
-        entity.OwnsOne(p => p.Name, NameConfiguration<Applicant>.Configure);
-        entity.OwnsOne(p => p.FatherName, NameConfiguration<Applicant>.Configure);
-        entity.OwnsOne(p => p.MotherName, NameConfiguration<Applicant>.Configure);
-        entity.OwnsOne(p => p.Passport, PassportConfiguration<Applicant>.Configure);
+        entity.OwnsOne(a => a.Name, NameConfiguration<Applicant>.Configure);
+        entity.OwnsOne(a => a.FatherName, NameConfiguration<Applicant>.Configure);
+        entity.OwnsOne(a => a.MotherName, NameConfiguration<Applicant>.Configure);
+        entity.OwnsOne(a => a.Passport, PassportConfiguration<Applicant>.Configure);
 
-        entity.HasOne(a => a.CityOfBirth).WithMany().OnDelete(DeleteBehavior.Restrict);
-        entity.HasOne(a => a.CountryOfBirth).WithMany().OnDelete(DeleteBehavior.Restrict);
         entity.HasOne<User>().WithOne().HasForeignKey<Applicant>(a => a.UserId);
 
-        entity.Property(p => p.Citizenship)
+        entity.Property(a => a.Citizenship)
             .IsUnicode(false)
-            .HasMaxLength(30);
+            .HasMaxLength(ConfigurationConstraints.CitizenshipLength);
 
-        entity.Property(p => p.CitizenshipByBirth)
+        entity.Property(a => a.CitizenshipByBirth)
             .IsUnicode(false)
-            .HasMaxLength(30);
+            .HasMaxLength(ConfigurationConstraints.CitizenshipLength);
+
+        entity.Property(a => a.CountryOfBirth)
+            .IsUnicode(false)
+            .HasMaxLength(ConfigurationConstraints.CountryNameLength);
+
+        entity.Property(a => a.CityOfBirth)
+            .IsUnicode(false)
+            .HasMaxLength(ConfigurationConstraints.CityNameLength);
     }
 }

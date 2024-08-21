@@ -12,10 +12,10 @@ public class PlaceOfWorkConfiguration : IEntityTypeConfiguration<PlaceOfWork>
 
         entity.Property(p => p.Name)
             .IsUnicode(false)
-            .HasMaxLength(200);
+            .HasMaxLength(ConfigurationConstraints.PlaceOfWorkNameLength);
 
         entity.Property(p => p.PhoneNum)
             .IsUnicode(false)
-            .HasMaxLength(20);
+            .HasMaxLength(ConfigurationConstraints.PhoneNumberLength);
     }
 }

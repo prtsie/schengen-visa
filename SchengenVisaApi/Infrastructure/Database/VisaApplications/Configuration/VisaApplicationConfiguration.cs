@@ -1,4 +1,5 @@
-﻿using Domains.VisaApplicationDomain;
+﻿using Domains.ApplicantDomain;
+using Domains.VisaApplicationDomain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -11,11 +12,13 @@ public class VisaApplicationConfiguration : IEntityTypeConfiguration<VisaApplica
         entity.OwnsOne(va => va.ReentryPermit, ReentryPermitConfiguration<VisaApplication>.Configure);
         entity.OwnsOne(va => va.PermissionToDestCountry, PermissionToDestCountryConfiguration<VisaApplication>.Configure);
         entity.OwnsMany(va => va.PastVisits, PastVisitConfiguration<VisaApplication>.Configure);
-        entity.OwnsMany(va => va.PastVisas);
+        entity.OwnsMany(va => va.PastVisas, PastVisaConfiguration<VisaApplication>.Configure);
 
-        entity.HasOne(va => va.DestinationCountry).WithMany().OnDelete(DeleteBehavior.Restrict);
+        entity.Property(va => va.DestinationCountry)
+            .IsUnicode(false)
+            .HasMaxLength(ConfigurationConstraints.CountryNameLength);
 
-        entity.HasOne(va => va.Applicant)
+        entity.HasOne<Applicant>()
             .WithMany()
             .HasForeignKey(va => va.ApplicantId)
             .IsRequired();

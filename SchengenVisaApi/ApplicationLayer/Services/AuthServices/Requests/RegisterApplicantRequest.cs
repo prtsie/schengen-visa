@@ -1,5 +1,4 @@
-﻿using ApplicationLayer.Services.Applicants.Models;
-using Domains.ApplicantDomain;
+﻿using Domains.ApplicantDomain;
 
 namespace ApplicationLayer.Services.AuthServices.Requests
 {
@@ -9,7 +8,8 @@ namespace ApplicationLayer.Services.AuthServices.Requests
         Name ApplicantName,
         Passport Passport,
         DateTime BirthDate,
-        Guid CityOfBirthId,
+        string CityOfBirth,
+        string CountryOfBirth,
         string Citizenship,
         string CitizenshipByBirth,
         Gender Gender,
@@ -17,6 +17,6 @@ namespace ApplicationLayer.Services.AuthServices.Requests
         Name FatherName,
         Name MotherName,
         string JobTitle,
-        PlaceOfWorkModel PlaceOfWork,
+        PlaceOfWork PlaceOfWork,
         bool IsNonResident) : RegisterRequest(Email, Password);
 }

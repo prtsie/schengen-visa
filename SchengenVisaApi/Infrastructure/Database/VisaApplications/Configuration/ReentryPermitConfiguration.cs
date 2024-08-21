@@ -10,6 +10,6 @@ public static class ReentryPermitConfiguration<T> where T : class, IEntity
     {
         entity.Property(p => p.Number)
             .IsUnicode(false)
-            .HasMaxLength(25);
+            .HasMaxLength(ConfigurationConstraints.ReentryPermitNumberLength);
     }
 }

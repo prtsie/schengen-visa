@@ -1,5 +1,4 @@
 ﻿using Domains.ApplicantDomain;
-using Domains.LocationDomain;
 
 namespace Domains.VisaApplicationDomain;
 
@@ -12,15 +11,12 @@ public class VisaApplication : IEntity
     /// Identifier of the <see cref="Applicant"/>
     public Guid ApplicantId { get; set; }
 
-    /// Applicant of <see cref="VisaApplication"/>
-    public Applicant Applicant { get; set; } = null!;
-
     /// <inheritdoc cref="Domains.VisaApplicationDomain.ReentryPermit"/>
     /// <remarks>always null if <see cref="Applicant"/> is not a non-resident</remarks>
     public ReentryPermit? ReentryPermit { get; set; }
 
-    /// <see cref="Country"/> that <see cref="Applicant"/> wants to visit
-    public Country DestinationCountry { get; set; } = null!;
+    /// Country that <see cref="Applicant"/> wants to visit
+    public string DestinationCountry { get; set; } = null!;
 
     /// <summary>
     /// List of <see cref="PastVisa"/> that applicant had before

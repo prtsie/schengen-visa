@@ -10,14 +10,14 @@ public static class NameConfiguration<T> where T : class, IEntity
     {
         entity.Property(p => p.FirstName)
             .IsUnicode(false)
-            .HasMaxLength(50);
+            .HasMaxLength(ConfigurationConstraints.NameLength);
 
         entity.Property(p => p.Surname)
             .IsUnicode(false)
-            .HasMaxLength(50);
+            .HasMaxLength(ConfigurationConstraints.NameLength);
 
         entity.Property(p => p.Patronymic)
             .IsUnicode(false)
-            .HasMaxLength(50);
+            .HasMaxLength(ConfigurationConstraints.NameLength);
     }
 }

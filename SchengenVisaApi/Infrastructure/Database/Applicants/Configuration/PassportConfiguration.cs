@@ -10,10 +10,10 @@ public static class PassportConfiguration<T> where T : class, IEntity
     {
         entity.Property(p => p.Number)
             .IsUnicode(false)
-            .HasMaxLength(20);
+            .HasMaxLength(ConfigurationConstraints.PassportNumberLength);
 
         entity.Property(p => p.Issuer)
             .IsUnicode(false)
-            .HasMaxLength(200);
+            .HasMaxLength(ConfigurationConstraints.IssuerNameLength);
     }
 }

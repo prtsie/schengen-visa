@@ -1,13 +1,10 @@
 ﻿using ApplicationLayer.InfrastructureServicesInterfaces;
 using ApplicationLayer.Services.Applicants.NeededServices;
 using ApplicationLayer.Services.AuthServices.NeededServices;
-using ApplicationLayer.Services.Locations.NeededServices;
 using ApplicationLayer.Services.VisaApplications.NeededServices;
 using Infrastructure.Common;
 using Infrastructure.Database.Applicants.Repositories;
 using Infrastructure.Database.Generic;
-using Infrastructure.Database.Locations.Repositories.Cities;
-using Infrastructure.Database.Locations.Repositories.Countries;
 using Infrastructure.Database.Users.Repositories;
 using Infrastructure.Database.VisaApplications.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -36,8 +33,6 @@ public static class DependencyInjection
 
         services.AddScoped<IApplicantsRepository, ApplicantsRepository>();
         services.AddScoped<IVisaApplicationsRepository, VisaApplicationsRepository>();
-        services.AddScoped<ICitiesRepository, CitiesRepository>();
-        services.AddScoped<ICountriesRepository, CountriesRepository>();
         services.AddScoped<IUsersRepository, UsersRepository>();
 
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();

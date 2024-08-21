@@ -10,13 +10,13 @@ namespace Infrastructure.Database.Users.Configuration
         {
             entity.Property(u => u.Email)
                 .IsUnicode(false)
-                .HasMaxLength(254);
+                .HasMaxLength(ConfigurationConstraints.EmailLength);
 
             entity.HasIndex(u => u.Email).IsUnique();
 
             entity.Property(u => u.Password)
                 .IsUnicode(false)
-                .HasMaxLength(50);
+                .HasMaxLength(ConfigurationConstraints.PasswordLength);
         }
     }
 }

@@ -2,7 +2,6 @@ using System.Security.Claims;
 using ApplicationLayer.Services.VisaApplications.Handlers;
 using ApplicationLayer.Services.VisaApplications.Models;
 using ApplicationLayer.Services.VisaApplications.Requests;
-using Domains.Users;
 using Domains.VisaApplicationDomain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,14 +9,14 @@ using SchengenVisaApi.Common;
 
 namespace SchengenVisaApi.Controllers;
 
-/// Controller for <see cref="Domains.VisaApplicationDomain"/>
+/// <summary> Controller for <see cref="Domains.VisaApplicationDomain"/> </summary>
 [ApiController]
 [Route("[controller]")]
 public class VisaApplicationController(IVisaApplicationRequestsHandler visaApplicationRequestsHandler) : ControllerBase
 {
     //todo should return only pending applications
-    /// Returns all <see cref="Domains.VisaApplicationDomain.VisaApplication"/> from DB
-    /// <remarks>Accessible only for <see cref="Role.ApprovingAuthority"/></remarks>
+    /// <summary> Returns all applications from DB </summary>
+    /// <remarks> Accessible only for approving authorities </remarks>
     [HttpGet]
     [ProducesResponseType<List<VisaApplication>>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -29,8 +28,8 @@ public class VisaApplicationController(IVisaApplicationRequestsHandler visaAppli
         return Ok(result);
     }
 
-    /// Returns all <see cref="VisaApplication"/> of one applicant
-    /// <remarks>Returns applications for authorized applicant</remarks>
+    /// <summary> Returns all applications of one applicant </summary>
+    /// <remarks> Returns applications of authorized applicant </remarks>
     [HttpGet]
     [ProducesResponseType<List<VisaApplicationModelForApplicant>>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -45,8 +44,8 @@ public class VisaApplicationController(IVisaApplicationRequestsHandler visaAppli
         return Ok(result);
     }
 
-    /// Adds new <see cref="VisaApplication"/> to DB
-    /// <remarks>Adds application for authorized applicant</remarks>
+    /// <summary> Adds new application to DB </summary>
+    /// <remarks> Adds application for authorized applicant </remarks>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]

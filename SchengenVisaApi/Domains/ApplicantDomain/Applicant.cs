@@ -1,6 +1,4 @@
-﻿using Domains.LocationDomain;
-
-namespace Domains.ApplicantDomain;
+﻿namespace Domains.ApplicantDomain;
 
 /// Model of an applicant
 public class Applicant : IEntity
@@ -19,11 +17,11 @@ public class Applicant : IEntity
     /// Date of birth of the <see cref="Applicant"/>
     public DateTime BirthDate { get; set; }
 
-    /// <see cref="Country"/> of birth of the <see cref="Applicant"/>
-    public Country CountryOfBirth { get; set; } = null!;
+    /// Country of birth of the <see cref="Applicant"/>
+    public string CountryOfBirth { get; set; } = null!;
 
-    /// <see cref="City"/> of birth of the <see cref="Applicant"/>
-    public City CityOfBirth { get; set; } = null!;
+    /// City of birth of the <see cref="Applicant"/>
+    public string CityOfBirth { get; set; } = null!;
 
     /// Citizenship of <see cref="Applicant"/>
     public string Citizenship { get; set; } = null!;

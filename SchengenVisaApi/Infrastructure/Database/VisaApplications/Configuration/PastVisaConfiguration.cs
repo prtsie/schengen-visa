@@ -10,6 +10,6 @@ public static class PastVisaConfiguration<T> where T : class, IEntity
     {
         entity.Property(p => p.Name)
             .IsUnicode(false)
-            .HasMaxLength(70);
+            .HasMaxLength(ConfigurationConstraints.VisaNameLength);
     }
 }

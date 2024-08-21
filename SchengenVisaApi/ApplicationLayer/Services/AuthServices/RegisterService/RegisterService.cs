@@ -3,7 +3,6 @@ using ApplicationLayer.Services.Applicants.NeededServices;
 using ApplicationLayer.Services.AuthServices.NeededServices;
 using ApplicationLayer.Services.AuthServices.RegisterService.Exceptions;
 using ApplicationLayer.Services.AuthServices.Requests;
-using ApplicationLayer.Services.Locations.NeededServices;
 using Domains.ApplicantDomain;
 using Domains.Users;
 
@@ -13,7 +12,6 @@ namespace ApplicationLayer.Services.AuthServices.RegisterService
     public class RegisterService(
         IUsersRepository users,
         IApplicantsRepository applicants,
-        ICitiesRepository cities,
         IUnitOfWork unitOfWork) : IRegisterService
     {
         async Task IRegisterService.Register(RegisterApplicantRequest request, CancellationToken cancellationToken)
@@ -26,21 +24,6 @@ namespace ApplicationLayer.Services.AuthServices.RegisterService
 
             //TODO mapper
             var user = new User { Email = request.Email, Password = request.Password, Role = Role.Applicant };
-
-            var applicantCity = await cities.GetByIdAsync(request.CityOfBirthId, cancellationToken);
-            var placeOfWorkCity = await cities.GetByIdAsync(request.PlaceOfWork.Address.CityId, cancellationToken);
-            var placeOfWorkAddress = new Address
-            {
-                Country = placeOfWorkCity.Country,
-                City = placeOfWorkCity,
-                Building = request.PlaceOfWork.Address.Building,
-                Street = request.PlaceOfWork.Address.Street
-            };
-
-            var placeOfWork = new PlaceOfWork
-            {
-                Name = request.PlaceOfWork.Name, Address = placeOfWorkAddress, PhoneNum = request.PlaceOfWork.PhoneNum
-            };
 
             var applicant = new Applicant
             {
@@ -55,10 +38,10 @@ namespace ApplicationLayer.Services.AuthServices.RegisterService
                 MaritalStatus = request.MaritalStatus,
                 MotherName = request.MotherName,
                 UserId = user.Id,
-                CityOfBirth = applicantCity,
-                CountryOfBirth = applicantCity.Country,
+                CityOfBirth = request.CityOfBirth,
+                CountryOfBirth = request.CountryOfBirth,
                 IsNonResident = request.IsNonResident,
-                PlaceOfWork = placeOfWork
+                PlaceOfWork = request.PlaceOfWork
             };
 
             await users.AddAsync(user, cancellationToken);

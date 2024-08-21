@@ -10,7 +10,6 @@ public sealed class VisaApplicationsRepository(IGenericReader reader, IGenericWr
 {
     protected override IQueryable<VisaApplication> LoadDomain()
         => base.LoadDomain()
-            .Include(va => va.DestinationCountry)
             .Include(va => va.PastVisas)
             .Include(va => va.PastVisits);
 

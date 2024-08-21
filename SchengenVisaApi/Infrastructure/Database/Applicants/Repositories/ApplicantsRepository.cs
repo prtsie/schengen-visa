@@ -15,8 +15,6 @@ public sealed class ApplicantsRepository(IGenericReader reader, IGenericWriter w
     protected override IQueryable<Applicant> LoadDomain()
     {
         return base.LoadDomain()
-            .Include(a => a.CountryOfBirth)
-            .Include(a => a.CityOfBirth)
             .Include(a => a.PlaceOfWork);
     }
 

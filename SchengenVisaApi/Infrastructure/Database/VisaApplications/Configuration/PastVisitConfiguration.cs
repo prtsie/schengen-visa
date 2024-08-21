@@ -1,6 +1,5 @@
 ﻿using Domains;
 using Domains.VisaApplicationDomain;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Database.VisaApplications.Configuration
@@ -9,7 +8,9 @@ namespace Infrastructure.Database.VisaApplications.Configuration
     {
         public static void Configure(OwnedNavigationBuilder<T, PastVisit> entity)
         {
-            entity.HasOne(p => p.DestinationCountry).WithMany().OnDelete(DeleteBehavior.Restrict);
+            entity.Property(pv => pv.DestinationCountry)
+                .IsUnicode(false)
+                .HasMaxLength(ConfigurationConstraints.CountryNameLength);
         }
     }
 }

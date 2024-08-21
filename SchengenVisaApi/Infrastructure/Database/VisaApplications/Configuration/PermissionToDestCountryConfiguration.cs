@@ -10,6 +10,6 @@ public static class PermissionToDestCountryConfiguration<T> where T : class, IEn
     {
         entity.Property(p => p.Issuer)
             .IsUnicode(false)
-            .HasMaxLength(200);
+            .HasMaxLength(ConfigurationConstraints.IssuerNameLength);
     }
 }
