@@ -11,8 +11,8 @@ namespace SchengenVisaApi.Controllers;
 
 /// <summary> Controller for <see cref="Domains.VisaApplicationDomain"/> </summary>
 [ApiController]
-[Route("[controller]")]
-public class VisaApplicationController(IVisaApplicationRequestsHandler visaApplicationRequestsHandler) : ControllerBase
+[Route("visaApplication")]
+public class VisaApplicationController(IVisaApplicationRequestsHandler visaApplicationRequestsHandler) : VisaApiControllerBase
 {
     //todo should return only pending applications
     //todo should return model
@@ -59,6 +59,4 @@ public class VisaApplicationController(IVisaApplicationRequestsHandler visaAppli
         await visaApplicationRequestsHandler.HandleCreateRequest(userId, request, cancellationToken);
         return Ok();
     }
-
-    private Guid GetUserId() => Guid.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
 }
