@@ -15,6 +15,7 @@ namespace SchengenVisaApi.Controllers;
 public class VisaApplicationController(IVisaApplicationRequestsHandler visaApplicationRequestsHandler) : ControllerBase
 {
     //todo should return only pending applications
+    //todo should return model
     /// <summary> Returns all applications from DB </summary>
     /// <remarks> Accessible only for approving authorities </remarks>
     [HttpGet]
