@@ -35,7 +35,7 @@ namespace SchengenVisaApi.Controllers
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Route("authority")]
+        [Route("authorities")]
         [Authorize(policy: PolicyConstants.AdminPolicy)]
         public async Task<IActionResult> RegisterAuthority(RegisterRequest request, CancellationToken cancellationToken)
         {
@@ -60,7 +60,7 @@ namespace SchengenVisaApi.Controllers
         [ProducesResponseType<List<User>>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Route("authority")]
+        [Route("authorities")]
         [Authorize(policy: PolicyConstants.AdminPolicy)]
         public async Task<IActionResult> GetAuthorityAccounts(CancellationToken cancellationToken)
         {
@@ -75,7 +75,7 @@ namespace SchengenVisaApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Route("authority/{authorityAccountId:guid}")]
+        [Route("authorities/{authorityAccountId:guid}")]
         [Authorize(policy: PolicyConstants.AdminPolicy)]
         //todo replace args with ChangeAuthorityAuthDataRequest or something
         public async Task<IActionResult> ChangeAuthorityAuthData(Guid authorityAccountId, RegisterRequest authData, CancellationToken cancellationToken)
@@ -91,7 +91,7 @@ namespace SchengenVisaApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Route("authority/{authorityAccountId:guid}")]
+        [Route("authorities/{authorityAccountId:guid}")]
         [Authorize(policy: PolicyConstants.AdminPolicy)]
         public async Task<IActionResult> RemoveAuthorityAccount(Guid authorityAccountId, CancellationToken cancellationToken)
         {

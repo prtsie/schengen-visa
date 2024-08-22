@@ -1,6 +1,7 @@
 ﻿using ApplicationLayer.InfrastructureServicesInterfaces;
 using ApplicationLayer.Services.Applicants.Models;
 using ApplicationLayer.Services.Applicants.NeededServices;
+using ApplicationLayer.Services.VisaApplications.Exceptions;
 using ApplicationLayer.Services.VisaApplications.Models;
 using ApplicationLayer.Services.VisaApplications.NeededServices;
 using ApplicationLayer.Services.VisaApplications.Requests;
@@ -87,7 +88,7 @@ public class VisaApplicationRequestsHandler(
             .ToList();
     }
 
-    public async Task HandleCreateRequest(Guid userId, VisaApplicationCreateRequest request, CancellationToken cancellationToken)
+    public async Task HandleCreateRequestAsync(Guid userId, VisaApplicationCreateRequest request, CancellationToken cancellationToken)
     {
         //TODO mapper
 
@@ -114,12 +115,38 @@ public class VisaApplicationRequestsHandler(
         await unitOfWork.SaveAsync(cancellationToken);
     }
 
-    async Task IVisaApplicationRequestsHandler.HandleCloseRequest(Guid userId, Guid applicationId, CancellationToken cancellationToken)
+    async Task IVisaApplicationRequestsHandler.HandleCloseRequestAsync(Guid userId, Guid applicationId, CancellationToken cancellationToken)
     {
         var applicantId = await applicants.GetApplicantIdByUserId(userId, cancellationToken);
         var application = await applications.GetByApplicantAndApplicationIdAsync(applicantId, applicationId, cancellationToken);
 
         application.Status = ApplicationStatus.Closed;
+        await applications.UpdateAsync(application, cancellationToken);
+
+        await unitOfWork.SaveAsync(cancellationToken);
+    }
+
+    async Task IVisaApplicationRequestsHandler.SetApplicationStatusFromAuthorityAsync(
+        Guid applicationId,
+        AuthorityRequestStatuses status,
+        CancellationToken cancellationToken)
+    {
+        var application = await applications.GetByIdAsync(applicationId, cancellationToken);
+        if (application.Status != ApplicationStatus.Pending)
+        {
+            //todo refactor exceptions
+            throw new ApplicationAlreadyProcessedException();
+        }
+
+        //todo mapper
+        ApplicationStatus statusToSet = status switch
+        {
+            AuthorityRequestStatuses.Approved => ApplicationStatus.Approved,
+            AuthorityRequestStatuses.Rejected => ApplicationStatus.Rejected,
+            _ => throw new ArgumentOutOfRangeException(nameof(status), status, null)
+        };
+
+        application.Status = statusToSet;
         await applications.UpdateAsync(application, cancellationToken);
 
         await unitOfWork.SaveAsync(cancellationToken);

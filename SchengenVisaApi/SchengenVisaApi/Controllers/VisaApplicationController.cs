@@ -9,7 +9,7 @@ namespace SchengenVisaApi.Controllers;
 
 /// <summary> Controller for <see cref="Domains.VisaApplicationDomain"/> </summary>
 [ApiController]
-[Route("visaApplication")]
+[Route("visaApplications")]
 public class VisaApplicationController(IVisaApplicationRequestsHandler visaApplicationRequestsHandler) : VisaApiControllerBase
 {
     //todo should return model
@@ -53,7 +53,7 @@ public class VisaApplicationController(IVisaApplicationRequestsHandler visaAppli
     public async Task<IActionResult> Create(VisaApplicationCreateRequest request, CancellationToken cancellationToken)
     {
         var userId = GetUserId();
-        await visaApplicationRequestsHandler.HandleCreateRequest(userId, request, cancellationToken);
+        await visaApplicationRequestsHandler.HandleCreateRequestAsync(userId, request, cancellationToken);
         return Ok();
     }
 
@@ -69,7 +69,22 @@ public class VisaApplicationController(IVisaApplicationRequestsHandler visaAppli
     public async Task<IActionResult> CloseApplication(Guid applicationId, CancellationToken cancellationToken)
     {
         var userId = GetUserId();
-        await visaApplicationRequestsHandler.HandleCloseRequest(userId, applicationId, cancellationToken);
+        await visaApplicationRequestsHandler.HandleCloseRequestAsync(userId, applicationId, cancellationToken);
+        return Ok();
+    }
+
+    /// <summary> Allows approving authorities approve or reject applications</summary>
+    /// <remarks> Accessible only for authorities</remarks>
+    [HttpPatch]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Authorize(policy: PolicyConstants.ApprovingAuthorityPolicy)]
+    [Route("approving/{applicationId:guid}")]
+    public async Task<IActionResult> SetStatusFromAuthority(Guid applicationId, AuthorityRequestStatuses status, CancellationToken cancellationToken)
+    {
+        await visaApplicationRequestsHandler.SetApplicationStatusFromAuthorityAsync(applicationId, status, cancellationToken);
         return Ok();
     }
 }
