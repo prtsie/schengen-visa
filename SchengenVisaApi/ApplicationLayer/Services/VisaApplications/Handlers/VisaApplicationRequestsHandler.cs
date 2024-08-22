@@ -114,4 +114,15 @@ public class VisaApplicationRequestsHandler(
 
         await unitOfWork.SaveAsync(cancellationToken);
     }
+
+    async Task IVisaApplicationRequestsHandler.HandleCloseRequest(Guid userId, Guid applicationId, CancellationToken cancellationToken)
+    {
+        var applicantId = await applicants.GetApplicantIdByUserId(userId, cancellationToken);
+        var application = await applications.GetByApplicantAndApplicationIdAsync(applicantId, applicationId, cancellationToken);
+
+        application.Status = ApplicationStatus.Closed;
+        await applications.UpdateAsync(application, cancellationToken);
+
+        await unitOfWork.SaveAsync(cancellationToken);
+    }
 }

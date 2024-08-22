@@ -14,4 +14,7 @@ public interface IVisaApplicationRequestsHandler
 
     /// Creates application for applicant with specific user identifier
     Task HandleCreateRequest(Guid userId, VisaApplicationCreateRequest request, CancellationToken cancellationToken);
+
+    /// Sets application status to closed
+    Task HandleCloseRequest(Guid userId, Guid applicationId, CancellationToken cancellationToken);
 }

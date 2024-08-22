@@ -57,4 +57,20 @@ public class VisaApplicationController(IVisaApplicationRequestsHandler visaAppli
         await visaApplicationRequestsHandler.HandleCreateRequest(userId, request, cancellationToken);
         return Ok();
     }
+
+    /// <summary> Sets application status to closed</summary>
+    /// <remarks> Accessible only for applicant</remarks>
+    [HttpPatch]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Authorize(policy: PolicyConstants.ApplicantPolicy)]
+    [Route("{applicationId:guid}")]
+    public async Task<IActionResult> CloseApplication(Guid applicationId, CancellationToken cancellationToken)
+    {
+        var userId = GetUserId();
+        await visaApplicationRequestsHandler.HandleCloseRequest(userId, applicationId, cancellationToken);
+        return Ok();
+    }
 }

@@ -21,7 +21,7 @@ namespace SchengenVisaApi.ExceptionFilters
                 problemDetails.Detail = exception.Message;
                 switch (exception)
                 {
-                    case EntityNotFoundException<IEntity>:
+                    case EntityNotFoundException:
                         problemDetails.Status = StatusCodes.Status404NotFound;
                         problemDetails.Title = "Requested entity not found";
                         problemDetails.Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.4";
