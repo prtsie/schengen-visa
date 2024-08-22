@@ -18,6 +18,7 @@ namespace ApplicationLayer.Services.VisaApplications.Models
         /// <inheritdoc cref="VisaApplication.PermissionToDestCountry"/>
         public PermissionToDestCountry? PermissionToDestCountry { get; set; }
 
+        /// <inheritdoc cref="VisaApplication.PastVisits"/>
         public List<PastVisit> PastVisits { get; set; } = null!;
 
         /// <inheritdoc cref="VisaApplication.VisaCategory"/>
