@@ -1,6 +1,5 @@
 ﻿using ApplicationLayer.Services.VisaApplications.Models;
 using ApplicationLayer.Services.VisaApplications.Requests;
-using Domains.VisaApplicationDomain;
 
 namespace ApplicationLayer.Services.VisaApplications.Handlers;
 

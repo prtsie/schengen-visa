@@ -4,7 +4,6 @@ using ApplicationLayer.Services.Applicants.NeededServices;
 using ApplicationLayer.Services.VisaApplications.Models;
 using ApplicationLayer.Services.VisaApplications.NeededServices;
 using ApplicationLayer.Services.VisaApplications.Requests;
-using Domains.ApplicantDomain;
 using Domains.VisaApplicationDomain;
 
 namespace ApplicationLayer.Services.VisaApplications.Handlers;
