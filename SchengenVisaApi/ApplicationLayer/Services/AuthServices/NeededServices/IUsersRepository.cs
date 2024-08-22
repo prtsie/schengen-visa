@@ -11,5 +11,11 @@ namespace ApplicationLayer.Services.AuthServices.NeededServices
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>User or null if not found</returns>
         Task<User?> FindByEmailAsync(string email, CancellationToken cancellationToken);
+
+        /// Returns all accounts with specific role
+        /// <param name="role">role</param>
+        /// <param name="cancellationToken">cancellation token</param>
+        /// <returns>list of accounts</returns>
+        Task<List<User>> GetAllOfRoleAsync(Role role, CancellationToken cancellationToken);
     }
 }

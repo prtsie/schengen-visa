@@ -1,4 +1,5 @@
-﻿using ApplicationLayer.Services.AuthServices.LoginService;
+﻿using ApplicationLayer.Services.ApprovingAuthorities;
+using ApplicationLayer.Services.AuthServices.LoginService;
 using ApplicationLayer.Services.AuthServices.RegisterService;
 using ApplicationLayer.Services.VisaApplications.Handlers;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +15,7 @@ public static class DependencyInjection
         services.AddScoped<IVisaApplicationRequestsHandler, VisaApplicationRequestsHandler>();
 
         services.AddScoped<IRegisterService, RegisterService>();
+        services.AddScoped<IUsersService, UsersService>();
 
         if (isDevelopment)
         {

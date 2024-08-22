@@ -13,5 +13,10 @@ namespace Infrastructure.Database.Users.Repositories
         {
             return await LoadDomain().SingleOrDefaultAsync(u => u.Email == email, cancellationToken);
         }
+
+        async Task<List<User>> IUsersRepository.GetAllOfRoleAsync(Role role, CancellationToken cancellationToken)
+        {
+            return await LoadDomain().Where(u => u.Role == role).ToListAsync(cancellationToken);
+        }
     }
 }
