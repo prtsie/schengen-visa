@@ -77,6 +77,7 @@ namespace SchengenVisaApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Route("authority/{authorityAccountId:guid}")]
         [Authorize(policy: PolicyConstants.AdminPolicy)]
+        //todo replace args with ChangeAuthorityAuthDataRequest or something
         public async Task<IActionResult> ChangeAuthorityAuthData(Guid authorityAccountId, RegisterRequest authData, CancellationToken cancellationToken)
         {
             await authorityService.ChangeAccountAuthDataAsync(authorityAccountId, authData, cancellationToken);
