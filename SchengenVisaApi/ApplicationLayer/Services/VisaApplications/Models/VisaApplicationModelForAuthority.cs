@@ -1,12 +1,16 @@
-﻿using Domains.VisaApplicationDomain;
+﻿using ApplicationLayer.Services.Applicants.Models;
+using Domains.VisaApplicationDomain;
 
 namespace ApplicationLayer.Services.VisaApplications.Models
 {
-    /// Model of <see cref="VisaApplication"/>
-    public class VisaApplicationModelForApplicant
+    /// Model of <see cref="VisaApplication"/> with applicant property
+    public class VisaApplicationModelForAuthority
     {
         /// <inheritdoc cref="VisaApplication.Id"/>
         public Guid Id { get; set; }
+
+        /// Applicant of application
+        public ApplicantModel Applicant { get; set; } = null!;
 
         /// <inheritdoc cref="VisaApplication.Status"/>
         public ApplicationStatus Status { get; set; }
@@ -23,7 +27,6 @@ namespace ApplicationLayer.Services.VisaApplications.Models
         /// <inheritdoc cref="VisaApplication.PermissionToDestCountry"/>
         public PermissionToDestCountry? PermissionToDestCountry { get; set; }
 
-        /// <inheritdoc cref="VisaApplication.PastVisits"/>
         public List<PastVisit> PastVisits { get; set; } = null!;
 
         /// <inheritdoc cref="VisaApplication.VisaCategory"/>

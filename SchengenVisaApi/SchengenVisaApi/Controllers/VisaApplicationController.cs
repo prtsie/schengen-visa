@@ -1,4 +1,3 @@
-using System.Security.Claims;
 using ApplicationLayer.Services.VisaApplications.Handlers;
 using ApplicationLayer.Services.VisaApplications.Models;
 using ApplicationLayer.Services.VisaApplications.Requests;
@@ -14,18 +13,17 @@ namespace SchengenVisaApi.Controllers;
 [Route("visaApplication")]
 public class VisaApplicationController(IVisaApplicationRequestsHandler visaApplicationRequestsHandler) : VisaApiControllerBase
 {
-    //todo should return only pending applications
     //todo should return model
     /// <summary> Returns all applications from DB </summary>
     /// <remarks> Accessible only for approving authorities </remarks>
     [HttpGet]
-    [ProducesResponseType<List<VisaApplication>>(StatusCodes.Status200OK)]
+    [ProducesResponseType<List<VisaApplicationModelForAuthority>>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [Authorize(policy: PolicyConstants.ApprovingAuthorityPolicy)]
     public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
-        var result = await visaApplicationRequestsHandler.Get(cancellationToken);
+        var result = await visaApplicationRequestsHandler.GetAllAsync(cancellationToken);
         return Ok(result);
     }
 
@@ -41,7 +39,7 @@ public class VisaApplicationController(IVisaApplicationRequestsHandler visaAppli
     public async Task<IActionResult> GetForApplicant(CancellationToken cancellationToken)
     {
         var userId = GetUserId();
-        var result = await visaApplicationRequestsHandler.GetForApplicant(userId, cancellationToken);
+        var result = await visaApplicationRequestsHandler.GetForApplicantAsync(userId, cancellationToken);
         return Ok(result);
     }
 

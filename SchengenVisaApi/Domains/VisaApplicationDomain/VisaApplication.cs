@@ -11,6 +11,9 @@ public class VisaApplication : IEntity
     /// Identifier of the <see cref="Applicant"/>
     public Guid ApplicantId { get; set; }
 
+    /// Status of application
+    public ApplicationStatus Status { get; set; }
+
     /// <inheritdoc cref="Domains.VisaApplicationDomain.ReentryPermit"/>
     /// <remarks>always null if <see cref="Applicant"/> is not a non-resident</remarks>
     public ReentryPermit? ReentryPermit { get; set; }
@@ -18,9 +21,7 @@ public class VisaApplication : IEntity
     /// Country that <see cref="Applicant"/> wants to visit
     public string DestinationCountry { get; set; } = null!;
 
-    /// <summary>
     /// List of <see cref="PastVisa"/> that applicant had before
-    /// </summary>
     public List<PastVisa> PastVisas { get; set; } = null!;
 
     /// Permission to enter the destination country of <see cref="Applicant"/>
