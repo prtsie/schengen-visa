@@ -24,7 +24,7 @@ namespace SchengenVisaApi.Controllers
         [Route("register")]
         public async Task<IActionResult> Register(RegisterApplicantRequest request, CancellationToken cancellationToken)
         {
-            await registerService.Register(request, cancellationToken);
+            await registerService.RegisterApplicant(request, cancellationToken);
             return Ok();
         }
 
@@ -62,6 +62,7 @@ namespace SchengenVisaApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Route("authorities")]
         [Authorize(policy: PolicyConstants.AdminPolicy)]
+        //todo return models
         public async Task<IActionResult> GetAuthorityAccounts(CancellationToken cancellationToken)
         {
             var result = await authorityService.GetAuthoritiesAccountsAsync(cancellationToken);

@@ -3,6 +3,7 @@ using ApplicationLayer.Services.Applicants.NeededServices;
 using ApplicationLayer.Services.AuthServices.NeededServices;
 using ApplicationLayer.Services.AuthServices.RegisterService.Exceptions;
 using ApplicationLayer.Services.AuthServices.Requests;
+using AutoMapper;
 using Domains.ApplicantDomain;
 using Domains.Users;
 
@@ -12,9 +13,10 @@ namespace ApplicationLayer.Services.AuthServices.RegisterService
     public class RegisterService(
         IUsersRepository users,
         IApplicantsRepository applicants,
-        IUnitOfWork unitOfWork) : IRegisterService
+        IUnitOfWork unitOfWork,
+        IMapper mapper) : IRegisterService
     {
-        async Task IRegisterService.Register(RegisterApplicantRequest request, CancellationToken cancellationToken)
+        async Task IRegisterService.RegisterApplicant(RegisterApplicantRequest request, CancellationToken cancellationToken)
         {
             //todo move to validation layer
             if (await users.FindByEmailAsync(request.Email, cancellationToken) is not null)
@@ -22,8 +24,8 @@ namespace ApplicationLayer.Services.AuthServices.RegisterService
                 throw new UserAlreadyExistsException(request);
             }
 
-            //TODO mapper
-            var user = new User { Email = request.Email, Password = request.Password, Role = Role.Applicant };
+            var user = mapper.Map<User>(request);
+            user.Role = Role.Applicant;
 
             var applicant = new Applicant
             {
@@ -58,8 +60,8 @@ namespace ApplicationLayer.Services.AuthServices.RegisterService
                 throw new UserAlreadyExistsException(request);
             }
 
-            //TODO mapper
-            var user = new User { Email = request.Email, Password = request.Password, Role = Role.ApprovingAuthority };
+            var user = mapper.Map<User>(request);
+            user.Role = Role.ApprovingAuthority;
 
             await users.AddAsync(user, cancellationToken);
 
