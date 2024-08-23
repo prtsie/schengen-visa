@@ -1,7 +1,7 @@
 ﻿using ApplicationLayer.GeneralExceptions;
 using ApplicationLayer.Services.AuthServices.LoginService.Exceptions;
 using ApplicationLayer.Services.GeneralExceptions;
-using Domains;
+using ApplicationLayer.Services.VisaApplications.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -21,7 +21,7 @@ namespace SchengenVisaApi.ExceptionFilters
                 problemDetails.Detail = exception.Message;
                 switch (exception)
                 {
-                    case EntityNotFoundException<IEntity>:
+                    case EntityNotFoundException:
                         problemDetails.Status = StatusCodes.Status404NotFound;
                         problemDetails.Title = "Requested entity not found";
                         problemDetails.Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.4";
@@ -34,6 +34,11 @@ namespace SchengenVisaApi.ExceptionFilters
                     case AlreadyExistsException:
                         problemDetails.Status = StatusCodes.Status409Conflict;
                         problemDetails.Title = "Already exists";
+                        problemDetails.Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.8";
+                        break;
+                    case ApplicationAlreadyProcessedException:
+                        problemDetails.Status = StatusCodes.Status409Conflict;
+                        problemDetails.Title = "Already processed";
                         problemDetails.Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.8";
                         break;
                     default:

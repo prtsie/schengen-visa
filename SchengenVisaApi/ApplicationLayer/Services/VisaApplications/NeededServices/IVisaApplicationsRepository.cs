@@ -7,4 +7,7 @@ public interface IVisaApplicationsRepository : IGenericRepository<VisaApplicatio
 {
     /// Get applications of one applicant
     Task<List<VisaApplication>> GetOfApplicantAsync(Guid applicantId, CancellationToken cancellationToken);
+
+    /// Get specific application of specific user
+    Task<VisaApplication> GetByApplicantAndApplicationIdAsync(Guid applicantId, Guid applicationId, CancellationToken cancellationToken);
 }

@@ -21,12 +21,12 @@ public sealed class ApplicantsRepository(IGenericReader reader, IGenericWriter w
     async Task<Applicant> IApplicantsRepository.FindByUserIdAsync(Guid userId, CancellationToken cancellationToken)
     {
         var result = await LoadDomain().SingleOrDefaultAsync(a => a.UserId == userId, cancellationToken);
-        return result ?? throw new ApplicantNotFoundByUserIdException(userId);
+        return result ?? throw new ApplicantNotFoundByUserIdException();
     }
 
     async Task<Guid> IApplicantsRepository.GetApplicantIdByUserId(Guid userId, CancellationToken cancellationToken)
     {
         var result = await base.LoadDomain().SingleOrDefaultAsync(a => a.UserId == userId, cancellationToken);
-        return result?.Id ?? throw new ApplicantNotFoundByUserIdException(userId);
+        return result?.Id ?? throw new ApplicantNotFoundByUserIdException();
     }
 }
