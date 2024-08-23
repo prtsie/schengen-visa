@@ -12,7 +12,6 @@ namespace SchengenVisaApi.Controllers;
 [Route("visaApplications")]
 public class VisaApplicationController(IVisaApplicationRequestsHandler visaApplicationRequestsHandler) : VisaApiControllerBase
 {
-    //todo should return model
     /// <summary> Returns all applications from DB </summary>
     /// <remarks> Accessible only for approving authorities </remarks>
     [HttpGet]
