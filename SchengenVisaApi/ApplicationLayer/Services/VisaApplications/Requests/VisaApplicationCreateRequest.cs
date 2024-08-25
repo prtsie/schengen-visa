@@ -4,7 +4,7 @@ namespace ApplicationLayer.Services.VisaApplications.Requests;
 
 /// Model of visa request from user
 public record VisaApplicationCreateRequest(
-    ReentryPermit ReentryPermit,
+    ReentryPermit? ReentryPermit,
     string DestinationCountry,
     VisaCategory VisaCategory,
     bool IsForGroup,

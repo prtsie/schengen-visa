@@ -1,8 +1,11 @@
-﻿using ApplicationLayer.Services.ApprovingAuthorities;
+﻿using ApplicationLayer.Services.AuthServices.Common;
 using ApplicationLayer.Services.AuthServices.LoginService;
 using ApplicationLayer.Services.AuthServices.RegisterService;
 using ApplicationLayer.Services.AuthServices.Requests;
+using ApplicationLayer.Services.Users;
+using ApplicationLayer.Services.Users.Requests;
 using Domains.Users;
+using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SchengenVisaApi.Common;
@@ -15,7 +18,9 @@ namespace SchengenVisaApi.Controllers
     public class UsersController(
         IRegisterService registerService,
         ILoginService loginService,
-        IUsersService authorityService) : VisaApiControllerBase
+        IUsersService usersService,
+        IValidator<RegisterApplicantRequest> registerApplicantRequestValidator,
+        IValidator<AuthData> authDataValidator) : ControllerBase
     {
         /// <summary> Adds applicant with user account to DB </summary>
         [HttpPost]
@@ -24,6 +29,8 @@ namespace SchengenVisaApi.Controllers
         [Route("register")]
         public async Task<IActionResult> Register(RegisterApplicantRequest request, CancellationToken cancellationToken)
         {
+            await registerApplicantRequestValidator.ValidateAndThrowAsync(request, cancellationToken);
+
             await registerService.RegisterApplicant(request, cancellationToken);
             return Ok();
         }
@@ -39,6 +46,8 @@ namespace SchengenVisaApi.Controllers
         [Authorize(policy: PolicyConstants.AdminPolicy)]
         public async Task<IActionResult> RegisterAuthority(RegisterRequest request, CancellationToken cancellationToken)
         {
+            await authDataValidator.ValidateAndThrowAsync(request.AuthData, cancellationToken);
+
             await registerService.RegisterAuthority(request, cancellationToken);
             return Ok();
         }
@@ -50,7 +59,7 @@ namespace SchengenVisaApi.Controllers
         [Route("login")]
         public async Task<IActionResult> Login(string email, string password, CancellationToken cancellationToken)
         {
-            var result = await loginService.LoginAsync(new UserLoginRequest(email, password), cancellationToken);
+            var result = await loginService.LoginAsync(email, password, cancellationToken);
             return Ok(result);
         }
 
@@ -62,10 +71,9 @@ namespace SchengenVisaApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Route("authorities")]
         [Authorize(policy: PolicyConstants.AdminPolicy)]
-        //todo return models
         public async Task<IActionResult> GetAuthorityAccounts(CancellationToken cancellationToken)
         {
-            var result = await authorityService.GetAuthoritiesAccountsAsync(cancellationToken);
+            var result = await usersService.GetAuthoritiesAccountsAsync(cancellationToken);
             return Ok(result);
         }
 
@@ -78,10 +86,11 @@ namespace SchengenVisaApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Route("authorities/{authorityAccountId:guid}")]
         [Authorize(policy: PolicyConstants.AdminPolicy)]
-        //todo replace args with ChangeAuthorityAuthDataRequest or something
-        public async Task<IActionResult> ChangeAuthorityAuthData(Guid authorityAccountId, RegisterRequest authData, CancellationToken cancellationToken)
+        public async Task<IActionResult> ChangeAuthorityAuthData(Guid authorityAccountId, AuthData authData, CancellationToken cancellationToken)
         {
-            await authorityService.ChangeAccountAuthDataAsync(authorityAccountId, authData, cancellationToken);
+            await authDataValidator.ValidateAndThrowAsync(authData, cancellationToken);
+
+            await usersService.ChangeAccountAuthDataAsync(new ChangeUserAuthDataRequest(authorityAccountId, authData), cancellationToken);
             return Ok();
         }
 
@@ -96,7 +105,7 @@ namespace SchengenVisaApi.Controllers
         [Authorize(policy: PolicyConstants.AdminPolicy)]
         public async Task<IActionResult> RemoveAuthorityAccount(Guid authorityAccountId, CancellationToken cancellationToken)
         {
-            await authorityService.RemoveUserAccount(authorityAccountId, cancellationToken);
+            await usersService.RemoveUserAccount(authorityAccountId, cancellationToken);
             return Ok();
         }
     }

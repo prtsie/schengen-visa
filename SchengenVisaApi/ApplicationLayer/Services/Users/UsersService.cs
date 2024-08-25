@@ -1,9 +1,9 @@
 ﻿using ApplicationLayer.InfrastructureServicesInterfaces;
 using ApplicationLayer.Services.AuthServices.NeededServices;
-using ApplicationLayer.Services.AuthServices.Requests;
+using ApplicationLayer.Services.Users.Requests;
 using Domains.Users;
 
-namespace ApplicationLayer.Services.ApprovingAuthorities
+namespace ApplicationLayer.Services.Users
 {
     public class UsersService(IUsersRepository users, IUnitOfWork unitOfWork) : IUsersService
     {
@@ -12,12 +12,12 @@ namespace ApplicationLayer.Services.ApprovingAuthorities
             return await users.GetAllOfRoleAsync(Role.ApprovingAuthority, cancellationToken);
         }
 
-        async Task IUsersService.ChangeAccountAuthDataAsync(Guid userId, RegisterRequest data, CancellationToken cancellationToken)
+        async Task IUsersService.ChangeAccountAuthDataAsync(ChangeUserAuthDataRequest request, CancellationToken cancellationToken)
         {
-            var user = await users.GetByIdAsync(userId, cancellationToken);
+            var user = await users.GetByIdAsync(request.UserId, cancellationToken);
 
-            user.Email = data.Email;
-            user.Password = data.Password;
+            user.Email = request.NewAuthData.Email;
+            user.Password = request.NewAuthData.Password;
             await users.UpdateAsync(user, cancellationToken);
 
             await unitOfWork.SaveAsync(cancellationToken);

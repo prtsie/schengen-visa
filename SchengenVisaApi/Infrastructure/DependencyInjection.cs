@@ -38,6 +38,9 @@ public static class DependencyInjection
 
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 
+        services.AddHttpContextAccessor();
+        services.AddScoped<IUserIdProvider, UserIdProvider>();
+
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
         return services;

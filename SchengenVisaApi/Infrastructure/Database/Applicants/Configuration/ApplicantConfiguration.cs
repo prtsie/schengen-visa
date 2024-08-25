@@ -1,4 +1,5 @@
-﻿using Domains.ApplicantDomain;
+﻿using Domains;
+using Domains.ApplicantDomain;
 using Domains.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -31,5 +32,9 @@ public class ApplicantConfiguration : IEntityTypeConfiguration<Applicant>
         entity.Property(a => a.CityOfBirth)
             .IsUnicode(false)
             .HasMaxLength(ConfigurationConstraints.CityNameLength);
+
+        entity.Property(a => a.JobTitle)
+            .IsUnicode(false)
+            .HasMaxLength(ConfigurationConstraints.JobTitleLength);
     }
 }

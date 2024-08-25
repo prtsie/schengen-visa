@@ -1,4 +1,5 @@
-﻿using Domains.ApplicantDomain;
+﻿using Domains;
+using Domains.ApplicantDomain;
 using Domains.VisaApplicationDomain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

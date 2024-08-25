@@ -1,4 +1,4 @@
-﻿using ApplicationLayer.Services.AuthServices.Requests;
+﻿using ApplicationLayer.Services.AuthServices.Common;
 using AutoMapper;
 using Domains.Users;
 
@@ -8,11 +8,7 @@ namespace Infrastructure.Automapper.Profiles
     {
         public UserProfile()
         {
-            CreateMap<RegisterApplicantRequest, User>(MemberList.Destination)
-                .ForMember(u => u.Role,
-                    opts => opts.Ignore());
-
-            CreateMap<RegisterRequest, User>()
+            CreateMap<AuthData, User>(MemberList.Destination)
                 .ForMember(u => u.Role,
                     opts => opts.Ignore());
         }

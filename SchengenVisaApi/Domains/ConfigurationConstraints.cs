@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Database
+﻿namespace Domains
 {
     public static class ConfigurationConstraints
     {
@@ -13,8 +13,12 @@
         public const int NameLength = 50;
         public const int BuildingNumberLength = 10;
         public const int PassportNumberLength = 20;
-        public const int PhoneNumberLength = 15;
+        public const int PhoneNumberLength = 13;
+        public const int PhoneNumberMinLength = 11;
         public const int EmailLength = 254;
         public const int PasswordLength = 50;
+        public const int ApplicantMinAge = 14;
+        public const int JobTitleLength = 50;
+        public const int MaxValidDays = 90;
     }
 }
