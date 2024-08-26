@@ -6,9 +6,14 @@ using Domains.Users;
 
 namespace Infrastructure.Auth;
 
+/// <inheritdoc cref="ITokenGenerator"/>
+/// <param name="options">options kind of one in authorization registration in DI methods</param>
+/// <param name="tokenHandler">token handler</param>
+/// <param name="dateTimeProvider">date time provider</param>
 public class TokenGenerator(TokenGeneratorOptions options, JwtSecurityTokenHandler tokenHandler, IDateTimeProvider dateTimeProvider)
     : ITokenGenerator
 {
+    /// <inheritdoc cref="ITokenGenerator.CreateToken"/>
     public string CreateToken(User user)
     {
         var claims = new List<Claim>
