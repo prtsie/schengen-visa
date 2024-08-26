@@ -6,7 +6,7 @@ namespace ApplicationLayer.Services.AuthServices.RegisterService
     public interface IRegisterService
     {
         /// Handle <see cref="RegisterApplicantRequest"/>
-        Task Register(RegisterApplicantRequest request, CancellationToken cancellationToken);
+        Task RegisterApplicant(RegisterApplicantRequest request, CancellationToken cancellationToken);
 
         /// Handles <see cref="RegisterRequest"/> and adds approving authority account
         Task RegisterAuthority(RegisterRequest request, CancellationToken cancellationToken);

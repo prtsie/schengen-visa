@@ -1,10 +1,11 @@
-﻿using Domains.ApplicantDomain;
+﻿using ApplicationLayer.Services.Applicants.Models;
+using ApplicationLayer.Services.AuthServices.Common;
+using Domains.ApplicantDomain;
 
 namespace ApplicationLayer.Services.AuthServices.Requests
 {
     public record RegisterApplicantRequest(
-        string Email,
-        string Password,
+        AuthData AuthData,
         Name ApplicantName,
         Passport Passport,
         DateTime BirthDate,
@@ -17,6 +18,6 @@ namespace ApplicationLayer.Services.AuthServices.Requests
         Name FatherName,
         Name MotherName,
         string JobTitle,
-        PlaceOfWork PlaceOfWork,
-        bool IsNonResident) : RegisterRequest(Email, Password);
+        PlaceOfWorkModel PlaceOfWork,
+        bool IsNonResident) : RegisterRequest(AuthData);
 }

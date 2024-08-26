@@ -11,4 +11,7 @@ public interface IApplicantsRepository : IGenericRepository<Applicant>
 
     /// Get identifier of applicant by user identifier
     Task<Guid> GetApplicantIdByUserId(Guid userId, CancellationToken cancellationToken);
+
+    /// Returns value of NonResident property of applicant
+    Task<bool> IsApplicantNonResidentByUserId(Guid userId, CancellationToken cancellationToken);
 }

@@ -5,6 +5,7 @@ using ApplicationLayer.Services.VisaApplications.Exceptions;
 using ApplicationLayer.Services.VisaApplications.Models;
 using ApplicationLayer.Services.VisaApplications.NeededServices;
 using ApplicationLayer.Services.VisaApplications.Requests;
+using AutoMapper;
 using Domains.VisaApplicationDomain;
 
 namespace ApplicationLayer.Services.VisaApplications.Handlers;
@@ -13,13 +14,14 @@ namespace ApplicationLayer.Services.VisaApplications.Handlers;
 public class VisaApplicationRequestsHandler(
     IVisaApplicationsRepository applications,
     IApplicantsRepository applicants,
-    IUnitOfWork unitOfWork) : IVisaApplicationRequestsHandler
+    IUnitOfWork unitOfWork,
+    IMapper mapper,
+    IDateTimeProvider dateTimeProvider) : IVisaApplicationRequestsHandler
 {
     async Task<List<VisaApplicationModelForAuthority>> IVisaApplicationRequestsHandler.GetAllAsync(CancellationToken cancellationToken)
     {
         var applicationsList = await applications.GetAllAsync(cancellationToken);
 
-        //todo mapper
         var applicationModels = applicationsList
             .Select(a => MapVisaApplicationToModelForAuthorities(a, cancellationToken).Result)
             .ToList();
@@ -30,85 +32,28 @@ public class VisaApplicationRequestsHandler(
         CancellationToken cancellationToken)
     {
         var applicant = await applicants.GetByIdAsync(visaApplication.ApplicantId, cancellationToken);
-        var applicantModel = new ApplicantModel
-        {
-            Citizenship = applicant.Citizenship,
-            Gender = applicant.Gender,
-            Name = applicant.Name,
-            Passport = applicant.Passport,
-            BirthDate = applicant.BirthDate,
-            FatherName = applicant.FatherName,
-            JobTitle = applicant.JobTitle,
-            MaritalStatus = applicant.MaritalStatus,
-            MotherName = applicant.MotherName,
-            CitizenshipByBirth = applicant.CitizenshipByBirth,
-            CityOfBirth = applicant.CityOfBirth,
-            CountryOfBirth = applicant.CountryOfBirth,
-            IsNonResident = applicant.IsNonResident,
-            PlaceOfWork = applicant.PlaceOfWork,
-        };
-        return new VisaApplicationModelForAuthority
-        {
-            PastVisits = visaApplication.PastVisits,
-            ReentryPermit = visaApplication.ReentryPermit,
-            VisaCategory = visaApplication.VisaCategory,
-            PermissionToDestCountry = visaApplication.PermissionToDestCountry,
-            DestinationCountry = visaApplication.DestinationCountry,
-            PastVisas = visaApplication.PastVisas,
-            RequestDate = visaApplication.RequestDate,
-            ValidDaysRequested = visaApplication.ValidDaysRequested,
-            RequestedNumberOfEntries = visaApplication.RequestedNumberOfEntries,
-            ForGroup = visaApplication.ForGroup,
-            Applicant = applicantModel,
-            Id = visaApplication.Id,
-            Status = visaApplication.Status
-        };
+        var applicantModel = mapper.Map<ApplicantModel>(applicant);
+
+        var model = mapper.Map<VisaApplicationModelForAuthority>(visaApplication);
+        model.Applicant = applicantModel;
+
+        return model;
     }
 
     public async Task<List<VisaApplicationModelForApplicant>> GetForApplicantAsync(Guid userId, CancellationToken cancellationToken)
     {
-        //todo mapper
         var applicantId = await applicants.GetApplicantIdByUserId(userId, cancellationToken);
         var visaApplications = await applications.GetOfApplicantAsync(applicantId, cancellationToken);
-        return visaApplications.Select(va => new VisaApplicationModelForApplicant
-            {
-                DestinationCountry = va.DestinationCountry,
-                ValidDaysRequested = va.ValidDaysRequested,
-                ReentryPermit = va.ReentryPermit,
-                VisaCategory = va.VisaCategory,
-                RequestedNumberOfEntries = va.RequestedNumberOfEntries,
-                PermissionToDestCountry = va.PermissionToDestCountry,
-                ForGroup = va.ForGroup,
-                PastVisas = va.PastVisas,
-                RequestDate = va.RequestDate,
-                PastVisits = va.PastVisits,
-                Id = va.Id,
-                Status = va.Status
-            })
-            .ToList();
+        return mapper.Map<List<VisaApplicationModelForApplicant>>(visaApplications);
     }
 
     public async Task HandleCreateRequestAsync(Guid userId, VisaApplicationCreateRequest request, CancellationToken cancellationToken)
     {
-        //TODO mapper
-
         var applicant = await applicants.FindByUserIdAsync(userId, cancellationToken);
 
-        var visaApplication = new VisaApplication
-        {
-            ApplicantId = applicant.Id,
-            RequestedNumberOfEntries = request.RequestedNumberOfEntries,
-            ValidDaysRequested = request.ValidDaysRequested,
-            ReentryPermit = request.ReentryPermit,
-            VisaCategory = request.VisaCategory,
-            PermissionToDestCountry = request.PermissionToDestCountry,
-            DestinationCountry = request.DestinationCountry,
-            PastVisas = request.PastVisas.ToList(),
-            PastVisits = request.PastVisits.ToList(),
-            ForGroup = request.IsForGroup,
-            RequestDate = DateTime.Today,
-            Status = ApplicationStatus.Pending
-        };
+        var visaApplication = mapper.Map<VisaApplication>(request);
+        visaApplication.RequestDate = dateTimeProvider.Now();
+        visaApplication.ApplicantId = applicant.Id;
 
         await applications.AddAsync(visaApplication, cancellationToken);
 
@@ -134,11 +79,9 @@ public class VisaApplicationRequestsHandler(
         var application = await applications.GetByIdAsync(applicationId, cancellationToken);
         if (application.Status != ApplicationStatus.Pending)
         {
-            //todo refactor exceptions
             throw new ApplicationAlreadyProcessedException();
         }
 
-        //todo mapper
         ApplicationStatus statusToSet = status switch
         {
             AuthorityRequestStatuses.Approved => ApplicationStatus.Approved,

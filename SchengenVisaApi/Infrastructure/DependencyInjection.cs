@@ -1,4 +1,5 @@
-﻿using ApplicationLayer.InfrastructureServicesInterfaces;
+﻿using System.Reflection;
+using ApplicationLayer.InfrastructureServicesInterfaces;
 using ApplicationLayer.Services.Applicants.NeededServices;
 using ApplicationLayer.Services.AuthServices.NeededServices;
 using ApplicationLayer.Services.VisaApplications.NeededServices;
@@ -36,6 +37,11 @@ public static class DependencyInjection
         services.AddScoped<IUsersRepository, UsersRepository>();
 
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+
+        services.AddHttpContextAccessor();
+        services.AddScoped<IUserIdProvider, UserIdProvider>();
+
+        services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
         return services;
     }

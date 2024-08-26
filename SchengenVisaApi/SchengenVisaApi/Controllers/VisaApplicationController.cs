@@ -1,6 +1,8 @@
+using ApplicationLayer.InfrastructureServicesInterfaces;
 using ApplicationLayer.Services.VisaApplications.Handlers;
 using ApplicationLayer.Services.VisaApplications.Models;
 using ApplicationLayer.Services.VisaApplications.Requests;
+using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SchengenVisaApi.Common;
@@ -10,7 +12,10 @@ namespace SchengenVisaApi.Controllers;
 /// <summary> Controller for <see cref="Domains.VisaApplicationDomain"/> </summary>
 [ApiController]
 [Route("visaApplications")]
-public class VisaApplicationController(IVisaApplicationRequestsHandler visaApplicationRequestsHandler) : VisaApiControllerBase
+public class VisaApplicationController(
+    IVisaApplicationRequestsHandler visaApplicationRequestsHandler,
+    IUserIdProvider userIdProvider,
+    IValidator<VisaApplicationCreateRequest> visaApplicationCreateRequestValidator) : ControllerBase
 {
     /// <summary> Returns all applications from DB </summary>
     /// <remarks> Accessible only for approving authorities </remarks>
@@ -36,7 +41,7 @@ public class VisaApplicationController(IVisaApplicationRequestsHandler visaAppli
     [Route("OfApplicant")]
     public async Task<IActionResult> GetForApplicant(CancellationToken cancellationToken)
     {
-        var userId = GetUserId();
+        var userId = userIdProvider.GetUserId();
         var result = await visaApplicationRequestsHandler.GetForApplicantAsync(userId, cancellationToken);
         return Ok(result);
     }
@@ -48,10 +53,13 @@ public class VisaApplicationController(IVisaApplicationRequestsHandler visaAppli
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [Authorize(policy: PolicyConstants.ApplicantPolicy)]
     public async Task<IActionResult> Create(VisaApplicationCreateRequest request, CancellationToken cancellationToken)
     {
-        var userId = GetUserId();
+        await visaApplicationCreateRequestValidator.ValidateAndThrowAsync(request, cancellationToken);
+
+        var userId = userIdProvider.GetUserId();
         await visaApplicationRequestsHandler.HandleCreateRequestAsync(userId, request, cancellationToken);
         return Ok();
     }
@@ -67,7 +75,7 @@ public class VisaApplicationController(IVisaApplicationRequestsHandler visaAppli
     [Route("{applicationId:guid}")]
     public async Task<IActionResult> CloseApplication(Guid applicationId, CancellationToken cancellationToken)
     {
-        var userId = GetUserId();
+        var userId = userIdProvider.GetUserId();
         await visaApplicationRequestsHandler.HandleCloseRequestAsync(userId, applicationId, cancellationToken);
         return Ok();
     }

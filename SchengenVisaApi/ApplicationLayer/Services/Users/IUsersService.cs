@@ -1,7 +1,7 @@
-﻿using ApplicationLayer.Services.AuthServices.Requests;
+﻿using ApplicationLayer.Services.Users.Requests;
 using Domains.Users;
 
-namespace ApplicationLayer.Services.ApprovingAuthorities
+namespace ApplicationLayer.Services.Users
 {
     /// user accounts service
     public interface IUsersService
@@ -11,10 +11,9 @@ namespace ApplicationLayer.Services.ApprovingAuthorities
         Task<List<User>> GetAuthoritiesAccountsAsync(CancellationToken cancellationToken);
 
         /// Changes authentication data for an account
-        /// <param name="userId">identifier of account</param>
-        /// <param name="data">request data with new email and password</param>
+        /// <param name="request"> Request object with identifier of user and new authentication data</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        Task ChangeAccountAuthDataAsync(Guid userId, RegisterRequest data, CancellationToken cancellationToken);
+        Task ChangeAccountAuthDataAsync(ChangeUserAuthDataRequest request, CancellationToken cancellationToken);
 
         /// Removes user account
         /// <param name="userId">Identifier of account</param>

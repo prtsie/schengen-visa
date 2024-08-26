@@ -1,7 +1,9 @@
-﻿using ApplicationLayer.Services.ApprovingAuthorities;
+﻿using System.Reflection;
 using ApplicationLayer.Services.AuthServices.LoginService;
 using ApplicationLayer.Services.AuthServices.RegisterService;
+using ApplicationLayer.Services.Users;
 using ApplicationLayer.Services.VisaApplications.Handlers;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ApplicationLayer;
@@ -12,6 +14,8 @@ public static class DependencyInjection
     /// Add services for Application layer
     public static IServiceCollection AddApplicationLayer(this IServiceCollection services, bool isDevelopment = false)
     {
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
         services.AddScoped<IVisaApplicationRequestsHandler, VisaApplicationRequestsHandler>();
 
         services.AddScoped<IRegisterService, RegisterService>();

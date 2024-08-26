@@ -18,7 +18,8 @@ public sealed class ApplicantsRepository(IGenericReader reader, IGenericWriter w
             .Include(a => a.PlaceOfWork);
     }
 
-    async Task<Applicant> IApplicantsRepository.FindByUserIdAsync(Guid userId, CancellationToken cancellationToken)
+    /// <inheritdoc cref="IApplicantsRepository.FindByUserIdAsync"/>
+    public async Task<Applicant> FindByUserIdAsync(Guid userId, CancellationToken cancellationToken)
     {
         var result = await LoadDomain().SingleOrDefaultAsync(a => a.UserId == userId, cancellationToken);
         return result ?? throw new ApplicantNotFoundByUserIdException();
@@ -28,5 +29,11 @@ public sealed class ApplicantsRepository(IGenericReader reader, IGenericWriter w
     {
         var result = await base.LoadDomain().SingleOrDefaultAsync(a => a.UserId == userId, cancellationToken);
         return result?.Id ?? throw new ApplicantNotFoundByUserIdException();
+    }
+
+    async Task<bool> IApplicantsRepository.IsApplicantNonResidentByUserId(Guid userId, CancellationToken cancellationToken)
+    {
+        var applicant = await FindByUserIdAsync(userId, cancellationToken);
+        return applicant.IsNonResident;
     }
 }
