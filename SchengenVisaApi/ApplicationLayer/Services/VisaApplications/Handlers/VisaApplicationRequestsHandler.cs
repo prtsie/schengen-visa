@@ -79,11 +79,9 @@ public class VisaApplicationRequestsHandler(
         var application = await applications.GetByIdAsync(applicationId, cancellationToken);
         if (application.Status != ApplicationStatus.Pending)
         {
-            //todo refactor exceptions
             throw new ApplicationAlreadyProcessedException();
         }
 
-        //todo handle exception or not
         ApplicationStatus statusToSet = status switch
         {
             AuthorityRequestStatuses.Approved => ApplicationStatus.Approved,
