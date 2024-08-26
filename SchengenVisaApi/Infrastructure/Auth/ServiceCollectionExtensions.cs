@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.Auth;
 
-public static class ServiceCollectionsExtensions
+public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddTokenGenerator(this IServiceCollection services, TokenGeneratorOptions options)
     {
