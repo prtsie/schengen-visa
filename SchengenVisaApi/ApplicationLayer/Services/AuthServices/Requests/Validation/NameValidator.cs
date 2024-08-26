@@ -2,12 +2,12 @@
 using Domains.ApplicantDomain;
 using FluentValidation;
 
-namespace ApplicationLayer.Services.AuthServices.Requests.Validation
+namespace ApplicationLayer.Services.AuthServices.Requests.Validation;
+
+public class NameValidator : AbstractValidator<Name>
 {
-    public class NameValidator : AbstractValidator<Name>
+    public NameValidator()
     {
-        public NameValidator()
-        {
             RuleFor(m => m.FirstName)
                 .NotEmpty()
                 .WithMessage("First Name can not be empty")
@@ -24,5 +24,4 @@ namespace ApplicationLayer.Services.AuthServices.Requests.Validation
                 .MaximumLength(ConfigurationConstraints.NameLength)
                 .WithMessage($"Patronymic length must be less than {ConfigurationConstraints.NameLength}");
         }
-    }
 }

@@ -3,12 +3,12 @@ using ApplicationLayer.Services.AuthServices.Requests;
 using AutoMapper;
 using Domains.ApplicantDomain;
 
-namespace Infrastructure.Automapper.Profiles
+namespace Infrastructure.Automapper.Profiles;
+
+public class ApplicantProfile : Profile
 {
-    public class ApplicantProfile : Profile
+    public ApplicantProfile()
     {
-        public ApplicantProfile()
-        {
             CreateMap<Applicant, ApplicantModel>(MemberList.Destination);
 
             CreateMap<RegisterApplicantRequest, Applicant>(MemberList.Destination)
@@ -16,5 +16,4 @@ namespace Infrastructure.Automapper.Profiles
                 .ForMember(a => a.Name,
                     opts => opts.MapFrom(r => r.ApplicantName));
         }
-    }
 }

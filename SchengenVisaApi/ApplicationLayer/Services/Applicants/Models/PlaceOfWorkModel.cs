@@ -1,16 +1,15 @@
 ﻿using Domains.ApplicantDomain;
 
-namespace ApplicationLayer.Services.Applicants.Models
+namespace ApplicationLayer.Services.Applicants.Models;
+
+public class PlaceOfWorkModel
 {
-    public class PlaceOfWorkModel
-    {
-        /// Name of hirer
-        public string Name { get; set; } = null!;
+    /// Name of hirer
+    public string Name { get; set; } = null!;
 
-        /// Address of hirer
-        public Address Address { get; set; } = null!;
+    /// Address of hirer
+    public Address Address { get; set; } = null!;
 
-        /// Phone number of hirer
-        public string PhoneNum { get; set; } = null!;
-    }
+    /// Phone number of hirer
+    public string PhoneNum { get; set; } = null!;
 }

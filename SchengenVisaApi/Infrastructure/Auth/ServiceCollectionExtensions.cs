@@ -3,12 +3,12 @@ using ApplicationLayer.InfrastructureServicesInterfaces;
 using ApplicationLayer.Services.AuthServices.NeededServices;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Infrastructure.Auth
+namespace Infrastructure.Auth;
+
+public static class ServiceCollectionExtensions
 {
-    public static class ServiceCollectionsExtensions
+    public static IServiceCollection AddTokenGenerator(this IServiceCollection services, TokenGeneratorOptions options)
     {
-        public static IServiceCollection AddTokenGenerator(this IServiceCollection services, TokenGeneratorOptions options)
-        {
             services.AddSingleton<JwtSecurityTokenHandler>();
             services.AddSingleton<ITokenGenerator, TokenGenerator>(provider =>
             {
@@ -20,5 +20,4 @@ namespace Infrastructure.Auth
 
             return services;
         }
-    }
 }

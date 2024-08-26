@@ -1,8 +1,7 @@
-﻿namespace ApplicationLayer.Services.VisaApplications.Models
+﻿namespace ApplicationLayer.Services.VisaApplications.Models;
+
+public enum AuthorityRequestStatuses
 {
-    public enum AuthorityRequestStatuses
-    {
-        Approved,
-        Rejected
-    }
+    Approved,
+    Rejected
 }

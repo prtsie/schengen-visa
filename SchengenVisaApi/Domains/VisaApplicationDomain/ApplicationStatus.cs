@@ -1,12 +1,11 @@
-﻿namespace Domains.VisaApplicationDomain
+﻿namespace Domains.VisaApplicationDomain;
+
+public enum ApplicationStatus
 {
-    public enum ApplicationStatus
-    {
-        /// Waits for approve
-        Pending,
-        Approved,
-        Rejected,
-        /// Closed by applicant
-        Closed
-    }
+    /// Waits for approve
+    Pending,
+    Approved,
+    Rejected,
+    /// Closed by applicant
+    Closed
 }

@@ -3,12 +3,12 @@ using ApplicationLayer.Services.AuthServices.NeededServices;
 using Domains;
 using FluentValidation;
 
-namespace ApplicationLayer.Services.AuthServices.Requests.Validation
+namespace ApplicationLayer.Services.AuthServices.Requests.Validation;
+
+public class AuthDataValidator : AbstractValidator<AuthData>
 {
-    public class AuthDataValidator : AbstractValidator<AuthData>
+    public AuthDataValidator(IUsersRepository users)
     {
-        public AuthDataValidator(IUsersRepository users)
-        {
             RuleFor(d => d.Email)
                 .NotEmpty()
                 .WithMessage("Email can not be empty")
@@ -28,5 +28,4 @@ namespace ApplicationLayer.Services.AuthServices.Requests.Validation
                 .MaximumLength(ConfigurationConstraints.PasswordLength)
                 .WithMessage($"Password length must be less than {ConfigurationConstraints.PasswordLength}");
         }
-    }
 }

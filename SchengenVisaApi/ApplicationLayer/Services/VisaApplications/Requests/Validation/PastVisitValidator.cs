@@ -3,12 +3,12 @@ using Domains;
 using Domains.VisaApplicationDomain;
 using FluentValidation;
 
-namespace ApplicationLayer.Services.VisaApplications.Requests.Validation
+namespace ApplicationLayer.Services.VisaApplications.Requests.Validation;
+
+public class PastVisitValidator : AbstractValidator<PastVisit>
 {
-    public class PastVisitValidator : AbstractValidator<PastVisit>
+    public PastVisitValidator(IDateTimeProvider dateTimeProvider)
     {
-        public PastVisitValidator(IDateTimeProvider dateTimeProvider)
-        {
             RuleFor(v => v.StartDate)
                 .NotEmpty()
                 .WithMessage("Start date of past visit can not be empty")
@@ -27,5 +27,4 @@ namespace ApplicationLayer.Services.VisaApplications.Requests.Validation
                 .MaximumLength(ConfigurationConstraints.CountryNameLength)
                 .WithMessage($"Destination Country of past visit length must be less than {ConfigurationConstraints.CountryNameLength}");
         }
-    }
 }

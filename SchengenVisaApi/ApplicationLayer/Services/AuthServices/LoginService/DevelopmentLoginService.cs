@@ -2,12 +2,12 @@
 using ApplicationLayer.Services.AuthServices.NeededServices;
 using Domains.Users;
 
-namespace ApplicationLayer.Services.AuthServices.LoginService
+namespace ApplicationLayer.Services.AuthServices.LoginService;
+
+public class DevelopmentLoginService(IUsersRepository users, ITokenGenerator tokenGenerator) : ILoginService
 {
-    public class DevelopmentLoginService(IUsersRepository users, ITokenGenerator tokenGenerator) : ILoginService
+    async Task<string> ILoginService.LoginAsync(string email, string password, CancellationToken cancellationToken)
     {
-        async Task<string> ILoginService.LoginAsync(string email, string password, CancellationToken cancellationToken)
-        {
             if (email == "admin@mail.ru" && password == "admin")
             {
                 var admin = new User { Role = Role.Admin };
@@ -23,5 +23,4 @@ namespace ApplicationLayer.Services.AuthServices.LoginService
 
             return tokenGenerator.CreateToken(user);
         }
-    }
 }

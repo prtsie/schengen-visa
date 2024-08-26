@@ -3,12 +3,12 @@ using Domains;
 using Domains.ApplicantDomain;
 using FluentValidation;
 
-namespace ApplicationLayer.Services.AuthServices.Requests.Validation
+namespace ApplicationLayer.Services.AuthServices.Requests.Validation;
+
+public class PassportValidator : AbstractValidator<Passport>
 {
-    public class PassportValidator : AbstractValidator<Passport>
+    public PassportValidator(IDateTimeProvider dateTimeProvider)
     {
-        public PassportValidator(IDateTimeProvider dateTimeProvider)
-        {
             RuleFor(r => r.Issuer)
                 .NotEmpty()
                 .WithMessage("Passport issuer can not be empty")
@@ -33,5 +33,4 @@ namespace ApplicationLayer.Services.AuthServices.Requests.Validation
                 .LessThanOrEqualTo(dateTimeProvider.Now())
                 .WithMessage("Passport issue date must be in past");
         }
-    }
 }

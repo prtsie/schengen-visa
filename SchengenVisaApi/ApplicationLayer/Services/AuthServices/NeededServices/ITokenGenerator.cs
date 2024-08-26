@@ -1,9 +1,10 @@
 ﻿using Domains.Users;
 
-namespace ApplicationLayer.Services.AuthServices.NeededServices
+namespace ApplicationLayer.Services.AuthServices.NeededServices;
+
+/// Generates jwt-tokens
+public interface ITokenGenerator
 {
-    public interface ITokenGenerator
-    {
-        string CreateToken(User user);
-    }
+    /// returns jwt-token for specific user
+    string CreateToken(User user);
 }

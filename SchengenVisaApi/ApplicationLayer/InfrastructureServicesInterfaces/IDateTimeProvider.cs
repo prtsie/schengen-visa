@@ -1,8 +1,7 @@
-﻿namespace ApplicationLayer.InfrastructureServicesInterfaces
+﻿namespace ApplicationLayer.InfrastructureServicesInterfaces;
+
+public interface IDateTimeProvider
 {
-    public interface IDateTimeProvider
-    {
-        /// Returns current date and time
-        DateTime Now();
-    }
+    /// Returns current date and time
+    DateTime Now();
 }
