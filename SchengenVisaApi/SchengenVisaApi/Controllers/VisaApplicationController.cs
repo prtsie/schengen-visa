@@ -1,4 +1,3 @@
-using ApplicationLayer.InfrastructureServicesInterfaces;
 using ApplicationLayer.Services.VisaApplications.Handlers;
 using ApplicationLayer.Services.VisaApplications.Models;
 using ApplicationLayer.Services.VisaApplications.Requests;
@@ -14,7 +13,6 @@ namespace SchengenVisaApi.Controllers;
 [Route("visaApplications")]
 public class VisaApplicationController(
     IVisaApplicationRequestsHandler visaApplicationRequestsHandler,
-    IUserIdProvider userIdProvider,
     IValidator<VisaApplicationCreateRequest> visaApplicationCreateRequestValidator) : ControllerBase
 {
     /// <summary> Returns all applications from DB </summary>
@@ -41,8 +39,7 @@ public class VisaApplicationController(
     [Route("OfApplicant")]
     public async Task<IActionResult> GetForApplicant(CancellationToken cancellationToken)
     {
-        var userId = userIdProvider.GetUserId();
-        var result = await visaApplicationRequestsHandler.GetForApplicantAsync(userId, cancellationToken);
+        var result = await visaApplicationRequestsHandler.GetForApplicantAsync(cancellationToken);
         return Ok(result);
     }
 
@@ -59,8 +56,7 @@ public class VisaApplicationController(
     {
         await visaApplicationCreateRequestValidator.ValidateAndThrowAsync(request, cancellationToken);
 
-        var userId = userIdProvider.GetUserId();
-        await visaApplicationRequestsHandler.HandleCreateRequestAsync(userId, request, cancellationToken);
+        await visaApplicationRequestsHandler.HandleCreateRequestAsync(request, cancellationToken);
         return Ok();
     }
 
@@ -75,8 +71,7 @@ public class VisaApplicationController(
     [Route("{applicationId:guid}")]
     public async Task<IActionResult> CloseApplication(Guid applicationId, CancellationToken cancellationToken)
     {
-        var userId = userIdProvider.GetUserId();
-        await visaApplicationRequestsHandler.HandleCloseRequestAsync(userId, applicationId, cancellationToken);
+        await visaApplicationRequestsHandler.HandleCloseRequestAsync(applicationId, cancellationToken);
         return Ok();
     }
 

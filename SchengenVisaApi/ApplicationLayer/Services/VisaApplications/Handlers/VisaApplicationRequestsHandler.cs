@@ -16,7 +16,8 @@ public class VisaApplicationRequestsHandler(
     IApplicantsRepository applicants,
     IUnitOfWork unitOfWork,
     IMapper mapper,
-    IDateTimeProvider dateTimeProvider) : IVisaApplicationRequestsHandler
+    IDateTimeProvider dateTimeProvider,
+    IUserIdProvider userIdProvider) : IVisaApplicationRequestsHandler
 {
     async Task<List<VisaApplicationModelForAuthority>> IVisaApplicationRequestsHandler.GetAllAsync(CancellationToken cancellationToken)
     {
@@ -40,16 +41,16 @@ public class VisaApplicationRequestsHandler(
         return model;
     }
 
-    public async Task<List<VisaApplicationModelForApplicant>> GetForApplicantAsync(Guid userId, CancellationToken cancellationToken)
+    public async Task<List<VisaApplicationModelForApplicant>> GetForApplicantAsync(CancellationToken cancellationToken)
     {
-        var applicantId = await applicants.GetApplicantIdByUserId(userId, cancellationToken);
+        var applicantId = await applicants.GetApplicantIdByUserId(userIdProvider.GetUserId(), cancellationToken);
         var visaApplications = await applications.GetOfApplicantAsync(applicantId, cancellationToken);
         return mapper.Map<List<VisaApplicationModelForApplicant>>(visaApplications);
     }
 
-    public async Task HandleCreateRequestAsync(Guid userId, VisaApplicationCreateRequest request, CancellationToken cancellationToken)
+    public async Task HandleCreateRequestAsync(VisaApplicationCreateRequest request, CancellationToken cancellationToken)
     {
-        var applicant = await applicants.FindByUserIdAsync(userId, cancellationToken);
+        var applicant = await applicants.FindByUserIdAsync(userIdProvider.GetUserId(), cancellationToken);
 
         var visaApplication = mapper.Map<VisaApplication>(request);
         visaApplication.RequestDate = dateTimeProvider.Now();
@@ -60,9 +61,9 @@ public class VisaApplicationRequestsHandler(
         await unitOfWork.SaveAsync(cancellationToken);
     }
 
-    async Task IVisaApplicationRequestsHandler.HandleCloseRequestAsync(Guid userId, Guid applicationId, CancellationToken cancellationToken)
+    async Task IVisaApplicationRequestsHandler.HandleCloseRequestAsync(Guid applicationId, CancellationToken cancellationToken)
     {
-        var applicantId = await applicants.GetApplicantIdByUserId(userId, cancellationToken);
+        var applicantId = await applicants.GetApplicantIdByUserId(userIdProvider.GetUserId(), cancellationToken);
         var application = await applications.GetByApplicantAndApplicationIdAsync(applicantId, applicationId, cancellationToken);
 
         application.Status = ApplicationStatus.Closed;

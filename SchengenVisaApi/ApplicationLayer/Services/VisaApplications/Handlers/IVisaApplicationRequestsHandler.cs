@@ -9,13 +9,13 @@ public interface IVisaApplicationRequestsHandler
     Task<List<VisaApplicationModelForAuthority>> GetAllAsync(CancellationToken cancellationToken);
 
     /// Returns all applications of one applicant
-    Task<List<VisaApplicationModelForApplicant>> GetForApplicantAsync(Guid userId, CancellationToken cancellationToken);
+    Task<List<VisaApplicationModelForApplicant>> GetForApplicantAsync(CancellationToken cancellationToken);
 
     /// Creates application for applicant with specific user identifier
-    Task HandleCreateRequestAsync(Guid userId, VisaApplicationCreateRequest request, CancellationToken cancellationToken);
+    Task HandleCreateRequestAsync(VisaApplicationCreateRequest request, CancellationToken cancellationToken);
 
     /// Sets application status to closed
-    Task HandleCloseRequestAsync(Guid userId, Guid applicationId, CancellationToken cancellationToken);
+    Task HandleCloseRequestAsync(Guid applicationId, CancellationToken cancellationToken);
 
     Task SetApplicationStatusFromAuthorityAsync(Guid applicationId, AuthorityRequestStatuses status, CancellationToken cancellationToken);
 }
