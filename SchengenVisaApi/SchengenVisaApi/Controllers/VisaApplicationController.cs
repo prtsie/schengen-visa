@@ -2,6 +2,7 @@ using ApplicationLayer.InfrastructureServicesInterfaces;
 using ApplicationLayer.Services.VisaApplications.Handlers;
 using ApplicationLayer.Services.VisaApplications.Models;
 using ApplicationLayer.Services.VisaApplications.Requests;
+using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SchengenVisaApi.Common;
@@ -13,7 +14,8 @@ namespace SchengenVisaApi.Controllers;
 [Route("visaApplications")]
 public class VisaApplicationController(
     IVisaApplicationRequestsHandler visaApplicationRequestsHandler,
-    IUserIdProvider userIdProvider) : ControllerBase
+    IUserIdProvider userIdProvider,
+    IValidator<VisaApplicationCreateRequest> visaApplicationCreateRequestValidator) : ControllerBase
 {
     /// <summary> Returns all applications from DB </summary>
     /// <remarks> Accessible only for approving authorities </remarks>
@@ -51,9 +53,12 @@ public class VisaApplicationController(
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [Authorize(policy: PolicyConstants.ApplicantPolicy)]
     public async Task<IActionResult> Create(VisaApplicationCreateRequest request, CancellationToken cancellationToken)
     {
+        await visaApplicationCreateRequestValidator.ValidateAndThrowAsync(request, cancellationToken);
+
         var userId = userIdProvider.GetUserId();
         await visaApplicationRequestsHandler.HandleCreateRequestAsync(userId, request, cancellationToken);
         return Ok();

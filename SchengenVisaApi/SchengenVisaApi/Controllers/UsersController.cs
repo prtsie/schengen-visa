@@ -26,6 +26,7 @@ namespace SchengenVisaApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Route("register")]
         public async Task<IActionResult> Register(RegisterApplicantRequest request, CancellationToken cancellationToken)
         {
@@ -42,6 +43,7 @@ namespace SchengenVisaApi.Controllers
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Route("authorities")]
         [Authorize(policy: PolicyConstants.AdminPolicy)]
         public async Task<IActionResult> RegisterAuthority(RegisterRequest request, CancellationToken cancellationToken)
@@ -84,6 +86,7 @@ namespace SchengenVisaApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Route("authorities/{authorityAccountId:guid}")]
         [Authorize(policy: PolicyConstants.AdminPolicy)]
         public async Task<IActionResult> ChangeAuthorityAuthData(Guid authorityAccountId, AuthData authData, CancellationToken cancellationToken)

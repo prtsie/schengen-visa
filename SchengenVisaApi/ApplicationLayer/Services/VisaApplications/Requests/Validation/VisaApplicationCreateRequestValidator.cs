@@ -16,19 +16,12 @@ namespace ApplicationLayer.Services.VisaApplications.Requests.Validation
             IApplicantsRepository applicants,
             IUserIdProvider userIdProvider)
         {
-            //todo fix
-            WhenAsync(
-                async (_, ct) =>
-                {
-                    return await applicants.IsApplicantNonResidentByUserId(userIdProvider.GetUserId(), ct);
-                },
-                () =>
-                {
-                    RuleFor(r => r.ReentryPermit)
-                        .NotEmpty()
-                        .WithMessage("Non-residents must provide re-entry permission")
-                        .SetValidator(reentryPermitValidator);
-                });
+            RuleFor(r => r.ReentryPermit)
+                .NotEmpty()
+                .WithMessage("Non-residents must provide re-entry permission")
+                .SetValidator(reentryPermitValidator)
+                .WhenAsync(async (r, ct) =>
+                    await applicants.IsApplicantNonResidentByUserId(userIdProvider.GetUserId(), ct));
 
             RuleFor(r => r.DestinationCountry)
                 .NotEmpty()
@@ -41,8 +34,6 @@ namespace ApplicationLayer.Services.VisaApplications.Requests.Validation
                 .IsInEnum();
 
             RuleFor(r => r.ValidDaysRequested)
-                .NotEmpty()
-                .WithMessage("Valid days requested can not be empty")
                 .GreaterThan(0)
                 .WithMessage($"Valid days requested should be positive number and less than {ConfigurationConstraints.MaxValidDays}")
                 .LessThanOrEqualTo(ConfigurationConstraints.MaxValidDays)
