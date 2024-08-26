@@ -20,7 +20,7 @@ public class VisaApplicationCreateRequestValidator : AbstractValidator<VisaAppli
             .NotEmpty()
             .WithMessage("Non-residents must provide re-entry permission")
             .SetValidator(reentryPermitValidator)
-            .WhenAsync(async (r, ct) =>
+            .WhenAsync(async (_, ct) =>
                 await applicants.IsApplicantNonResidentByUserId(userIdProvider.GetUserId(), ct));
 
         RuleFor(r => r.DestinationCountry)
