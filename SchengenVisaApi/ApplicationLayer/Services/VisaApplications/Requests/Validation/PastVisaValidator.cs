@@ -2,12 +2,12 @@
 using Domains.VisaApplicationDomain;
 using FluentValidation;
 
-namespace ApplicationLayer.Services.VisaApplications.Requests.Validation
+namespace ApplicationLayer.Services.VisaApplications.Requests.Validation;
+
+public class PastVisaValidator : AbstractValidator<PastVisa>
 {
-    public class PastVisaValidator : AbstractValidator<PastVisa>
+    public PastVisaValidator(IDateTimeProvider dateTimeProvider)
     {
-        public PastVisaValidator(IDateTimeProvider dateTimeProvider)
-        {
             RuleFor(v => v.ExpirationDate)
                 .NotEmpty()
                 .WithMessage("Expiration date of past visa can not be empty")
@@ -24,5 +24,4 @@ namespace ApplicationLayer.Services.VisaApplications.Requests.Validation
                 .NotEmpty()
                 .WithMessage("Name of past visa can not be empty");
         }
-    }
 }

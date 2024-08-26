@@ -1,10 +1,9 @@
 ﻿using ApplicationLayer.InfrastructureServicesInterfaces;
 
-namespace Infrastructure.Common
+namespace Infrastructure.Common;
+
+/// Implements <see cref="IDateTimeProvider"/>
+public class DateTimeProvider : IDateTimeProvider
 {
-    /// Implements <see cref="IDateTimeProvider"/>
-    public class DateTimeProvider : IDateTimeProvider
-    {
-        DateTime IDateTimeProvider.Now() => DateTime.Now;
-    }
+    DateTime IDateTimeProvider.Now() => DateTime.Now;
 }

@@ -6,37 +6,36 @@ using AutoMapper;
 using Domains.ApplicantDomain;
 using Domains.Users;
 
-namespace ApplicationLayer.Services.AuthServices.RegisterService
+namespace ApplicationLayer.Services.AuthServices.RegisterService;
+
+/// <inheritdoc cref="IRegisterService"/>
+public class RegisterService(
+    IUsersRepository users,
+    IApplicantsRepository applicants,
+    IUnitOfWork unitOfWork,
+    IMapper mapper) : IRegisterService
 {
-    /// <inheritdoc cref="IRegisterService"/>
-    public class RegisterService(
-        IUsersRepository users,
-        IApplicantsRepository applicants,
-        IUnitOfWork unitOfWork,
-        IMapper mapper) : IRegisterService
+    async Task IRegisterService.RegisterApplicant(RegisterApplicantRequest request, CancellationToken cancellationToken)
     {
-        async Task IRegisterService.RegisterApplicant(RegisterApplicantRequest request, CancellationToken cancellationToken)
-        {
-            var user = mapper.Map<User>(request.AuthData);
-            user.Role = Role.Applicant;
+        var user = mapper.Map<User>(request.AuthData);
+        user.Role = Role.Applicant;
 
-            var applicant = mapper.Map<Applicant>(request);
-            applicant.UserId = user.Id;
+        var applicant = mapper.Map<Applicant>(request);
+        applicant.UserId = user.Id;
 
-            await users.AddAsync(user, cancellationToken);
-            await applicants.AddAsync(applicant, cancellationToken);
+        await users.AddAsync(user, cancellationToken);
+        await applicants.AddAsync(applicant, cancellationToken);
 
-            await unitOfWork.SaveAsync(cancellationToken);
-        }
+        await unitOfWork.SaveAsync(cancellationToken);
+    }
 
-        async Task IRegisterService.RegisterAuthority(RegisterRequest request, CancellationToken cancellationToken)
-        {
-            var user = mapper.Map<User>(request.AuthData);
-            user.Role = Role.ApprovingAuthority;
+    async Task IRegisterService.RegisterAuthority(RegisterRequest request, CancellationToken cancellationToken)
+    {
+        var user = mapper.Map<User>(request.AuthData);
+        user.Role = Role.ApprovingAuthority;
 
-            await users.AddAsync(user, cancellationToken);
+        await users.AddAsync(user, cancellationToken);
 
-            await unitOfWork.SaveAsync(cancellationToken);
-        }
+        await unitOfWork.SaveAsync(cancellationToken);
     }
 }

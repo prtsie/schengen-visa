@@ -2,12 +2,12 @@
 using Domains;
 using FluentValidation;
 
-namespace ApplicationLayer.Services.AuthServices.Requests.Validation
+namespace ApplicationLayer.Services.AuthServices.Requests.Validation;
+
+public class PlaceOfWorkModelValidator : AbstractValidator<PlaceOfWorkModel>
 {
-    public class PlaceOfWorkModelValidator : AbstractValidator<PlaceOfWorkModel>
+    public PlaceOfWorkModelValidator()
     {
-        public PlaceOfWorkModelValidator()
-        {
             RuleFor(p => p.Name)
                 .NotEmpty()
                 .WithMessage("Place of work name can not be empty")
@@ -46,5 +46,4 @@ namespace ApplicationLayer.Services.AuthServices.Requests.Validation
                 .MaximumLength(ConfigurationConstraints.CountryNameLength)
                 .WithMessage($"Building of place of work length must be less than {ConfigurationConstraints.BuildingNumberLength}");
         }
-    }
 }

@@ -1,9 +1,8 @@
 ﻿using Domains.Users;
 
-namespace ApplicationLayer.Services.AuthServices.NeededServices
+namespace ApplicationLayer.Services.AuthServices.NeededServices;
+
+public interface ITokenGenerator
 {
-    public interface ITokenGenerator
-    {
-        string CreateToken(User user);
-    }
+    string CreateToken(User user);
 }

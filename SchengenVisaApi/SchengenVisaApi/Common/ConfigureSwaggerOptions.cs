@@ -2,13 +2,13 @@
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace SchengenVisaApi.Common
+namespace SchengenVisaApi.Common;
+
+/// Adds auth for swagger
+public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
 {
-    /// Adds auth for swagger
-    public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
+    void IConfigureOptions<SwaggerGenOptions>.Configure(SwaggerGenOptions options)
     {
-        void IConfigureOptions<SwaggerGenOptions>.Configure(SwaggerGenOptions options)
-        {
             options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
                 In = ParameterLocation.Header,
@@ -34,5 +34,4 @@ namespace SchengenVisaApi.Common
                 }
             });
         }
-    }
 }

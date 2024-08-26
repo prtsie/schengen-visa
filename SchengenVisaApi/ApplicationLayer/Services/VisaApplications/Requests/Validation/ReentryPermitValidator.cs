@@ -3,12 +3,12 @@ using Domains;
 using Domains.VisaApplicationDomain;
 using FluentValidation;
 
-namespace ApplicationLayer.Services.VisaApplications.Requests.Validation
+namespace ApplicationLayer.Services.VisaApplications.Requests.Validation;
+
+public class ReentryPermitValidator : AbstractValidator<ReentryPermit?>
 {
-    public class ReentryPermitValidator : AbstractValidator<ReentryPermit?>
+    public ReentryPermitValidator(IDateTimeProvider dateTimeProvider)
     {
-        public ReentryPermitValidator(IDateTimeProvider dateTimeProvider)
-        {
             RuleFor(p => p!.Number)
                 .NotEmpty()
                 .WithMessage("Re-entry permit number can not be empty")
@@ -21,5 +21,4 @@ namespace ApplicationLayer.Services.VisaApplications.Requests.Validation
                 .GreaterThan(dateTimeProvider.Now())
                 .WithMessage("Re-entry permit must not be expired");
         }
-    }
 }

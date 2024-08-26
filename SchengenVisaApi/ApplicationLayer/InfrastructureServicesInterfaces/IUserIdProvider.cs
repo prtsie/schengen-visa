@@ -1,8 +1,7 @@
-﻿namespace ApplicationLayer.InfrastructureServicesInterfaces
+﻿namespace ApplicationLayer.InfrastructureServicesInterfaces;
+
+public interface IUserIdProvider
 {
-    public interface IUserIdProvider
-    {
-        /// Returns identifier of authenticated user who sent the request
-        Guid GetUserId();
-    }
+    /// Returns identifier of authenticated user who sent the request
+    Guid GetUserId();
 }

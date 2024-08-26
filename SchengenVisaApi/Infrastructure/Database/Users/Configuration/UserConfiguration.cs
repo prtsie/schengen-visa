@@ -3,12 +3,12 @@ using Domains.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Database.Users.Configuration
+namespace Infrastructure.Database.Users.Configuration;
+
+public class UserConfiguration : IEntityTypeConfiguration<User>
 {
-    public class UserConfiguration : IEntityTypeConfiguration<User>
+    public void Configure(EntityTypeBuilder<User> entity)
     {
-        public void Configure(EntityTypeBuilder<User> entity)
-        {
             entity.Property(u => u.Email)
                 .IsUnicode(false)
                 .HasMaxLength(ConfigurationConstraints.EmailLength);
@@ -19,5 +19,4 @@ namespace Infrastructure.Database.Users.Configuration
                 .IsUnicode(false)
                 .HasMaxLength(ConfigurationConstraints.PasswordLength);
         }
-    }
 }

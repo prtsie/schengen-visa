@@ -5,17 +5,17 @@ using Domains;
 using Domains.ApplicantDomain;
 using FluentValidation;
 
-namespace ApplicationLayer.Services.AuthServices.Requests.Validation
+namespace ApplicationLayer.Services.AuthServices.Requests.Validation;
+
+public class RegisterApplicantRequestValidator : AbstractValidator<RegisterApplicantRequest>
 {
-    public class RegisterApplicantRequestValidator : AbstractValidator<RegisterApplicantRequest>
+    public RegisterApplicantRequestValidator(
+        IDateTimeProvider dateTimeProvider,
+        IValidator<Name> nameValidator,
+        IValidator<AuthData> authDataValidator,
+        IValidator<Passport> passportValidator,
+        IValidator<PlaceOfWorkModel> placeOfWorkModelValidator)
     {
-        public RegisterApplicantRequestValidator(
-            IDateTimeProvider dateTimeProvider,
-            IValidator<Name> nameValidator,
-            IValidator<AuthData> authDataValidator,
-            IValidator<Passport> passportValidator,
-            IValidator<PlaceOfWorkModel> placeOfWorkModelValidator)
-        {
             RuleFor(r => r.AuthData)
                 .SetValidator(authDataValidator);
 
@@ -74,5 +74,4 @@ namespace ApplicationLayer.Services.AuthServices.Requests.Validation
             RuleFor(r => r.PlaceOfWork)
                 .SetValidator(placeOfWorkModelValidator);
         }
-    }
 }

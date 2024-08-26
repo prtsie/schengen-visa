@@ -3,12 +3,12 @@ using ApplicationLayer.Services.VisaApplications.Requests;
 using AutoMapper;
 using Domains.VisaApplicationDomain;
 
-namespace Infrastructure.Automapper.Profiles
+namespace Infrastructure.Automapper.Profiles;
+
+public class VisaApplicationProfile : Profile
 {
-    public class VisaApplicationProfile : Profile
+    public VisaApplicationProfile()
     {
-        public VisaApplicationProfile()
-        {
             CreateMap<VisaApplication, VisaApplicationModelForApplicant>(MemberList.Destination);
 
             CreateMap<VisaApplication, VisaApplicationModelForAuthority>(MemberList.Destination)
@@ -21,5 +21,4 @@ namespace Infrastructure.Automapper.Profiles
                 .ForMember(va => va.ApplicantId,
                 opts => opts.Ignore());
         }
-    }
 }

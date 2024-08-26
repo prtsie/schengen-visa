@@ -3,12 +3,12 @@ using Domains;
 using Domains.VisaApplicationDomain;
 using FluentValidation;
 
-namespace ApplicationLayer.Services.VisaApplications.Requests.Validation
+namespace ApplicationLayer.Services.VisaApplications.Requests.Validation;
+
+public class PermissionToDestCountryValidator : AbstractValidator<PermissionToDestCountry?>
 {
-    public class PermissionToDestCountryValidator : AbstractValidator<PermissionToDestCountry?>
+    public PermissionToDestCountryValidator(IDateTimeProvider dateTimeProvider)
     {
-        public PermissionToDestCountryValidator(IDateTimeProvider dateTimeProvider)
-        {
             RuleFor(p => p!.ExpirationDate)
                 .NotEmpty()
                 .WithMessage("Expiration date of permission to destination Country can not be empty")
@@ -21,5 +21,4 @@ namespace ApplicationLayer.Services.VisaApplications.Requests.Validation
                 .MaximumLength(ConfigurationConstraints.IssuerNameLength)
                 .WithMessage($"Issuer of permission to destination Country length must be less than {ConfigurationConstraints.IssuerNameLength}");
         }
-    }
 }
