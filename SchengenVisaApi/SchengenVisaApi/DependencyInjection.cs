@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json.Serialization;
 using ApplicationLayer;
 using Domains.Users;
 using Infrastructure;
@@ -42,7 +43,8 @@ public static class DependencyInjection
 
         services.AddProblemDetails();
 
-        services.AddControllers(opts => opts.Filters.Add<GlobalExceptionsFilter>());
+        services.AddControllers(opts => opts.Filters.Add<GlobalExceptionsFilter>())
+            .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
     }
 
     /// Adds authentication, authorization and token generator
@@ -95,6 +97,9 @@ public static class DependencyInjection
         {
             var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+
+            options.CustomOperationIds(apiDescription =>
+                apiDescription.TryGetMethodInfo(out MethodInfo methodInfo) ? methodInfo.Name : null);
         });
     }
 }
