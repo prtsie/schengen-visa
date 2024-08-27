@@ -8,21 +8,21 @@ using SchengenVisaApi.Common;
 
 namespace SchengenVisaApi.Controllers;
 
-/// <summary> Controller for <see cref="Domains.VisaApplicationDomain"/> </summary>
+/// <summary> Controller for visa applications </summary>
 [ApiController]
 [Route("visaApplications")]
 public class VisaApplicationController(
     IVisaApplicationRequestsHandler visaApplicationRequestsHandler,
     IValidator<VisaApplicationCreateRequest> visaApplicationCreateRequestValidator) : ControllerBase
 {
-    /// <summary> Returns pending applications from DB </summary>
+    /// <summary> Returns pending applications </summary>
     /// <remarks> Accessible only for approving authorities </remarks>
     [HttpGet("pending")]
     [ProducesResponseType<List<VisaApplicationModelForAuthority>>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [Authorize(policy: PolicyConstants.ApprovingAuthorityPolicy)]
-    public async Task<IActionResult> Get(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetPending(CancellationToken cancellationToken)
     {
         var result = await visaApplicationRequestsHandler.GetPendingAsync(cancellationToken);
         return Ok(result);
@@ -30,20 +30,19 @@ public class VisaApplicationController(
 
     /// <summary> Returns all applications of one applicant </summary>
     /// <remarks> Returns applications of authorized applicant </remarks>
-    [HttpGet]
+    [HttpGet("ofApplicant")]
     [ProducesResponseType<List<VisaApplicationModelForApplicant>>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Authorize(policy: PolicyConstants.ApplicantPolicy)]
-    [Route("ofApplicant")]
     public async Task<IActionResult> GetForApplicant(CancellationToken cancellationToken)
     {
         var result = await visaApplicationRequestsHandler.GetForApplicantAsync(cancellationToken);
         return Ok(result);
     }
 
-    /// <summary> Adds new application to DB </summary>
+    /// <summary> Adds new application </summary>
     /// <remarks> Adds application for authorized applicant </remarks>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -52,7 +51,7 @@ public class VisaApplicationController(
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [Authorize(policy: PolicyConstants.ApplicantPolicy)]
-    public async Task<IActionResult> Create(VisaApplicationCreateRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateApplication(VisaApplicationCreateRequest request, CancellationToken cancellationToken)
     {
         await visaApplicationCreateRequestValidator.ValidateAndThrowAsync(request, cancellationToken);
 
@@ -62,28 +61,26 @@ public class VisaApplicationController(
 
     /// <summary> Sets application status to closed</summary>
     /// <remarks> Accessible only for applicant</remarks>
-    [HttpPatch]
+    [HttpPatch("{applicationId:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Authorize(policy: PolicyConstants.ApplicantPolicy)]
-    [Route("{applicationId:guid}")]
     public async Task<IActionResult> CloseApplication(Guid applicationId, CancellationToken cancellationToken)
     {
         await visaApplicationRequestsHandler.HandleCloseRequestAsync(applicationId, cancellationToken);
         return Ok();
     }
 
-    /// <summary> Allows approving authorities approve or reject applications</summary>
+    /// <summary> Approve or reject applications</summary>
     /// <remarks> Accessible only for authorities</remarks>
-    [HttpPatch]
+    [HttpPatch("approving/{applicationId:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Authorize(policy: PolicyConstants.ApprovingAuthorityPolicy)]
-    [Route("approving/{applicationId:guid}")]
     public async Task<IActionResult> SetStatusFromAuthority(Guid applicationId, AuthorityRequestStatuses status, CancellationToken cancellationToken)
     {
         await visaApplicationRequestsHandler.SetApplicationStatusFromAuthorityAsync(applicationId, status, cancellationToken);

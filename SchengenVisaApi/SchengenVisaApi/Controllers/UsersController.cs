@@ -22,7 +22,7 @@ public class UsersController(
     IValidator<RegisterApplicantRequest> registerApplicantRequestValidator,
     IValidator<AuthData> authDataValidator) : ControllerBase
 {
-    /// <summary> Adds applicant with user account to DB </summary>
+    /// <summary> Adds applicant with user account </summary>
     [HttpPost("register")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
@@ -35,7 +35,7 @@ public class UsersController(
         return Ok();
     }
 
-    /// <summary> Adds approving authority with user account to DB </summary>
+    /// <summary> Adds approving authority with user account </summary>
     ///<remarks> Accessible only for admins </remarks>
     [HttpPost("authorities")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -92,7 +92,7 @@ public class UsersController(
         return Ok();
     }
 
-    /// <summary> Removes authority's account authentication data </summary>
+    /// <summary> Removes authority's account </summary>
     /// <remarks> Accessible only for admins </remarks>
     [HttpDelete("authorities/{authorityAccountId:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
