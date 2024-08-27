@@ -15,16 +15,16 @@ public class VisaApplicationController(
     IVisaApplicationRequestsHandler visaApplicationRequestsHandler,
     IValidator<VisaApplicationCreateRequest> visaApplicationCreateRequestValidator) : ControllerBase
 {
-    /// <summary> Returns all applications from DB </summary>
+    /// <summary> Returns pending applications from DB </summary>
     /// <remarks> Accessible only for approving authorities </remarks>
-    [HttpGet]
+    [HttpGet("pending")]
     [ProducesResponseType<List<VisaApplicationModelForAuthority>>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [Authorize(policy: PolicyConstants.ApprovingAuthorityPolicy)]
     public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
-        var result = await visaApplicationRequestsHandler.GetAllAsync(cancellationToken);
+        var result = await visaApplicationRequestsHandler.GetPendingAsync(cancellationToken);
         return Ok(result);
     }
 
@@ -36,7 +36,7 @@ public class VisaApplicationController(
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Authorize(policy: PolicyConstants.ApplicantPolicy)]
-    [Route("OfApplicant")]
+    [Route("ofApplicant")]
     public async Task<IActionResult> GetForApplicant(CancellationToken cancellationToken)
     {
         var result = await visaApplicationRequestsHandler.GetForApplicantAsync(cancellationToken);

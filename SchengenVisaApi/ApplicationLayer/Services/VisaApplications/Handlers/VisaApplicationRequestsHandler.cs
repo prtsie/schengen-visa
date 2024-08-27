@@ -19,9 +19,9 @@ public class VisaApplicationRequestsHandler(
     IDateTimeProvider dateTimeProvider,
     IUserIdProvider userIdProvider) : IVisaApplicationRequestsHandler
 {
-    async Task<List<VisaApplicationModelForAuthority>> IVisaApplicationRequestsHandler.GetAllAsync(CancellationToken cancellationToken)
+    async Task<List<VisaApplicationModelForAuthority>> IVisaApplicationRequestsHandler.GetPendingAsync(CancellationToken cancellationToken)
     {
-        var applicationsList = await applications.GetAllAsync(cancellationToken);
+        var applicationsList = await applications.GetPendingApplicationsAsync(cancellationToken);
 
         var applicationModels = applicationsList
             .Select(a => MapVisaApplicationToModelForAuthorities(a, cancellationToken).Result)

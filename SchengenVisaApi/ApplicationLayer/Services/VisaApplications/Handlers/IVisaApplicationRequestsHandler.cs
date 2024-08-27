@@ -6,7 +6,7 @@ namespace ApplicationLayer.Services.VisaApplications.Handlers;
 public interface IVisaApplicationRequestsHandler
 {
     /// Returns all applications for approving authorities
-    Task<List<VisaApplicationModelForAuthority>> GetAllAsync(CancellationToken cancellationToken);
+    Task<List<VisaApplicationModelForAuthority>> GetPendingAsync(CancellationToken cancellationToken);
 
     /// Returns all applications of one applicant
     Task<List<VisaApplicationModelForApplicant>> GetForApplicantAsync(CancellationToken cancellationToken);

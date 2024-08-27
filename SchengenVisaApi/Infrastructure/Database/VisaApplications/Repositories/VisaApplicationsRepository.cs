@@ -27,4 +27,10 @@ public sealed class VisaApplicationsRepository(IGenericReader reader, IGenericWr
             .SingleOrDefaultAsync(va => va.Id == applicationId && va.ApplicantId == applicantId, cancellationToken);
         return result ?? throw new ApplicationNotFoundByApplicantAndApplicationIdException(applicationId);
     }
+
+    async Task<List<VisaApplication>> IVisaApplicationsRepository.GetPendingApplicationsAsync(CancellationToken cancellationToken)
+    {
+        var result = LoadDomain().Where(va => va.Status == ApplicationStatus.Pending);
+        return await result.ToListAsync(cancellationToken);
+    }
 }
