@@ -22,12 +22,11 @@ public class UsersController(
     IValidator<RegisterApplicantRequest> registerApplicantRequestValidator,
     IValidator<AuthData> authDataValidator) : ControllerBase
 {
-    /// <summary> Adds applicant with user account to DB </summary>
-    [HttpPost]
+    /// <summary> Adds applicant with user account </summary>
+    [HttpPost("register")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [Route("register")]
     public async Task<IActionResult> Register(RegisterApplicantRequest request, CancellationToken cancellationToken)
     {
         await registerApplicantRequestValidator.ValidateAndThrowAsync(request, cancellationToken);
@@ -36,15 +35,14 @@ public class UsersController(
         return Ok();
     }
 
-    /// <summary> Adds approving authority with user account to DB </summary>
+    /// <summary> Adds approving authority with user account </summary>
     ///<remarks> Accessible only for admins </remarks>
-    [HttpPost]
+    [HttpPost("authorities")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [Route("authorities")]
     [Authorize(policy: PolicyConstants.AdminPolicy)]
     public async Task<IActionResult> RegisterAuthority(RegisterRequest request, CancellationToken cancellationToken)
     {
@@ -55,10 +53,9 @@ public class UsersController(
     }
 
     /// <summary> Returns JWT-token for authentication </summary>
-    [HttpGet]
+    [HttpGet("login")]
     [ProducesResponseType<string>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    [Route("login")]
     public async Task<IActionResult> Login(string email, string password, CancellationToken cancellationToken)
     {
         var result = await loginService.LoginAsync(email, password, cancellationToken);
@@ -67,11 +64,10 @@ public class UsersController(
 
     /// <summary> Returns list of authority accounts </summary>
     /// <remarks> Accessible only for admins </remarks>
-    [HttpGet]
+    [HttpGet("authorities")]
     [ProducesResponseType<List<User>>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [Route("authorities")]
     [Authorize(policy: PolicyConstants.AdminPolicy)]
     public async Task<IActionResult> GetAuthorityAccounts(CancellationToken cancellationToken)
     {
@@ -81,13 +77,12 @@ public class UsersController(
 
     /// <summary> Changes authority's account authentication data </summary>
     /// <remarks> Accessible only for admins </remarks>
-    [HttpPut]
+    [HttpPut("authorities/{authorityAccountId:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [Route("authorities/{authorityAccountId:guid}")]
     [Authorize(policy: PolicyConstants.AdminPolicy)]
     public async Task<IActionResult> ChangeAuthorityAuthData(Guid authorityAccountId, AuthData authData, CancellationToken cancellationToken)
     {
@@ -97,14 +92,13 @@ public class UsersController(
         return Ok();
     }
 
-    /// <summary> Removes authority's account authentication data </summary>
+    /// <summary> Removes authority's account </summary>
     /// <remarks> Accessible only for admins </remarks>
-    [HttpDelete]
+    [HttpDelete("authorities/{authorityAccountId:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [Route("authorities/{authorityAccountId:guid}")]
     [Authorize(policy: PolicyConstants.AdminPolicy)]
     public async Task<IActionResult> RemoveAuthorityAccount(Guid authorityAccountId, CancellationToken cancellationToken)
     {

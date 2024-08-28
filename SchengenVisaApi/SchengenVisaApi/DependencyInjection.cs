@@ -1,14 +1,15 @@
 ﻿using System.Reflection;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json.Serialization;
 using ApplicationLayer;
 using Domains.Users;
 using Infrastructure;
 using Infrastructure.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using SchengenVisaApi.Common;
 using SchengenVisaApi.ExceptionFilters;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -42,7 +43,8 @@ public static class DependencyInjection
 
         services.AddProblemDetails();
 
-        services.AddControllers(opts => opts.Filters.Add<GlobalExceptionsFilter>());
+        services.AddControllers(opts => opts.Filters.Add<GlobalExceptionsFilter>())
+            .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
     }
 
     /// Adds authentication, authorization and token generator
@@ -90,11 +92,38 @@ public static class DependencyInjection
     /// Add swagger
     private static void AddSwagger(this IServiceCollection services)
     {
-        services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
         services.AddSwaggerGen(options =>
         {
             var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+
+            options.CustomOperationIds(apiDescription =>
+                apiDescription.TryGetMethodInfo(out MethodInfo methodInfo) ? methodInfo.Name : null);
+
+            options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            {
+                In = ParameterLocation.Header,
+                Description = "Provide a JWT-token.",
+                Name = "Authorization",
+                Type = SecuritySchemeType.Http,
+                BearerFormat = "JWT",
+                Scheme = "Bearer"
+            });
+
+            options.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    Array.Empty<string>()
+                }
+            });
         });
     }
 }
