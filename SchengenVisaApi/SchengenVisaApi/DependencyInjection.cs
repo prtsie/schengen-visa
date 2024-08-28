@@ -8,8 +8,8 @@ using Infrastructure;
 using Infrastructure.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using SchengenVisaApi.Common;
 using SchengenVisaApi.ExceptionFilters;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -92,7 +92,6 @@ public static class DependencyInjection
     /// Add swagger
     private static void AddSwagger(this IServiceCollection services)
     {
-        services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
         services.AddSwaggerGen(options =>
         {
             var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -100,6 +99,31 @@ public static class DependencyInjection
 
             options.CustomOperationIds(apiDescription =>
                 apiDescription.TryGetMethodInfo(out MethodInfo methodInfo) ? methodInfo.Name : null);
+
+            options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            {
+                In = ParameterLocation.Header,
+                Description = "Provide a JWT-token.",
+                Name = "Authorization",
+                Type = SecuritySchemeType.Http,
+                BearerFormat = "JWT",
+                Scheme = "Bearer"
+            });
+
+            options.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    Array.Empty<string>()
+                }
+            });
         });
     }
 }
