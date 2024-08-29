@@ -81,7 +81,6 @@ public class VisaApplicationController(
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Authorize(policy: PolicyConstants.ApprovingAuthorityPolicy)]
-    public async Task<IActionResult> SetStatusFromAuthority(Guid applicationId, AuthorityRequestStatuses status, CancellationToken cancellationToken)
     public async Task<IActionResult> SetStatusFromAuthority(Guid applicationId,
         AuthorityRequestStatuses status,
         CancellationToken cancellationToken)
