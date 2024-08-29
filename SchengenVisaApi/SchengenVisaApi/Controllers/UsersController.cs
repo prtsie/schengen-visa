@@ -56,9 +56,9 @@ public class UsersController(
     [HttpGet("login")]
     [ProducesResponseType<string>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public async Task<IActionResult> Login(string email, string password, CancellationToken cancellationToken)
+    public async Task<IActionResult> Login(LoginRequest request, CancellationToken cancellationToken)
     {
-        var result = await loginService.LoginAsync(email, password, cancellationToken);
+        var result = await loginService.LoginAsync(request, cancellationToken);
         return Ok(result);
     }
 
@@ -88,7 +88,7 @@ public class UsersController(
     {
         await authDataValidator.ValidateAndThrowAsync(authData, cancellationToken);
 
-        await usersService.ChangeAccountAuthDataAsync(new ChangeUserAuthDataRequest(authorityAccountId, authData), cancellationToken);
+        await usersService.ChangeAuthorityAuthDataAsync(new ChangeUserAuthDataRequest(authorityAccountId, authData), cancellationToken);
         return Ok();
     }
 
@@ -102,7 +102,7 @@ public class UsersController(
     [Authorize(policy: PolicyConstants.AdminPolicy)]
     public async Task<IActionResult> RemoveAuthorityAccount(Guid authorityAccountId, CancellationToken cancellationToken)
     {
-        await usersService.RemoveUserAccount(authorityAccountId, cancellationToken);
+        await usersService.RemoveAuthorityAccount(authorityAccountId, cancellationToken);
         return Ok();
     }
 }

@@ -29,18 +29,6 @@ public class VisaApplicationRequestsHandler(
         return applicationModels;
     }
 
-    private async Task<VisaApplicationModelForAuthority> MapVisaApplicationToModelForAuthorities(VisaApplication visaApplication,
-        CancellationToken cancellationToken)
-    {
-        var applicant = await applicants.GetByIdAsync(visaApplication.ApplicantId, cancellationToken);
-        var applicantModel = mapper.Map<ApplicantModel>(applicant);
-
-        var model = mapper.Map<VisaApplicationModelForAuthority>(visaApplication);
-        model.Applicant = applicantModel;
-
-        return model;
-    }
-
     public async Task<List<VisaApplicationModelForApplicant>> GetForApplicantAsync(CancellationToken cancellationToken)
     {
         var applicantId = await applicants.GetApplicantIdByUserId(userIdProvider.GetUserId(), cancellationToken);
@@ -83,7 +71,7 @@ public class VisaApplicationRequestsHandler(
             throw new ApplicationAlreadyProcessedException();
         }
 
-        ApplicationStatus statusToSet = status switch
+        var statusToSet = status switch
         {
             AuthorityRequestStatuses.Approved => ApplicationStatus.Approved,
             AuthorityRequestStatuses.Rejected => ApplicationStatus.Rejected,
@@ -94,5 +82,17 @@ public class VisaApplicationRequestsHandler(
         await applications.UpdateAsync(application, cancellationToken);
 
         await unitOfWork.SaveAsync(cancellationToken);
+    }
+
+    private async Task<VisaApplicationModelForAuthority> MapVisaApplicationToModelForAuthorities(VisaApplication visaApplication,
+        CancellationToken cancellationToken)
+    {
+        var applicant = await applicants.GetByIdAsync(visaApplication.ApplicantId, cancellationToken);
+        var applicantModel = mapper.Map<ApplicantModel>(applicant);
+
+        var model = mapper.Map<VisaApplicationModelForAuthority>(visaApplication);
+        model.Applicant = applicantModel;
+
+        return model;
     }
 }

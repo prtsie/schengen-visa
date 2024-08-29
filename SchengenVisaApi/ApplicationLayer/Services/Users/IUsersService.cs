@@ -10,13 +10,13 @@ public interface IUsersService
     /// <param name="cancellationToken">Cancellation token</param>
     Task<List<User>> GetAuthoritiesAccountsAsync(CancellationToken cancellationToken);
 
-    /// Changes authentication data for an account
+    /// Changes authentication data for an authority account
     /// <param name="request"> Request object with identifier of user and new authentication data</param>
     /// <param name="cancellationToken">Cancellation token</param>
-    Task ChangeAccountAuthDataAsync(ChangeUserAuthDataRequest request, CancellationToken cancellationToken);
+    Task ChangeAuthorityAuthDataAsync(ChangeUserAuthDataRequest request, CancellationToken cancellationToken);
 
-    /// Removes user account
+    /// Removes account of authority
     /// <param name="userId">Identifier of account</param>
     /// <param name="cancellationToken">Cancellation token</param>
-    Task RemoveUserAccount(Guid userId, CancellationToken cancellationToken);
+    Task RemoveAuthorityAccount(Guid userId, CancellationToken cancellationToken);
 }
