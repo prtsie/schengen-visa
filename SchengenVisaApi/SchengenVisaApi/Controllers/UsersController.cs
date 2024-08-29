@@ -3,6 +3,7 @@ using ApplicationLayer.Services.AuthServices.LoginService;
 using ApplicationLayer.Services.AuthServices.RegisterService;
 using ApplicationLayer.Services.AuthServices.Requests;
 using ApplicationLayer.Services.Users;
+using ApplicationLayer.Services.Users.Models;
 using ApplicationLayer.Services.Users.Requests;
 using Domains.Users;
 using FluentValidation;
@@ -66,7 +67,7 @@ public class UsersController(
     /// <summary> Returns list of authority accounts </summary>
     /// <remarks> Accessible only for admins </remarks>
     [HttpGet("authorities")]
-    [ProducesResponseType<List<User>>(StatusCodes.Status200OK)]
+    [ProducesResponseType<List<UserModel>>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [Authorize(policy: PolicyConstants.AdminPolicy)]
