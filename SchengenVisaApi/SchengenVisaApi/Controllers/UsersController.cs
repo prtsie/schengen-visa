@@ -5,7 +5,6 @@ using ApplicationLayer.Services.AuthServices.Requests;
 using ApplicationLayer.Services.Users;
 using ApplicationLayer.Services.Users.Models;
 using ApplicationLayer.Services.Users.Requests;
-using Domains.Users;
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -58,9 +57,14 @@ public class UsersController(
     [HttpGet("login")]
     [ProducesResponseType<string>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public async Task<IActionResult> Login([FromQuery] LoginRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Login(string email, string password, CancellationToken cancellationToken)
     {
-        var result = await loginService.LoginAsync(request, cancellationToken);
+        var loginRequest = new LoginRequest
+        {
+            AuthData = new AuthData { Email = email, Password = password }
+        };
+
+        var result = await loginService.LoginAsync(loginRequest, cancellationToken);
         return Ok(result);
     }
 

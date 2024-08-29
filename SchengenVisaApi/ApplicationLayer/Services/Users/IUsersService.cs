@@ -1,6 +1,5 @@
 ﻿using ApplicationLayer.Services.Users.Models;
 using ApplicationLayer.Services.Users.Requests;
-using Domains.Users;
 
 namespace ApplicationLayer.Services.Users;
 

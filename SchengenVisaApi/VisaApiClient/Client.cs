@@ -413,9 +413,9 @@ namespace VisaApiClient
         /// </summary>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<string> LoginAsync(string authData_Email, string authData_Password)
+        public virtual System.Threading.Tasks.Task<string> LoginAsync(string? email, string? password)
         {
-            return LoginAsync(authData_Email, authData_Password, System.Threading.CancellationToken.None);
+            return LoginAsync(email, password, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -424,14 +424,8 @@ namespace VisaApiClient
         /// </summary>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<string> LoginAsync(string authData_Email, string authData_Password, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<string> LoginAsync(string? email, string? password, System.Threading.CancellationToken cancellationToken)
         {
-            if (authData_Email == null)
-                throw new System.ArgumentNullException("authData_Email");
-
-            if (authData_Password == null)
-                throw new System.ArgumentNullException("authData_Password");
-
             var client_ = _httpClient;
             var disposeClient_ = false;
             try
@@ -446,8 +440,14 @@ namespace VisaApiClient
                     // Operation Path: "users/login"
                     urlBuilder_.Append("users/login");
                     urlBuilder_.Append('?');
-                    urlBuilder_.Append(System.Uri.EscapeDataString("AuthData.Email")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(authData_Email, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
-                    urlBuilder_.Append(System.Uri.EscapeDataString("AuthData.Password")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(authData_Password, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    if (email != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("email")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(email, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (password != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("password")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(password, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
                     urlBuilder_.Length--;
 
                     await PrepareRequestAsync(client_, request_, urlBuilder_, cancellationToken).ConfigureAwait(false);
