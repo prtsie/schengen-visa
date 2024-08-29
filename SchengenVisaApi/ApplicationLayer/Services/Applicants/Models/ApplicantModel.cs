@@ -2,15 +2,14 @@
 
 namespace ApplicationLayer.Services.Applicants.Models;
 
-/// Model of
-/// <see cref="Applicant" />
+/// Model of <see cref="Applicant" />
 public class ApplicantModel
 {
     /// <inheritdoc cref="Applicant.Name" />
-    public Name Name { get; set; } = null!;
+    public NameModel Name { get; set; } = null!;
 
     /// <inheritdoc cref="Applicant.Passport" />
-    public Passport Passport { get; set; } = null!;
+    public PassportModel Passport { get; set; } = null!;
 
     /// <inheritdoc cref="Applicant.BirthDate" />
     public DateTime BirthDate { get; set; }
@@ -34,16 +33,16 @@ public class ApplicantModel
     public MaritalStatus MaritalStatus { get; set; }
 
     /// <inheritdoc cref="Applicant.FatherName" />
-    public Name FatherName { get; set; } = null!;
+    public NameModel FatherName { get; set; } = null!;
 
     /// <inheritdoc cref="Applicant.MotherName" />
-    public Name MotherName { get; set; } = null!;
+    public NameModel MotherName { get; set; } = null!;
 
     /// <inheritdoc cref="Applicant.JobTitle" />
     public string JobTitle { get; set; } = null!;
 
     /// <inheritdoc cref="Applicant.PlaceOfWork" />
-    public PlaceOfWork PlaceOfWork { get; set; } = null!;
+    public PlaceOfWorkModel PlaceOfWork { get; set; } = null!;
 
     /// <inheritdoc cref="Applicant.IsNonResident" />
     public bool IsNonResident { get; set; }

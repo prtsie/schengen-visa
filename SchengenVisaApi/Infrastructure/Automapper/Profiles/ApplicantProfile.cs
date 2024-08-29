@@ -9,11 +9,14 @@ public class ApplicantProfile : Profile
 {
     public ApplicantProfile()
     {
-            CreateMap<Applicant, ApplicantModel>(MemberList.Destination);
+        CreateMap<Applicant, ApplicantModel>(MemberList.Destination).ReverseMap();
 
-            CreateMap<RegisterApplicantRequest, Applicant>(MemberList.Destination)
-                .ForMember(a => a.UserId, opts => opts.Ignore())
-                .ForMember(a => a.Name,
-                    opts => opts.MapFrom(r => r.ApplicantName));
-        }
+        CreateMap<RegisterApplicantRequest, Applicant>(MemberList.Destination)
+            .ForMember(a => a.UserId, opts => opts.Ignore())
+            .ForMember(a => a.Name,
+                opts => opts.MapFrom(r => r.ApplicantName));
+
+        CreateMap<NameModel, Name>().ReverseMap();
+        CreateMap<PassportModel, Passport>().ReverseMap();
+    }
 }

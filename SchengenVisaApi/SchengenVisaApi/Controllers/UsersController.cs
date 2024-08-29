@@ -20,7 +20,8 @@ public class UsersController(
     ILoginService loginService,
     IUsersService usersService,
     IValidator<RegisterApplicantRequest> registerApplicantRequestValidator,
-    IValidator<AuthData> authDataValidator) : ControllerBase
+    IValidator<AuthData> authDataValidator,
+    IValidator<RegisterRequest> registerRequestValidator) : ControllerBase
 {
     /// <summary> Adds applicant with user account </summary>
     [HttpPost("register")]
@@ -46,7 +47,7 @@ public class UsersController(
     [Authorize(policy: PolicyConstants.AdminPolicy)]
     public async Task<IActionResult> RegisterAuthority(RegisterRequest request, CancellationToken cancellationToken)
     {
-        await authDataValidator.ValidateAndThrowAsync(request.AuthData, cancellationToken);
+        await registerRequestValidator.ValidateAndThrowAsync(request, cancellationToken);
 
         await registerService.RegisterAuthority(request, cancellationToken);
         return Ok();
@@ -56,7 +57,7 @@ public class UsersController(
     [HttpGet("login")]
     [ProducesResponseType<string>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public async Task<IActionResult> Login(LoginRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Login([FromQuery] LoginRequest request, CancellationToken cancellationToken)
     {
         var result = await loginService.LoginAsync(request, cancellationToken);
         return Ok(result);

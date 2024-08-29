@@ -2,15 +2,20 @@
 using ApplicationLayer.Services.AuthServices.Common;
 using ApplicationLayer.Services.AuthServices.NeededServices;
 using ApplicationLayer.Services.Users.Exceptions;
+using ApplicationLayer.Services.Users.Models;
 using ApplicationLayer.Services.Users.Requests;
+using AutoMapper;
 using Domains.Users;
 
 namespace ApplicationLayer.Services.Users;
 
-public class UsersService(IUsersRepository users, IUnitOfWork unitOfWork) : IUsersService
+public class UsersService(IMapper mapper, IUsersRepository users, IUnitOfWork unitOfWork) : IUsersService
 {
-    async Task<List<User>> IUsersService.GetAuthoritiesAccountsAsync(CancellationToken cancellationToken) =>
-        await users.GetAllOfRoleAsync(Role.ApprovingAuthority, cancellationToken);
+    async Task<List<UserModel>> IUsersService.GetAuthoritiesAccountsAsync(CancellationToken cancellationToken)
+    {
+        var userList = await users.GetAllOfRoleAsync(Role.ApprovingAuthority, cancellationToken);
+        return mapper.Map<List<UserModel>>(userList);
+    }
 
     async Task IUsersService.ChangeAuthorityAuthDataAsync(ChangeUserAuthDataRequest request, CancellationToken cancellationToken)
     {
