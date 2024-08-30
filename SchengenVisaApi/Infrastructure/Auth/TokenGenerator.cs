@@ -2,7 +2,6 @@
 using System.Security.Claims;
 using ApplicationLayer.InfrastructureServicesInterfaces;
 using ApplicationLayer.Services.AuthServices.Common;
-using ApplicationLayer.Services.AuthServices.NeededServices;
 using Domains.Users;
 
 namespace Infrastructure.Auth;
