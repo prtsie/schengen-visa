@@ -4,11 +4,9 @@ namespace VisaApiClient
 {
     public class ClientBase
     {
-        private const string LoginPath = "users/login";
+        protected AuthToken? AuthToken { get; private set; }
 
-        protected string? AuthToken { get; private set; }
-
-        protected void SetAuthToken(string token)
+        public void SetAuthToken(AuthToken token)
         {
             AuthToken = token;
         }
@@ -16,7 +14,9 @@ namespace VisaApiClient
         protected Task<HttpRequestMessage> CreateHttpRequestMessageAsync(CancellationToken cancellationToken)
         {
             var msg = new HttpRequestMessage();
-            msg.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AuthToken);
+
+            msg.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AuthToken?.Token);
+
             return Task.FromResult(msg);
         }
 
@@ -25,15 +25,11 @@ namespace VisaApiClient
             => await Task.CompletedTask;
 
         protected async Task PrepareRequestAsync(HttpClient client, HttpRequestMessage request, StringBuilder urlBuilder, CancellationToken cancellationToken)
-            => await Task.CompletedTask;
+        {
+            await Task.CompletedTask;
+        }
 
         protected async Task ProcessResponseAsync(HttpClient client, HttpResponseMessage response, CancellationToken cancellationToken)
-        {
-            if (response.RequestMessage!.RequestUri!.AbsolutePath == LoginPath)
-            {
-                var token = await response.Content.ReadAsStringAsync(cancellationToken);
-                SetAuthToken(token);
-            }
-        }
+            => await Task.CompletedTask;
     }
 }

@@ -1,4 +1,5 @@
-﻿using ApplicationLayer.Services.AuthServices.Requests;
+﻿using ApplicationLayer.Services.AuthServices.Common;
+using ApplicationLayer.Services.AuthServices.Requests;
 
 namespace ApplicationLayer.Services.AuthServices.LoginService;
 
@@ -7,5 +8,5 @@ public interface ILoginService
 {
     /// Handle login request
     /// <returns>JWT-token</returns>
-    Task<string> LoginAsync(LoginRequest request, CancellationToken cancellationToken);
+    Task<AuthToken> LoginAsync(LoginRequest request, CancellationToken cancellationToken);
 }

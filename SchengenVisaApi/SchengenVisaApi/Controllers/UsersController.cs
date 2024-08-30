@@ -55,7 +55,7 @@ public class UsersController(
 
     /// <summary> Returns JWT-token for authentication </summary>
     [HttpGet("login")]
-    [ProducesResponseType<string>(StatusCodes.Status200OK)]
+    [ProducesResponseType<AuthToken>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> Login(string email, string password, CancellationToken cancellationToken)
     {

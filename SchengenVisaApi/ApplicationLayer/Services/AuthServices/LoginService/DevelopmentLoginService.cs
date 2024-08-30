@@ -1,4 +1,6 @@
-﻿using ApplicationLayer.Services.AuthServices.LoginService.Exceptions;
+﻿using ApplicationLayer.InfrastructureServicesInterfaces;
+using ApplicationLayer.Services.AuthServices.Common;
+using ApplicationLayer.Services.AuthServices.LoginService.Exceptions;
 using ApplicationLayer.Services.AuthServices.NeededServices;
 using ApplicationLayer.Services.AuthServices.Requests;
 using Domains.Users;
@@ -7,7 +9,7 @@ namespace ApplicationLayer.Services.AuthServices.LoginService;
 
 public class DevelopmentLoginService(IUsersRepository users, ITokenGenerator tokenGenerator) : ILoginService
 {
-    async Task<string> ILoginService.LoginAsync(LoginRequest request, CancellationToken cancellationToken)
+    async Task<AuthToken> ILoginService.LoginAsync(LoginRequest request, CancellationToken cancellationToken)
     {
         if (request.AuthData is { Email: "admin@mail.ru", Password: "admin" })
         {

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using VisaApiClient;
 
 namespace BlazorWebAssemblyVisaApiClient;
 
@@ -11,7 +12,13 @@ public class Program
         builder.RootComponents.Add<App>("#app");
         builder.RootComponents.Add<HeadOutlet>("head::after");
 
-        builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+        //todo move to launch settings
+        const string baseAddress = "https://localhost:44370";
+
+        //todo make pretty
+        builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri(baseAddress) });
+        builder.Services.AddScoped<Client>(sp =>
+            new Client(baseAddress, sp.GetRequiredService<HttpClient>()));
 
         await builder.Build().RunAsync();
     }
