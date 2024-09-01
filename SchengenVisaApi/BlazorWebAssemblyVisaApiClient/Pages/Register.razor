@@ -9,6 +9,8 @@
 @using global::FluentValidation
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Linq
+@using BlazorWebAssemblyVisaApiClient.Components
+@inherits BlazorWebAssemblyVisaApiClient.Components.Base.VisaClientComponentBase
 
 <PageTitle>Registration</PageTitle>
 
@@ -122,17 +124,14 @@
         </div><br/>
 
         <input type="submit" class="btn-outline-primary" value="Register"/>
-        <p class="@requestResultClass">@((MarkupString)requestResult)</p>
+        <Status @ref="status"/>
     </EditForm>
 </div>
 
 @code
 {
     private RegisterApplicantRequestModel requestModel = new();
-    private string requestResult = string.Empty;
-    private string requestResultClass = string.Empty;
-
-    [Inject] public Client Client { get; set; } = null!;
+    private Status status = null!;
 
     [Inject] IValidator<RegisterApplicantRequestModel> RegisterApplicantRequestValidator { get; set; } = null!;
 
@@ -143,27 +142,6 @@
     protected override void OnInitialized()
     {
         requestModel.BirthDate = DateTime.Now;
-    }
-
-    private void SetRequestResultMessage(string message)
-    {
-        requestResult = message;
-        requestResultClass = string.Empty;
-        StateHasChanged();
-    }
-
-    private void SetRequestResultSuccess(string message)
-    {
-        requestResult = message;
-        requestResultClass = "text-success";
-        StateHasChanged();
-    }
-
-    private void SetRequestResultError(string message)
-    {
-        requestResult = message;
-        requestResultClass = "validation-message";
-        StateHasChanged();
     }
 
     private string ErrorsToString(IEnumerable<string> errors)
@@ -183,18 +161,18 @@
         if (!validationResult.IsValid)
         {
             var errorsString = ErrorsToString(validationResult.Errors.Select(e => e.ErrorMessage));
-            SetRequestResultError(errorsString);
+            status.SetError(errorsString);
 
             return;
         }
 
-        SetRequestResultMessage("Wait...");
+        status.SetMessage("Wait...");
 
         var request = Mapper.Map<RegisterApplicantRequest>(requestModel);
         try
         {
             await Client.RegisterAsync(request);
-            SetRequestResultSuccess("Register successful. Now log in.");
+            status.SetSucces("Register successful. Now log in.");
         }
         catch (ApiException<ProblemDetails> e)
         {
@@ -204,15 +182,21 @@
                 var errorsList = ((JArray)errors).ToObject<List<string>>();
                 if (errorsList is null)
                 {
-                    throw new JsonException();
+                    ErrorHandler.Handle(new JsonException("Can't convert validation errors to list"));
+
+                    return;
                 }
 
-                SetRequestResultError(ErrorsToString(errorsList));
+                status.SetError(ErrorsToString(errorsList));
             }
             else
             {
-                SetRequestResultError(e.Result.Detail!);
+                ErrorHandler.Handle(e);
             }
+        }
+        catch (Exception e)
+        {
+            ErrorHandler.Handle(e);
         }
     }
 }

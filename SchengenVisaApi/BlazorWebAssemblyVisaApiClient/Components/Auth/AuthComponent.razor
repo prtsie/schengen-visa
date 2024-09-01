@@ -1,0 +1,67 @@
+﻿@using System.Net
+@using BlazorWebAssemblyVisaApiClient.Components.Auth.Exceptions
+@using BlazorWebAssemblyVisaApiClient.ErrorHandling
+@using VisaApiClient
+
+@code {
+    public static bool LoggedIn;
+    private static AuthData savedData = null!;
+
+    [CascadingParameter] private GlobalErrorHandler ErrorHandler { get; set; } = null!;
+
+    [CascadingParameter] private Status? Status { get; set; }
+
+    [Inject] private Client Client { get; set; } = null!;
+
+    [Inject] private NavigationManager Nav { get; set; } = null!;
+
+    ///Authorize with email and password
+    /// <returns>Message to user</returns>
+    public async Task TryAuthorize(AuthData authData)
+    {
+        Status?.SetMessage("Wait...");
+        try
+        {
+            var token = await Client.LoginAsync(authData.Email, authData.Password);
+            Client.SetAuthToken(token);
+            savedData = authData;
+
+            Status?.SetSucces("Logged in successfully.");
+        }
+        catch (ApiException<ProblemDetails> e)
+        {
+            if (e.Result.Status == (int)HttpStatusCode.Forbidden)
+            {
+                Status?.SetError(e.Result.Detail!);
+            }
+            else
+            {
+                Status?.SetError("Error occured");
+                ErrorHandler.Handle(e);
+            }
+        }
+        catch (Exception e)
+        {
+            Status?.SetError("Error occured");
+            ErrorHandler.Handle(e);
+        }
+    }
+
+    ///Re-auth if token expired or something
+    public async Task ReAuthenticate(bool redirectOnFailure = true)
+    {
+        if (!LoggedIn)
+        {
+            if (redirectOnFailure)
+            {
+                Nav.NavigateTo("/");
+                return;
+            }
+
+            throw new NotLoggedInException();
+        }
+
+        await TryAuthorize(savedData);
+    }
+
+}

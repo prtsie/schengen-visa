@@ -1,0 +1,34 @@
+﻿<p class="@statusClass">@((MarkupString)StatusText)</p>
+<CascadingValue Value="this">
+    @ChildContent
+</CascadingValue>
+
+@code {
+    private string statusClass = string.Empty;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    public string StatusText { get; set; } = string.Empty;
+
+    public void SetMessage(string message)
+    {
+        statusClass = string.Empty;
+        StatusText = message;
+        StateHasChanged();
+    }
+
+    public void SetError(string message)
+    {
+        statusClass = "validation-message";
+        StatusText = message;
+        StateHasChanged();
+    }
+
+    public void SetSucces(string message)
+    {
+        statusClass = "text-success";
+        StatusText = message;
+        StateHasChanged();
+    }
+}
