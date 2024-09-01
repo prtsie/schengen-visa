@@ -98,6 +98,37 @@ a, .btn-link {
         content: var(--blazor-load-percentage-text, "Loading");
     }
 
+    .fullscreen {
+        height: 100vh;
+    }
+
+    .with-centered-content {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .with-centered-content > * {
+        margin: auto;
+    }
+
+    .horizontal-centered-content > * {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+
+    .form {
+        width: fit-content;
+        text-align: left;
+    }
+
+    .form-block {
+        margin: 10px 20px;
+        display: inline-block;
+        vertical-align: top;
+    }
+
 code {
     color: #c02d76;
 }

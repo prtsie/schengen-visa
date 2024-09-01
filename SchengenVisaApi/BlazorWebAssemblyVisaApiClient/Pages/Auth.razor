@@ -1,31 +1,38 @@
-﻿@page "/login"
+﻿@page "/"
 @using VisaApiClient
+@using BlazorWebAssemblyVisaApiClient.Components.FormComponents.Applicants
 
 <PageTitle>Authentication</PageTitle>
 
-<EditForm Model="loginData" OnValidSubmit="TryLogin">
-    <DataAnnotationsValidator/>
-    <label >Email: <InputText @bind-Value="loginData.Email"/></label>
-    <label >Password: <InputText @bind-Value="loginData.Password"/></label>
-    <input type="submit" value="Login"/>
-</EditForm>
-<p>@loginResult</p>
+<div class="with-centered-content">
+    <EditForm class="form" Model="loginData" OnValidSubmit="TryLogin">
+        <DataAnnotationsValidator/>
+
+        <AuthDataInput AuthData="loginData"/><br/>
+
+        <input class="btn-outline-primary rounded" type="submit" value="Login"/>
+        or
+        <NavLink href="register">Register</NavLink >
+        <p>@loginResult</p>
+    </EditForm>
+</div>
 
 @code
 {
     private AuthData loginData = new();
     private string loginResult = string.Empty;
 
-    [Inject]
-    private Client Client { get; set; } = null!;
+    [Inject] private Client Client { get; set; } = null!;
 
-    private async Task TryLogin(EditContext obj)
+    private async Task TryLogin()
     {
+        loginResult = "Wait...";
+        StateHasChanged();
         try
         {
             var token = await Client.LoginAsync(loginData.Email, loginData.Password);
             Client.SetAuthToken(token);
-            loginResult = "Logged in successfully";
+            loginResult = "Logged in successfully.";
         }
         catch (ApiException<ProblemDetails> e)
         {

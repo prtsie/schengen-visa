@@ -1,0 +1,31 @@
+﻿@using VisaApiClient
+
+<div>
+    <div >
+        <label>
+            First name:<br/>
+            <InputText DisplayName="First name" class="rounded" @bind-Value="Name.FirstName"/>
+        </label><br/>
+        <ValidationMessage For="() => Name.FirstName"></ValidationMessage>
+    </div><br/>
+
+    <div >
+        <label>
+            Surname:<br/>
+            <InputText class="rounded" @bind-Value="Name.Surname"/>
+        </label><br/>
+        <ValidationMessage For="() => Name.Surname"></ValidationMessage>
+    </div><br/>
+
+    <div >
+        <label>
+            Patronymic:<br/>
+            <InputText class="rounded" @bind-Value="Name.Patronymic"/>
+        </label><br/>
+        <ValidationMessage For="() => Name.Patronymic"></ValidationMessage>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public NameModel Name { get; set; } = null!;
+}

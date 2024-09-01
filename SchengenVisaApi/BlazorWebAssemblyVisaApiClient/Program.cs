@@ -1,3 +1,6 @@
+using System.Reflection;
+using BlazorWebAssemblyVisaApiClient.Infrastructure.Services;
+using FluentValidation;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using VisaApiClient;
@@ -17,8 +20,12 @@ public class Program
 
         //todo make pretty
         builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri(baseAddress) });
-        builder.Services.AddScoped<Client>(sp =>
-            new Client(baseAddress, sp.GetRequiredService<HttpClient>()));
+        builder.Services.AddScoped<Client>(sp => new Client(baseAddress, sp.GetRequiredService<HttpClient>()));
+
+        builder.Services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+        builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+        builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
         await builder.Build().RunAsync();
     }

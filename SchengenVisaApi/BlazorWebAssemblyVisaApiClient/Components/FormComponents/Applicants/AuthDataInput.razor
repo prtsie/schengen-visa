@@ -1,0 +1,23 @@
+﻿@using VisaApiClient
+
+<div>
+    <div >
+        <label >
+            Email:<br/>
+            <InputText class="rounded" @bind-Value="AuthData.Email"/>
+        </label><br/>
+        <ValidationMessage For="() => AuthData.Email"></ValidationMessage><br/>
+    </div>
+
+    <div >
+        <label >
+            Password:<br/>
+            <InputText class="rounded" @bind-Value="AuthData.Password"/>
+        </label><br/>
+        <ValidationMessage For="() => AuthData.Password"></ValidationMessage>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public AuthData AuthData { get; set; } = null!;
+}

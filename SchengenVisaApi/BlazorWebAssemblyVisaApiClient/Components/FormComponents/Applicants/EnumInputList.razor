@@ -1,0 +1,50 @@
+﻿@using System.ComponentModel.DataAnnotations
+@using System.Linq.Expressions
+@using System.Reflection
+@typeparam TItem where TItem : class
+    @typeparam TMember where TMember : struct, Enum
+
+<InputSelect TValue="TMember"  @bind-Value="selected">
+    @foreach (var value in enumValues)
+    {
+        <option value="@value.Key">@value.Value</option>
+    }
+</InputSelect><br/>
+
+@code {
+    [Parameter, EditorRequired] public TItem Model { get; set; } = default!;
+
+    [Parameter, EditorRequired] public Expression<Func<TItem, TMember>> EnumProperty { get; set; } = null!;
+
+    private Dictionary<TMember, string> enumValues = new();
+    private PropertyInfo modelMemberInfo = null!;
+    private TMember selected;
+
+    protected override void OnInitialized()
+    {
+        var enumMembers = typeof(TMember).GetMembers();
+        var modelMemberName = ((MemberExpression)EnumProperty.Body).Member.Name;
+        modelMemberInfo = typeof(TItem).GetProperty(modelMemberName)!;
+
+        foreach (var value in Enum.GetValues<TMember>())
+        {
+            var member = enumMembers.First(info => info.Name == value.ToString());
+            var displayAttribute = (DisplayAttribute?)member
+                .GetCustomAttributes(typeof(DisplayAttribute), false)
+                .FirstOrDefault();
+            var displayName = displayAttribute?.Name ?? value.ToString();
+            enumValues.Add(value, displayName);
+        }
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        OnValueChanged();
+    }
+
+    private void OnValueChanged()
+    {
+        modelMemberInfo.SetValue(Model, selected);
+    }
+
+}

@@ -1,0 +1,218 @@
+﻿@page "/register"
+@using System.Net
+@using System.Text
+@using AutoMapper
+@using VisaApiClient
+@using BlazorWebAssemblyVisaApiClient.Components.FormComponents.Applicants
+@using BlazorWebAssemblyVisaApiClient.FluentValidation.Applicants.Models
+@using BlazorWebAssemblyVisaApiClient.Infrastructure.Services
+@using global::FluentValidation
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
+
+<PageTitle>Registration</PageTitle>
+
+<div class="horizontal-centered-content">
+    <h3>Registration data</h3>
+    <EditForm class="form" Model="requestModel" OnValidSubmit="TryRegisterApplicant">
+        <ObjectGraphDataAnnotationsValidator/>
+
+        <div class="form-block">
+            <h5>Authentication data</h5>
+            <AuthDataInput AuthData="requestModel.RegisterRequest.AuthData"/>
+        </div>
+
+        <div class="form-block">
+            <h5>Your Fullname</h5>
+            <NameInput Name="requestModel.ApplicantName"/>
+        </div>
+
+        <div class="form-block">
+            <h5>Fullname of your mother</h5>
+            <NameInput Name="requestModel.MotherName"/>
+        </div>
+
+        <div class="form-block">
+            <h5>Fullname of your father</h5>
+            <NameInput Name="requestModel.FatherName"/>
+        </div>
+
+        <div class="form-block">
+            <h5>Your passport</h5>
+            <PassportInput Passport="requestModel.Passport"/>
+        </div>
+
+        <div class="form-block">
+            <h5>Birth data</h5>
+            <div >
+                <label>
+                    Country of birth:<br/>
+                    <InputText DisplayName="Country of birth" class="rounded" @bind-Value="requestModel.CountryOfBirth"/>
+                </label><br/>
+                <ValidationMessage For="() => requestModel.CountryOfBirth"></ValidationMessage><br/>
+                <label>
+                    City of birth:<br/>
+                    <InputText DisplayName="City of birth" class="rounded" @bind-Value="requestModel.CityOfBirth"/>
+                </label><br/>
+                <ValidationMessage For="() => requestModel.CityOfBirth"></ValidationMessage><br/>
+                <label>
+                    Birth date:<br/>
+                    <InputDate DisplayName="Birth date" class="rounded" @bind-Value="requestModel.BirthDate" max="@DateTimeProvider.Now()"/>
+                </label><br/>
+                <ValidationMessage For="() => requestModel.BirthDate"></ValidationMessage>
+            </div>
+        </div>
+
+        <div class="form-block">
+            <h5>Citizenship</h5>
+            <div >
+                <label>
+                    Citizenship:<br/>
+                    <InputText class="rounded" @bind-Value="requestModel.Citizenship"/>
+                </label><br/>
+                <ValidationMessage For="() => requestModel.Citizenship"></ValidationMessage><br/>
+                <label>
+                    Citizenship by birth:<br/>
+                    <InputText DisplayName="Citizenship by birth" class="rounded" @bind-Value="requestModel.CitizenshipByBirth"/>
+                </label><br/>
+                <ValidationMessage For="() => requestModel.CitizenshipByBirth"></ValidationMessage>
+            </div>
+        </div>
+
+        <div class="form-block">
+            <h5>Address of your place of work</h5>
+            <div >
+                <AddressInput Address="requestModel.PlaceOfWork.Address"/>
+            </div>
+        </div>
+
+        <div class="form-block">
+            <h5>Place of work data</h5>
+            <div >
+                <PlaceOfWorkInput PlaceOfWork="requestModel.PlaceOfWork"/><br/>
+
+                <label>
+                    Job title:<br/>
+                    <InputText DisplayName="Job title" class="rounded" @bind-Value="requestModel.JobTitle"/>
+                </label><br/>
+                <ValidationMessage For="() => requestModel.JobTitle"></ValidationMessage>
+            </div>
+        </div>
+
+        <div class="form-block">
+            <h5>Other</h5>
+
+            <div >
+                <label>
+                    Gender: <EnumInputList Model="requestModel" EnumProperty="r => r.Gender"/>
+                </label>
+            </div><br/>
+
+            <div >
+                <label>
+                    Marital status: <EnumInputList Model="requestModel" EnumProperty="r => r.MaritalStatus"/>
+                </label>
+            </div><br/>
+
+            <div >
+                <label>
+                    Non-resident: <InputCheckbox @bind-Value="requestModel.IsNonResident"/>
+                </label>
+            </div>
+        </div><br/>
+
+        <input type="submit" class="btn-outline-primary" value="Register"/>
+        <p class="@requestResultClass">@((MarkupString)requestResult)</p>
+    </EditForm>
+</div>
+
+@code
+{
+    private RegisterApplicantRequestModel requestModel = new();
+    private string requestResult = string.Empty;
+    private string requestResultClass = string.Empty;
+
+    [Inject] public Client Client { get; set; } = null!;
+
+    [Inject] IValidator<RegisterApplicantRequestModel> RegisterApplicantRequestValidator { get; set; } = null!;
+
+    [Inject] IMapper Mapper { get; set; } = null!;
+
+    [Inject] IDateTimeProvider DateTimeProvider { get; set; } = null!;
+
+    protected override void OnInitialized()
+    {
+        requestModel.BirthDate = DateTime.Now;
+    }
+
+    private void SetRequestResultMessage(string message)
+    {
+        requestResult = message;
+        requestResultClass = string.Empty;
+        StateHasChanged();
+    }
+
+    private void SetRequestResultSuccess(string message)
+    {
+        requestResult = message;
+        requestResultClass = "text-success";
+        StateHasChanged();
+    }
+
+    private void SetRequestResultError(string message)
+    {
+        requestResult = message;
+        requestResultClass = "validation-message";
+        StateHasChanged();
+    }
+
+    private string ErrorsToString(IEnumerable<string> errors)
+    {
+        var stringBuilder = new StringBuilder();
+        foreach (var error in errors)
+        {
+            stringBuilder.Append($"{error}<br/>");
+        }
+
+        return stringBuilder.ToString();
+    }
+
+    private async void TryRegisterApplicant()
+    {
+        var validationResult = await RegisterApplicantRequestValidator.ValidateAsync(requestModel);
+        if (!validationResult.IsValid)
+        {
+            var errorsString = ErrorsToString(validationResult.Errors.Select(e => e.ErrorMessage));
+            SetRequestResultError(errorsString);
+
+            return;
+        }
+
+        SetRequestResultMessage("Wait...");
+
+        var request = Mapper.Map<RegisterApplicantRequest>(requestModel);
+        try
+        {
+            await Client.RegisterAsync(request);
+            SetRequestResultSuccess("Register successful. Now log in.");
+        }
+        catch (ApiException<ProblemDetails> e)
+        {
+            if (e.StatusCode == (int)HttpStatusCode.BadRequest
+                && e.Result.AdditionalProperties.TryGetValue("errors", out var errors))
+            {
+                var errorsList = ((JArray)errors).ToObject<List<string>>();
+                if (errorsList is null)
+                {
+                    throw new JsonException();
+                }
+
+                SetRequestResultError(ErrorsToString(errorsList));
+            }
+            else
+            {
+                SetRequestResultError(e.Result.Detail!);
+            }
+        }
+    }
+}

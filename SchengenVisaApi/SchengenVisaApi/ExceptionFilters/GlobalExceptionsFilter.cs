@@ -20,7 +20,7 @@ public class GlobalExceptionsFilter : IAsyncExceptionFilter
         switch (exception)
         {
             case ValidationException validationException:
-                problemDetails.Extensions.Add("Errors", validationException.Errors.Select(e => e.ErrorMessage));
+                problemDetails.Extensions.Add("errors", validationException.Errors.Select(e => e.ErrorMessage));
                 problemDetails.Detail = "Validation errors occured";
                 problemDetails.Status = StatusCodes.Status400BadRequest;
                 problemDetails.Title = "Bad request";

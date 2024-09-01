@@ -1,0 +1,51 @@
+﻿@using BlazorWebAssemblyVisaApiClient.Infrastructure.Services
+@using VisaApiClient
+
+<div>
+    <div >
+        <label>
+            Passport number:<br/>
+            <InputText DisplayName="Passport number" class="rounded" @bind-Value="Passport.Number"/>
+        </label><br/>
+        <ValidationMessage For="() => Passport.Number"></ValidationMessage>
+    </div><br/>
+
+    <div >
+        <label>
+            Issuer:<br/>
+            <InputText class="rounded" @bind-Value="Passport.Issuer"/>
+        </label><br/>
+        <ValidationMessage For="() => Passport.Issuer"></ValidationMessage>
+    </div><br/>
+
+    <div >
+        <label>
+            Issue date:<br/>
+            <InputDate DisplayName="Issue date" class="rounded" @bind-Value="Passport.IssueDate" max="DateTimeProvider.Now()"/>
+        </label><br/>
+        <ValidationMessage For="() => Passport.IssueDate"></ValidationMessage>
+    </div><br/>
+
+    <div >
+        <label>
+            Expiration date:<br/>
+            <InputDate DisplayName="Expiration date" class="rounded" @bind-Value="Passport.ExpirationDate" min="DateTimeProvider.Now()"/>
+        </label><br/>
+        <ValidationMessage For="() => Passport.ExpirationDate"></ValidationMessage>
+    </div>
+</div>
+
+@code {
+    private string now = DateTime.Now.ToString("yyyy-MM-dd");
+
+    [Parameter, EditorRequired] public PassportModel Passport { get; set; } = null!;
+
+    [Inject] IDateTimeProvider DateTimeProvider { get; set; } = null!;
+
+    protected override void OnInitialized()
+    {
+        Passport.IssueDate = DateTime.Now;
+        Passport.ExpirationDate = DateTime.Now;
+    }
+
+}
