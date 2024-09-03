@@ -1,5 +1,4 @@
 ﻿using BlazorWebAssemblyVisaApiClient.Common;
-using VisaApiClient;
 
 namespace BlazorWebAssemblyVisaApiClient.Components.Auth.Exceptions
 {
