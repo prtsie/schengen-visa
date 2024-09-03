@@ -32,6 +32,7 @@ public class VisaApplicationCreateRequest
     [Required]
     public PastVisaModel[] PastVisas { get; set; } = null!;
 
+    //todo remove attribute
     [Required]
     public PermissionToDestCountryModel? PermissionToDestCountry { get; set; }
 
