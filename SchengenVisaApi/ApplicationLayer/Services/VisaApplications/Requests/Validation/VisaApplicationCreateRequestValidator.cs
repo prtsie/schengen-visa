@@ -17,6 +17,12 @@ public class VisaApplicationCreateRequestValidator : AbstractValidator<VisaAppli
         IApplicantsRepository applicants,
         IUserIdProvider userIdProvider)
     {
+        RuleFor(r => r.PermissionToDestCountry)
+            .NotEmpty()
+            .WithMessage("For transit you must provide permission to destination country")
+            .SetValidator(permissionToDestCountryModelValidator)
+            .When(r => r.VisaCategory is VisaCategory.Transit);
+
         RuleFor(r => r.ReentryPermit)
             .NotEmpty()
             .WithMessage("Non-residents must provide re-entry permission")
@@ -42,11 +48,6 @@ public class VisaApplicationCreateRequestValidator : AbstractValidator<VisaAppli
 
         RuleForEach(r => r.PastVisas)
             .SetValidator(pastVisaModelValidator);
-
-        When(r => r.VisaCategory == VisaCategory.Transit,
-            () =>
-                RuleFor(r => r.PermissionToDestCountry)
-                    .SetValidator(permissionToDestCountryModelValidator));
 
         RuleForEach(r => r.PastVisits)
             .SetValidator(pastVisitModelValidator);

@@ -8,8 +8,6 @@ namespace ApplicationLayer.Services.VisaApplications.Requests;
 /// Model of visa request from user
 public class VisaApplicationCreateRequest
 {
-
-    [Required]
     public ReentryPermitModel? ReentryPermit { get; set; }
 
     [Required]
@@ -32,8 +30,6 @@ public class VisaApplicationCreateRequest
     [Required]
     public PastVisaModel[] PastVisas { get; set; } = null!;
 
-    //todo remove attribute
-    [Required]
     public PermissionToDestCountryModel? PermissionToDestCountry { get; set; }
 
     [Required]

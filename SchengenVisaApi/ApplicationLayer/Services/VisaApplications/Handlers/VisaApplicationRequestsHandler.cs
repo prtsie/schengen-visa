@@ -53,6 +53,10 @@ public class VisaApplicationRequestsHandler(
     {
         var applicantId = await applicants.GetApplicantIdByUserId(userIdProvider.GetUserId(), cancellationToken);
         var application = await applications.GetByApplicantAndApplicationIdAsync(applicantId, applicationId, cancellationToken);
+        if (application.Status is ApplicationStatus.Approved or ApplicationStatus.Rejected)
+        {
+            throw new ApplicationAlreadyProcessedException();
+        }
 
         application.Status = ApplicationStatus.Closed;
         await applications.UpdateAsync(application, cancellationToken);

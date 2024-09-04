@@ -26,7 +26,6 @@ public class UsersController(
     /// <summary> Adds applicant with user account </summary>
     [HttpPost("register")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status409Conflict)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Register(RegisterApplicantRequest request, CancellationToken cancellationToken)
     {
@@ -40,7 +39,6 @@ public class UsersController(
     ///<remarks> Accessible only for admins </remarks>
     [HttpPost("authorities")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status409Conflict)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

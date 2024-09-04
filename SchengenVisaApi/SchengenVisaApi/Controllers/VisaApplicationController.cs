@@ -66,6 +66,7 @@ public class VisaApplicationController(
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [Authorize(policy: PolicyConstants.ApplicantPolicy)]
     public async Task<IActionResult> CloseApplication(Guid applicationId, CancellationToken cancellationToken)
     {
