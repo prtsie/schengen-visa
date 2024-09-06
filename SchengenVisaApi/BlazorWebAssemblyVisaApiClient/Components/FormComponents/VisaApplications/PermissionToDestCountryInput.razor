@@ -13,7 +13,7 @@
         Expiration date:<br/>
         <InputDate DisplayName="Expiration date of permission to destination Country" class="rounded"
                    @bind-Value="PermissionToDestCountry.ExpirationDate"
-                   max="@formattedDate"/>
+                   min="@formattedDate"/>
     </label><br/>
     <ValidationMessage For="() => PermissionToDestCountry.ExpirationDate"></ValidationMessage>
 </div>

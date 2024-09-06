@@ -1,4 +1,5 @@
-﻿using ApplicationLayer.Services.AuthServices.Common;
+﻿using ApplicationLayer.Services.Applicants.Models;
+using ApplicationLayer.Services.AuthServices.Common;
 using ApplicationLayer.Services.AuthServices.LoginService;
 using ApplicationLayer.Services.AuthServices.RegisterService;
 using ApplicationLayer.Services.AuthServices.Requests;
@@ -108,5 +109,18 @@ public class UsersController(
     {
         await usersService.RemoveAuthorityAccount(authorityAccountId, cancellationToken);
         return Ok();
+    }
+
+    /// <summary> Returns applicant info </summary>
+    [HttpGet("applicant")]
+    [ProducesResponseType<ApplicantModel>(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [Authorize(policy: PolicyConstants.ApplicantPolicy)]
+    public async Task<IActionResult> GetApplicant(CancellationToken cancellationToken)
+    {
+
+        var result = await usersService.GetAuthenticatedApplicant(cancellationToken);
+        return Ok(result);
     }
 }

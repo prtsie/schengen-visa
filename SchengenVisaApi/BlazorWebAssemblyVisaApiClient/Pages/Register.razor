@@ -1,6 +1,5 @@
 ﻿@page "/register"
 @using System.Net
-@using System.Text
 @using AutoMapper
 @using VisaApiClient
 @using BlazorWebAssemblyVisaApiClient.Components.FormComponents.Applicants
@@ -8,6 +7,7 @@
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Linq
 @using BlazorWebAssemblyVisaApiClient.Components
+@using BlazorWebAssemblyVisaApiClient.Infrastructure.Helpers
 @using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.DateTimeProvider
 @using BlazorWebAssemblyVisaApiClient.Validation.Applicants.Models
 @inherits BlazorWebAssemblyVisaApiClient.Components.Base.VisaClientComponentBase
@@ -144,23 +144,12 @@
         requestModel.BirthDate = DateTime.Now;
     }
 
-    private string ErrorsToString(IEnumerable<string> errors)
-    {
-        var stringBuilder = new StringBuilder();
-        foreach (var error in errors)
-        {
-            stringBuilder.Append($"{error}<br/>");
-        }
-
-        return stringBuilder.ToString();
-    }
-
     private async void TryRegisterApplicant()
     {
         var validationResult = await RegisterApplicantRequestValidator.ValidateAsync(requestModel);
         if (!validationResult.IsValid)
         {
-            var errorsString = ErrorsToString(validationResult.Errors.Select(e => e.ErrorMessage));
+            var errorsString = validationResult.ToErrorsString();
             status.SetError(errorsString);
 
             return;
@@ -187,7 +176,7 @@
                     return;
                 }
 
-                status.SetError(ErrorsToString(errorsList));
+                status.SetError(string.Join("<br/>", errorsList));
             }
             else
             {
@@ -196,6 +185,7 @@
         }
         catch (Exception e)
         {
+            status.SetError("Error occured");
             ErrorHandler.Handle(e);
         }
     }

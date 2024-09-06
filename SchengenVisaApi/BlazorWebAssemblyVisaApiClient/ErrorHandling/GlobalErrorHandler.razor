@@ -1,4 +1,6 @@
-﻿<CascadingValue Value="this">
+﻿@using System.Net
+@using VisaApiClient
+<CascadingValue Value="this">
     @ChildContent
 </CascadingValue>
 
@@ -7,8 +9,13 @@
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    [Inject] private NavigationManager Nav { get; set; } = null!;
+
     public void Handle(Exception ex)
     {
-
+        if (ex is ApiException<ProblemDetails> { StatusCode: (int)HttpStatusCode.Unauthorized or (int)HttpStatusCode.Forbidden })
+        {
+            Nav.NavigateTo("/");
+        }
     }
 }

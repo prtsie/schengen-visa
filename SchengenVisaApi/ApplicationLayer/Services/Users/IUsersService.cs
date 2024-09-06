@@ -1,4 +1,5 @@
-﻿using ApplicationLayer.Services.Users.Models;
+﻿using ApplicationLayer.Services.Applicants.Models;
+using ApplicationLayer.Services.Users.Models;
 using ApplicationLayer.Services.Users.Requests;
 
 namespace ApplicationLayer.Services.Users;
@@ -19,4 +20,8 @@ public interface IUsersService
     /// <param name="userId">Identifier of account</param>
     /// <param name="cancellationToken">Cancellation token</param>
     Task RemoveAuthorityAccount(Guid userId, CancellationToken cancellationToken);
+
+    /// Get applicant that made request
+    /// <param name="cancellationToken">cancellation token</param>
+    Task<ApplicantModel> GetAuthenticatedApplicant(CancellationToken cancellationToken);
 }

@@ -1,5 +1,4 @@
 @page "/applications"
-@using System.Net
 @using System.Text
 @using BlazorWebAssemblyVisaApiClient.Infrastructure.Helpers
 @using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvider
@@ -61,14 +60,7 @@
         }
         catch (Exception e)
         {
-            if (e is ApiException<ProblemDetails> { Result.Status: (int)HttpStatusCode.Unauthorized } problemDetailsException)
-            {
-                htmlBody =  $"<p>{problemDetailsException.Result.Detail!}</p>";
-            }
-            else
-            {
                 ErrorHandler.Handle(e);
-            }
         }
     }
 

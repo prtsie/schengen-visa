@@ -1,4 +1,6 @@
 ﻿using ApplicationLayer.InfrastructureServicesInterfaces;
+using ApplicationLayer.Services.Applicants.Models;
+using ApplicationLayer.Services.Applicants.NeededServices;
 using ApplicationLayer.Services.AuthServices.Common;
 using ApplicationLayer.Services.AuthServices.NeededServices;
 using ApplicationLayer.Services.Users.Exceptions;
@@ -9,7 +11,12 @@ using Domains.Users;
 
 namespace ApplicationLayer.Services.Users;
 
-public class UsersService(IMapper mapper, IUsersRepository users, IUnitOfWork unitOfWork) : IUsersService
+public class UsersService(
+    IMapper mapper,
+    IUserIdProvider userIdProvider,
+    IUsersRepository users,
+    IApplicantsRepository applicants,
+    IUnitOfWork unitOfWork) : IUsersService
 {
     async Task<List<UserModel>> IUsersService.GetAuthoritiesAccountsAsync(CancellationToken cancellationToken)
     {
@@ -33,6 +40,13 @@ public class UsersService(IMapper mapper, IUsersRepository users, IUnitOfWork un
         ValidateRole(user, Role.ApprovingAuthority);
 
         await RemoveUserAccount(user, cancellationToken);
+    }
+
+    async Task<ApplicantModel> IUsersService.GetAuthenticatedApplicant(CancellationToken cancellationToken)
+    {
+        var applicant = await applicants.FindByUserIdAsync(userIdProvider.GetUserId(), cancellationToken);
+
+        return mapper.Map<ApplicantModel>(applicant);
     }
 
     /// Updates user account auth data

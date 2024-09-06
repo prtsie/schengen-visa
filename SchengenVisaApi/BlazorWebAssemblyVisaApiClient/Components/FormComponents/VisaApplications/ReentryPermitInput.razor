@@ -1,0 +1,34 @@
+﻿@using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.DateTimeProvider
+@using VisaApiClient
+
+<div>
+    <label>
+        Number:<br/>
+        <InputText DisplayName="Number of re-entry permit" class="rounded"
+                   @bind-Value="ReentryPermit.Number"/>
+    </label><br/>
+    <ValidationMessage For="() => ReentryPermit.Number"></ValidationMessage><br/>
+
+    <label>
+        Expiration date:<br/>
+        <InputDate DisplayName="Expiration date of re-entry permit" class="rounded"
+                   @bind-Value="ReentryPermit.ExpirationDate"
+                   min="@formattedDate"/>
+    </label><br/>
+    <ValidationMessage For="() => ReentryPermit.ExpirationDate"></ValidationMessage>
+</div>
+
+@code {
+    private string formattedDate = null!;
+
+    [Parameter, EditorRequired] public ReentryPermitModel ReentryPermit { get; set; } = null!;
+
+    [Inject] IDateTimeProvider DateTimeProvider { get; set; } = null!;
+
+    protected override void OnInitialized()
+    {
+        formattedDate = DateTimeProvider.FormattedNow();
+        ReentryPermit.ExpirationDate = DateTimeProvider.Now();
+    }
+
+}

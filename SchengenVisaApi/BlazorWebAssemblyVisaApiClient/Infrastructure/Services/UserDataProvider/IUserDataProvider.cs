@@ -5,7 +5,7 @@ namespace BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvide
     public interface IUserDataProvider
     {
 
-        public ApplicantModel? GetApplicant();
+        public Task<ApplicantModel> GetApplicant();
 
         public string? GetCurrentRole();
     }

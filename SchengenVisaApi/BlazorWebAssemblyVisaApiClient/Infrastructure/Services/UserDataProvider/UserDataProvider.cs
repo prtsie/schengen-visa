@@ -8,10 +8,9 @@ namespace BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvide
     {
         private static readonly JwtSecurityTokenHandler tokenHandler = new ();
 
-        public ApplicantModel? GetApplicant()
+        public async Task<ApplicantModel> GetApplicant()
         {
-            //todo api action
-            return null;
+            return await client.GetApplicantAsync();
         }
 
         public string? GetCurrentRole()
