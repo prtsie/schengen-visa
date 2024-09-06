@@ -1,5 +1,4 @@
-﻿@using BlazorWebAssemblyVisaApiClient.Infrastructure.Services
-@using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.DateTimeProvider
+﻿@using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.DateTimeProvider
 @using VisaApiClient
 
 <div>
@@ -22,7 +21,7 @@
     <div >
         <label>
             Issue date:<br/>
-            <InputDate DisplayName="Issue date" class="rounded" @bind-Value="Passport.IssueDate" max="DateTimeProvider.Now()"/>
+            <InputDate DisplayName="Issue date" class="rounded" @bind-Value="Passport.IssueDate" max="@formattedDate"/>
         </label><br/>
         <ValidationMessage For="() => Passport.IssueDate"></ValidationMessage>
     </div><br/>
@@ -30,14 +29,14 @@
     <div >
         <label>
             Expiration date:<br/>
-            <InputDate DisplayName="Expiration date" class="rounded" @bind-Value="Passport.ExpirationDate" min="DateTimeProvider.Now()"/>
+            <InputDate DisplayName="Expiration date" class="rounded" @bind-Value="Passport.ExpirationDate" min="@formattedDate"/>
         </label><br/>
         <ValidationMessage For="() => Passport.ExpirationDate"></ValidationMessage>
     </div>
 </div>
 
 @code {
-    private string now = DateTime.Now.ToString("yyyy-MM-dd");
+    private string formattedDate = null!;
 
     [Parameter, EditorRequired] public PassportModel Passport { get; set; } = null!;
 
@@ -47,6 +46,7 @@
     {
         Passport.IssueDate = DateTime.Now;
         Passport.ExpirationDate = DateTime.Now;
+        formattedDate = DateTimeProvider.FormattedNow();
     }
 
 }

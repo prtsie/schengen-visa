@@ -2,9 +2,9 @@
 @using System.Reflection
 @using BlazorWebAssemblyVisaApiClient.Infrastructure.Helpers
 @typeparam TItem where TItem : class
-    @typeparam TMember where TMember : struct, Enum
+@typeparam TMember where TMember : struct, Enum
 
-<InputSelect TValue="TMember"  @bind-Value="selected">
+<InputSelect TValue="TMember" @bind-Value="selected">
     @foreach (var value in enumValues)
     {
         <option value="@value.Key">@value.Value</option>
@@ -15,6 +15,8 @@
     [Parameter, EditorRequired] public TItem Model { get; set; } = default!;
 
     [Parameter, EditorRequired] public Expression<Func<TItem, TMember>> EnumProperty { get; set; } = null!;
+
+    [Parameter] public Action? OnChanged { get; set; }
 
     private Dictionary<TMember, string> enumValues = new();
     private PropertyInfo modelMemberInfo = null!;
@@ -33,12 +35,17 @@
 
     protected override void OnAfterRender(bool firstRender)
     {
-        OnValueChanged();
+        var current = (TMember)modelMemberInfo.GetValue(Model)!;
+        if (!current.Equals(selected))
+        {
+            OnValueChanged();
+        }
     }
 
     private void OnValueChanged()
     {
         modelMemberInfo.SetValue(Model, selected);
+        OnChanged?.Invoke();
     }
 
 }

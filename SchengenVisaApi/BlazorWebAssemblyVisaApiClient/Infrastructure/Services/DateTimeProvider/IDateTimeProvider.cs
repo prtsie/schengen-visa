@@ -3,5 +3,7 @@
     public interface IDateTimeProvider
     {
         DateTime Now();
+
+        string FormattedNow();
     }
 }

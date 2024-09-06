@@ -1,7 +1,7 @@
-﻿using BlazorWebAssemblyVisaApiClient.FluentValidation.Applicants.Models;
+﻿using BlazorWebAssemblyVisaApiClient.Validation.Applicants.Models;
 using FluentValidation;
 
-namespace BlazorWebAssemblyVisaApiClient.FluentValidation.Applicants.Validators;
+namespace BlazorWebAssemblyVisaApiClient.Validation.Applicants.Validators;
 
 public class PlaceOfWorkModelValidator : AbstractValidator<PlaceOfWorkModel>
 {

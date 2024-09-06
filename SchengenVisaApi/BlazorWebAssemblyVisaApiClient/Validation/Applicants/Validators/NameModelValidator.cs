@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using VisaApiClient;
 
-namespace BlazorWebAssemblyVisaApiClient.FluentValidation.Applicants.Validators;
+namespace BlazorWebAssemblyVisaApiClient.Validation.Applicants.Validators;
 
 public class NameModelValidator : AbstractValidator<NameModel>
 {

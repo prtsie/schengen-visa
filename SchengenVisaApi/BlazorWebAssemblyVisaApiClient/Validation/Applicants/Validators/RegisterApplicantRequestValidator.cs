@@ -1,11 +1,10 @@
-﻿using BlazorWebAssemblyVisaApiClient.FluentValidation.Applicants.Models;
-using BlazorWebAssemblyVisaApiClient.Infrastructure.Services;
-using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.DateTimeProvider;
+﻿using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.DateTimeProvider;
+using BlazorWebAssemblyVisaApiClient.Validation.Applicants.Models;
 using FluentValidation;
 using VisaApiClient;
-using PlaceOfWorkModel = BlazorWebAssemblyVisaApiClient.FluentValidation.Applicants.Models.PlaceOfWorkModel;
+using PlaceOfWorkModel = BlazorWebAssemblyVisaApiClient.Validation.Applicants.Models.PlaceOfWorkModel;
 
-namespace BlazorWebAssemblyVisaApiClient.FluentValidation.Applicants.Validators;
+namespace BlazorWebAssemblyVisaApiClient.Validation.Applicants.Validators;
 
 public class RegisterApplicantRequestValidator : AbstractValidator<RegisterApplicantRequestModel>
 {

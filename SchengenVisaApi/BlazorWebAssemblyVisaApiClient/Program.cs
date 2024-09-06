@@ -1,5 +1,5 @@
 using System.Reflection;
-using BlazorWebAssemblyVisaApiClient.Infrastructure.Services;
+using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.DateTimeProvider;
 using FluentValidation;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;

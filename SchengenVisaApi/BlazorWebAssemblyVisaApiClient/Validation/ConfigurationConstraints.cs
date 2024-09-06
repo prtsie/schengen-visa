@@ -1,4 +1,4 @@
-﻿namespace BlazorWebAssemblyVisaApiClient.FluentValidation;
+﻿namespace BlazorWebAssemblyVisaApiClient.Validation;
 
 public static class ConfigurationConstraints
 {

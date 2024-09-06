@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using VisaApiClient;
 
-namespace BlazorWebAssemblyVisaApiClient.FluentValidation.Common;
+namespace BlazorWebAssemblyVisaApiClient.Validation.Common;
 
 public class AuthDataValidator : AbstractValidator<AuthData>
 {

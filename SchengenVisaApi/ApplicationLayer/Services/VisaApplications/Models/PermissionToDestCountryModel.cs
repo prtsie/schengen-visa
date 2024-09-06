@@ -7,11 +7,9 @@ namespace ApplicationLayer.Services.VisaApplications.Models;
 public class PermissionToDestCountryModel
 {
     /// Date when permission to destination country expires
-    [Required]
     public DateTime ExpirationDate { get; set; }
 
     /// Issuing authority
-    [Required]
     [MaxLength(ConfigurationConstraints.IssuerNameLength)]
     public string Issuer { get; set; } = null!;
 }

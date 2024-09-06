@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using VisaApiClient;
 
-namespace BlazorWebAssemblyVisaApiClient.FluentValidation.Applicants.Models
+namespace BlazorWebAssemblyVisaApiClient.Validation.Applicants.Models
 {
     /// Model of place of work with attributes required for validation to work
     public class PlaceOfWorkModel

@@ -1,0 +1,33 @@
+﻿@using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.DateTimeProvider
+@using VisaApiClient
+
+<div>
+    <label>
+        Destination Country:<br/>
+        <InputText DisplayName="Issuer of permission to destination Country" class="rounded"
+                   @bind-Value="PermissionToDestCountry.Issuer"/>
+    </label><br/>
+    <ValidationMessage For="() => PermissionToDestCountry.Issuer"></ValidationMessage><br/>
+
+    <label>
+        Expiration date:<br/>
+        <InputDate DisplayName="Expiration date of permission to destination Country" class="rounded"
+                   @bind-Value="PermissionToDestCountry.ExpirationDate"
+                   max="@formattedDate"/>
+    </label><br/>
+    <ValidationMessage For="() => PermissionToDestCountry.ExpirationDate"></ValidationMessage>
+</div>
+
+@code {
+    private string formattedDate = null!;
+
+    [Parameter, EditorRequired] public PermissionToDestCountryModel PermissionToDestCountry { get; set; } = null!;
+
+    [Inject] IDateTimeProvider DateTimeProvider { get; set; } = null!;
+
+    protected override void OnInitialized()
+    {
+        formattedDate = DateTimeProvider.FormattedNow();
+    }
+
+}

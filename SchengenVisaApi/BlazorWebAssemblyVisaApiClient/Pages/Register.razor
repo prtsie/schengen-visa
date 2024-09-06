@@ -4,13 +4,12 @@
 @using AutoMapper
 @using VisaApiClient
 @using BlazorWebAssemblyVisaApiClient.Components.FormComponents.Applicants
-@using BlazorWebAssemblyVisaApiClient.FluentValidation.Applicants.Models
-@using BlazorWebAssemblyVisaApiClient.Infrastructure.Services
 @using global::FluentValidation
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Linq
 @using BlazorWebAssemblyVisaApiClient.Components
 @using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.DateTimeProvider
+@using BlazorWebAssemblyVisaApiClient.Validation.Applicants.Models
 @inherits BlazorWebAssemblyVisaApiClient.Components.Base.VisaClientComponentBase
 
 <PageTitle>Registration</PageTitle>
@@ -60,7 +59,7 @@
                 <ValidationMessage For="() => requestModel.CityOfBirth"></ValidationMessage><br/>
                 <label>
                     Birth date:<br/>
-                    <InputDate DisplayName="Birth date" class="rounded" @bind-Value="requestModel.BirthDate" max="@DateTimeProvider.Now()"/>
+                    <InputDate DisplayName="Birth date" class="rounded" @bind-Value="requestModel.BirthDate" max="@DateTimeProvider.FormattedNow()"/>
                 </label><br/>
                 <ValidationMessage For="() => requestModel.BirthDate"></ValidationMessage>
             </div>

@@ -1,9 +1,8 @@
-﻿using BlazorWebAssemblyVisaApiClient.Infrastructure.Services;
-using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.DateTimeProvider;
+﻿using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.DateTimeProvider;
 using FluentValidation;
 using VisaApiClient;
 
-namespace BlazorWebAssemblyVisaApiClient.FluentValidation.Applicants.Validators;
+namespace BlazorWebAssemblyVisaApiClient.Validation.Applicants.Validators;
 
 public class PassportModelValidator : AbstractValidator<PassportModel>
 {

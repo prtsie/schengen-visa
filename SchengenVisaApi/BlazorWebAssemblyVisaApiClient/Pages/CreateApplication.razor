@@ -1,0 +1,78 @@
+﻿@page "/visaApplications/new"
+@using BlazorWebAssemblyVisaApiClient.Validation.VisaApplications.Models
+@using BlazorWebAssemblyVisaApiClient.Components.FormComponents.Applicants
+@using VisaApiClient
+@using BlazorWebAssemblyVisaApiClient.Components
+@using BlazorWebAssemblyVisaApiClient.Components.FormComponents.VisaApplications
+@using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.DateTimeProvider
+@inherits BlazorWebAssemblyVisaApiClient.Components.Base.VisaClientComponentBase
+
+<PageTitle>New Application</PageTitle>
+
+<div class="horizontal-centered-content">
+    <h3>New application</h3>
+    <EditForm class="form" Model="requestModel" OnValidSubmit="TryCreate">
+        <ObjectGraphDataAnnotationsValidator/>
+
+        <div class="form-block">
+            <h5>Visa</h5>
+            <label>
+                Destination Country:<br/>
+                <InputText DisplayName="Destination Country" class="rounded" @bind-Value="requestModel.DestinationCountry"/>
+            </label><br/>
+            <ValidationMessage For="() => requestModel.DestinationCountry"></ValidationMessage><br/>
+
+            <label>
+                Category: <EnumInputList Model="requestModel"
+                                         EnumProperty="r => r.VisaCategory"
+                                         OnChanged="StateHasChanged"/>
+            </label><br/>
+            <ValidationMessage For="() => requestModel.VisaCategory"></ValidationMessage><br/>
+
+            <label>
+                Number of entries: <EnumInputList Model="requestModel" EnumProperty="r => r.RequestedNumberOfEntries"/>
+            </label><br/>
+            <ValidationMessage For="() => requestModel.RequestedNumberOfEntries"></ValidationMessage><br/>
+
+            <label>
+                For group: <InputCheckbox @bind-Value="requestModel.IsForGroup"/>
+            </label><br/>
+            <ValidationMessage For="() => requestModel.IsForGroup"></ValidationMessage><br/>
+
+            <label>
+                Valid for days:<br/>
+                <InputNumber DisplayName="Valid days" class="rounded" @bind-Value="requestModel.ValidDaysRequested"/>
+            </label>
+            <ValidationMessage For="() => requestModel.ValidDaysRequested"></ValidationMessage><br/>
+        </div>
+
+        <div class="form-block">
+            <fieldset disabled="@(requestModel.VisaCategory is not VisaCategory.Transit)">
+                <h5>Permission to destination Country</h5>
+                <PermissionToDestCountryInput PermissionToDestCountry="requestModel.PermissionToDestCountry" />
+            </fieldset>
+        </div><br/>
+
+        <input type="submit" class="btn-outline-primary" value="Register"/>
+        <Status @ref="status"/>
+    </EditForm>
+</div>
+
+
+@code {
+    private VisaApplicationCreateRequestModel requestModel = new();
+    private Status status = null!;
+
+    [Inject] IDateTimeProvider DateTimeProvider { get; set; } = null!;
+
+    protected override void OnInitialized()
+    {
+        requestModel.PermissionToDestCountry!.ExpirationDate = DateTimeProvider.Now();
+    }
+
+    private static void TryCreate()
+    {
+
+    }
+
+}

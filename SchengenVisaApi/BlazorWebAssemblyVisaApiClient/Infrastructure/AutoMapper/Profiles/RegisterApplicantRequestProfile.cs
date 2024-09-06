@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using BlazorWebAssemblyVisaApiClient.FluentValidation.Applicants.Models;
+using BlazorWebAssemblyVisaApiClient.Validation.Applicants.Models;
 using VisaApiClient;
+using PlaceOfWorkModel = BlazorWebAssemblyVisaApiClient.Validation.Applicants.Models.PlaceOfWorkModel;
 
 namespace BlazorWebAssemblyVisaApiClient.Infrastructure.AutoMapper.Profiles
 {
@@ -12,7 +13,7 @@ namespace BlazorWebAssemblyVisaApiClient.Infrastructure.AutoMapper.Profiles
 
             CreateMap<RegisterRequestModel, RegisterRequest>(MemberList.Destination);
 
-            CreateMap<FluentValidation.Applicants.Models.PlaceOfWorkModel, VisaApiClient.PlaceOfWorkModel>(MemberList.Destination);
+            CreateMap<PlaceOfWorkModel, VisaApiClient.PlaceOfWorkModel>(MemberList.Destination);
         }
     }
 }

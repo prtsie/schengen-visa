@@ -9,7 +9,7 @@
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
-    public string StatusText { get; set; } = string.Empty;
+    public string StatusText { get; private set; } = string.Empty;
 
     public void SetMessage(string message)
     {
