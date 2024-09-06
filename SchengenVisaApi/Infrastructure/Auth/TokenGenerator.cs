@@ -29,6 +29,6 @@ public class TokenGenerator(TokenGeneratorOptions options, JwtSecurityTokenHandl
             signingCredentials: options.Credentials,
             claims: claims);
 
-        return new AuthToken(tokenHandler.WriteToken(token));
+        return new AuthToken { Token = tokenHandler.WriteToken(token) };
     }
 }

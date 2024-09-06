@@ -1,5 +1,6 @@
 using System.Reflection;
 using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.DateTimeProvider;
+using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvider;
 using FluentValidation;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -23,6 +24,7 @@ public class Program
         builder.Services.AddScoped<Client>(sp => new Client(baseAddress, sp.GetRequiredService<HttpClient>()));
 
         builder.Services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+        builder.Services.AddScoped<IUserDataProvider, UserDataProvider>();
         builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
         builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());

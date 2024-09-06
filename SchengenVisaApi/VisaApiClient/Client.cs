@@ -1494,14 +1494,14 @@ namespace VisaApiClient
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ApplicantModel
     {
-        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameModel Name { get; set; } = default!;
+        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public NameModel? Name { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("passport", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public PassportModel Passport { get; set; } = default!;
+        [Newtonsoft.Json.JsonProperty("passport", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public PassportModel? Passport { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("birthDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset BirthDate { get; set; } = default!;
+        [Newtonsoft.Json.JsonProperty("birthDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.DateTimeOffset? BirthDate { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("countryOfBirth", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string? CountryOfBirth { get; set; } = default!;
@@ -1515,28 +1515,28 @@ namespace VisaApiClient
         [Newtonsoft.Json.JsonProperty("citizenshipByBirth", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string? CitizenshipByBirth { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("gender", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("gender", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public Gender Gender { get; set; } = default!;
+        public Gender? Gender { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("maritalStatus", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("maritalStatus", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public MaritalStatus MaritalStatus { get; set; } = default!;
+        public MaritalStatus? MaritalStatus { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("fatherName", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameModel FatherName { get; set; } = default!;
+        [Newtonsoft.Json.JsonProperty("fatherName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public NameModel? FatherName { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("motherName", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameModel MotherName { get; set; } = default!;
+        [Newtonsoft.Json.JsonProperty("motherName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public NameModel? MotherName { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("jobTitle", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string? JobTitle { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("placeOfWork", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public PlaceOfWorkModel PlaceOfWork { get; set; } = default!;
+        [Newtonsoft.Json.JsonProperty("placeOfWork", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public PlaceOfWorkModel? PlaceOfWork { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("isNonResident", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool IsNonResident { get; set; } = default!;
+        [Newtonsoft.Json.JsonProperty("isNonResident", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? IsNonResident { get; set; } = default!;
 
     }
 
@@ -1576,8 +1576,9 @@ namespace VisaApiClient
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class AuthToken
     {
-        [Newtonsoft.Json.JsonProperty("token", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string? Token { get; set; } = default!;
+        [Newtonsoft.Json.JsonProperty("token", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string Token { get; set; } = default!;
 
     }
 
@@ -1713,8 +1714,8 @@ namespace VisaApiClient
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class PermissionToDestCountryModel
     {
-        [Newtonsoft.Json.JsonProperty("expirationDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset ExpirationDate { get; set; } = default!;
+        [Newtonsoft.Json.JsonProperty("expirationDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.DateTimeOffset? ExpirationDate { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("issuer", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(200)]
@@ -1777,8 +1778,8 @@ namespace VisaApiClient
         [System.ComponentModel.DataAnnotations.StringLength(25)]
         public string? Number { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("expirationDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset ExpirationDate { get; set; } = default!;
+        [Newtonsoft.Json.JsonProperty("expirationDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.DateTimeOffset? ExpirationDate { get; set; } = default!;
 
     }
 
@@ -1894,8 +1895,8 @@ namespace VisaApiClient
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class VisaApplicationCreateRequest
     {
-        [Newtonsoft.Json.JsonProperty("reentryPermit", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public ReentryPermitModel ReentryPermit { get; set; } = default!;
+        [Newtonsoft.Json.JsonProperty("reentryPermit", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public ReentryPermitModel? ReentryPermit { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("destinationCountry", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
@@ -1923,8 +1924,8 @@ namespace VisaApiClient
         [System.ComponentModel.DataAnnotations.Required]
         public System.Collections.Generic.ICollection<PastVisaModel> PastVisas { get; set; } = new System.Collections.ObjectModel.Collection<PastVisaModel>();
 
-        [Newtonsoft.Json.JsonProperty("permissionToDestCountry", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public PermissionToDestCountryModel PermissionToDestCountry { get; set; } = default!;
+        [Newtonsoft.Json.JsonProperty("permissionToDestCountry", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public PermissionToDestCountryModel? PermissionToDestCountry { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("pastVisits", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
@@ -1935,43 +1936,51 @@ namespace VisaApiClient
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class VisaApplicationModelForApplicant
     {
-        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public System.Guid Id { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public ApplicationStatus Status { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("reentryPermit", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public ReentryPermitModel ReentryPermit { get; set; } = default!;
+        [Newtonsoft.Json.JsonProperty("reentryPermit", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public ReentryPermitModel? ReentryPermit { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("destinationCountry", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string? DestinationCountry { get; set; } = default!;
+        [Newtonsoft.Json.JsonProperty("destinationCountry", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string DestinationCountry { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("pastVisas", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<PastVisaModel>? PastVisas { get; set; } = default!;
+        [Newtonsoft.Json.JsonProperty("pastVisas", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.Collections.Generic.ICollection<PastVisaModel> PastVisas { get; set; } = new System.Collections.ObjectModel.Collection<PastVisaModel>();
 
-        [Newtonsoft.Json.JsonProperty("permissionToDestCountry", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public PermissionToDestCountryModel PermissionToDestCountry { get; set; } = default!;
+        [Newtonsoft.Json.JsonProperty("permissionToDestCountry", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public PermissionToDestCountryModel? PermissionToDestCountry { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("pastVisits", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<PastVisitModel>? PastVisits { get; set; } = default!;
+        [Newtonsoft.Json.JsonProperty("pastVisits", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.Collections.Generic.ICollection<PastVisitModel> PastVisits { get; set; } = new System.Collections.ObjectModel.Collection<PastVisitModel>();
 
-        [Newtonsoft.Json.JsonProperty("visaCategory", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("visaCategory", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public VisaCategory VisaCategory { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("forGroup", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("forGroup", Required = Newtonsoft.Json.Required.Always)]
         public bool ForGroup { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("requestedNumberOfEntries", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("requestedNumberOfEntries", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public RequestedNumberOfEntries RequestedNumberOfEntries { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("requestDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("requestDate", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public System.DateTimeOffset RequestDate { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("validDaysRequested", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("validDaysRequested", Required = Newtonsoft.Json.Required.Always)]
         public int ValidDaysRequested { get; set; } = default!;
 
     }
@@ -1979,46 +1988,55 @@ namespace VisaApiClient
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class VisaApplicationModelForAuthority
     {
-        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public System.Guid Id { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("applicant", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public ApplicantModel Applicant { get; set; } = default!;
+        [Newtonsoft.Json.JsonProperty("applicant", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public ApplicantModel Applicant { get; set; } = new ApplicantModel();
 
-        [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public ApplicationStatus Status { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("reentryPermit", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public ReentryPermitModel ReentryPermit { get; set; } = default!;
+        [Newtonsoft.Json.JsonProperty("reentryPermit", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public ReentryPermitModel? ReentryPermit { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("destinationCountry", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string? DestinationCountry { get; set; } = default!;
+        [Newtonsoft.Json.JsonProperty("destinationCountry", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string DestinationCountry { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("pastVisas", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<PastVisaModel>? PastVisas { get; set; } = default!;
+        [Newtonsoft.Json.JsonProperty("pastVisas", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.Collections.Generic.ICollection<PastVisaModel> PastVisas { get; set; } = new System.Collections.ObjectModel.Collection<PastVisaModel>();
 
-        [Newtonsoft.Json.JsonProperty("permissionToDestCountry", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public PermissionToDestCountryModel PermissionToDestCountry { get; set; } = default!;
+        [Newtonsoft.Json.JsonProperty("permissionToDestCountry", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public PermissionToDestCountryModel? PermissionToDestCountry { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("pastVisits", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<PastVisitModel>? PastVisits { get; set; } = default!;
+        [Newtonsoft.Json.JsonProperty("pastVisits", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.Collections.Generic.ICollection<PastVisitModel> PastVisits { get; set; } = new System.Collections.ObjectModel.Collection<PastVisitModel>();
 
-        [Newtonsoft.Json.JsonProperty("visaCategory", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("visaCategory", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public VisaCategory VisaCategory { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("forGroup", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("forGroup", Required = Newtonsoft.Json.Required.Always)]
         public bool ForGroup { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("requestedNumberOfEntries", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("requestedNumberOfEntries", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public RequestedNumberOfEntries RequestedNumberOfEntries { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("requestDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("requestDate", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public System.DateTimeOffset RequestDate { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("validDaysRequested", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("validDaysRequested", Required = Newtonsoft.Json.Required.Always)]
         public int ValidDaysRequested { get; set; } = default!;
 
     }

@@ -1,16 +1,10 @@
 ﻿@using System.Net
-@using System.IdentityModel.Tokens.Jwt
-@using System.Security.Claims
-@using BlazorWebAssemblyVisaApiClient.Components.Auth.Exceptions
 @using BlazorWebAssemblyVisaApiClient.ErrorHandling
+@using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvider
 @using VisaApiClient
 
 @code {
-    public static bool LoggedIn;
-    public static ApplicantModel? CurrentApplicant; //todo api action
-    public static string? CurrentRole;
-    private static AuthData savedData = null!;
-    private static readonly JwtSecurityTokenHandler TokenHandler = new();
+    public static AuthData? AuthData;
 
     [CascadingParameter] private GlobalErrorHandler ErrorHandler { get; set; } = null!;
 
@@ -20,6 +14,8 @@
 
     [Inject] private NavigationManager Nav { get; set; } = null!;
 
+    [Inject] private IUserDataProvider UserDataProvider { get; set; } = null!;
+
     ///Authorize with email and password
     /// <returns>Message to user</returns>
     public async Task TryAuthorize(AuthData authData)
@@ -28,12 +24,8 @@
         try
         {
             var token = await Client.LoginAsync(authData.Email, authData.Password);
-            Client.SetAuthToken(token);
-            CurrentRole = TokenHandler.ReadJwtToken(token.Token)
-                .Claims
-                .FirstOrDefault(claim => claim.Type == ClaimTypes.Role)?
-                .Value;
-            savedData = authData;
+            Client.AuthToken = token;
+            AuthData = authData;
 
             Status?.SetSucces("Logged in successfully.");
         }
@@ -57,20 +49,18 @@
     }
 
     ///Re-auth if token expired or something
-    public async Task ReAuthenticate(bool redirectOnFailure = true)
+    public async Task ReAuthenticate()
     {
-        if (!LoggedIn)
+        if (AuthData is not null)
         {
-            if (redirectOnFailure)
-            {
-                Nav.NavigateTo("/");
-                return;
-            }
-
-            throw new NotLoggedInException();
+            await TryAuthorize(AuthData);
         }
-
-        await TryAuthorize(savedData);
+        else
+        {
+            Client.AuthToken = null;
+            AuthData = null;
+            Nav.NavigateTo("/");
+        }
     }
 
 }

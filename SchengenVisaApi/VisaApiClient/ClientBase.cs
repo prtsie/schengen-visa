@@ -4,12 +4,7 @@ namespace VisaApiClient
 {
     public class ClientBase
     {
-        protected AuthToken? AuthToken { get; private set; }
-
-        public void SetAuthToken(AuthToken token)
-        {
-            AuthToken = token;
-        }
+        public AuthToken? AuthToken { get; set; }
 
         protected Task<HttpRequestMessage> CreateHttpRequestMessageAsync(CancellationToken cancellationToken)
         {

@@ -1,17 +1,30 @@
 @page "/applications"
 @using System.Net
 @using System.Text
-@using BlazorWebAssemblyVisaApiClient.Components.Auth
 @using BlazorWebAssemblyVisaApiClient.Infrastructure.Helpers
+@using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvider
 @using VisaApiClient
 @inherits BlazorWebAssemblyVisaApiClient.Components.Base.VisaClientComponentBase
 
-<PageTitle>@(AuthComponent.CurrentRole ?? "bruh")</PageTitle>
+<PageTitle>Applications</PageTitle>
 
-@((MarkupString)htmlMarkup)
+<table class="table table-bordered">
+    <thead>
+    @((MarkupString)htmlHead)
+    </thead>
+    <tbody>
+    @((MarkupString)htmlBody)
+    </tbody>
+</table >
 
 @code {
-    private string htmlMarkup = "bruh";
+    private string htmlBody = null!;
+
+    private string htmlHead = null!;
+
+    [Inject] private IUserDataProvider UserDataProvider { get; set; } = null!;
+
+    [Inject] private NavigationManager Nav { get; set; } = null!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -19,35 +32,42 @@
 
         try
         {
-            switch (AuthComponent.CurrentRole)
-        {
-            case "Applicant":
-                var applications = await Client.GetForApplicantAsync();
+            switch (UserDataProvider.GetCurrentRole())
+            {
+                case "Applicant":
+                    htmlHead = "<tr><th>Destination Country</th><th>Visa Category</th><th>Request date</th><th>Days requested</th><th>Status</th></tr>";
+                    var applications = await Client.GetForApplicantAsync();
 
-                stringBuilder.AppendLine("<table><tr><th>Destination Country</th><th>Visa Category</th><th>Request date</th><th>Days requested</th><th>Status</th></tr>");
-                foreach (var application in applications)
-                {
-                    stringBuilder.AppendLine($"<tr><th>{application.DestinationCountry}</th><th>{application.VisaCategory.GetDisplayName()}</th><th>{application.RequestDate.ToString("d")}</th><th>{application.ValidDaysRequested}</th><th>{application.Status.GetDisplayName()}</th></tr>");
-                }
+                    foreach (var application in applications)
+                    {
+                        var rowClass = application.Status switch
+                        {
+                            ApplicationStatus.Pending => "",
+                            ApplicationStatus.Approved => "table-success",
+                            ApplicationStatus.Rejected => "table-danger",
+                            ApplicationStatus.Closed => "table-danger",
+                            _ => throw new ArgumentOutOfRangeException()
+                        };
 
-                stringBuilder.AppendLine("</table >");
-                htmlMarkup = stringBuilder.ToString();
-                break;
+                        stringBuilder.AppendLine($"<tr class=\"{rowClass}\"><th>{application.DestinationCountry}</th><th>{application.VisaCategory.GetDisplayName()}</th><th>{application.RequestDate.ToString("d")}</th><th>{application.ValidDaysRequested}</th><th>{application.Status.GetDisplayName()}</th></tr>");
+                    }
+
+                    htmlBody = stringBuilder.ToString();
+                    break;
                 default:
-                htmlMarkup = AuthComponent.CurrentRole;
-                break;
-        }
+                    Nav.NavigateTo("/"); //todo feedback
+                    break;
+            }
         }
         catch (Exception e)
         {
             if (e is ApiException<ProblemDetails> { Result.Status: (int)HttpStatusCode.Unauthorized } problemDetailsException)
             {
-                htmlMarkup = problemDetailsException.Result.Detail!;
+                htmlBody =  $"<p>{problemDetailsException.Result.Detail!}</p>";
             }
             else
             {
-                //ErrorHandler.Handle(e);
-                throw;
+                ErrorHandler.Handle(e);
             }
         }
     }
