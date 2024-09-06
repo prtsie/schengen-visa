@@ -1,11 +1,16 @@
 ﻿@using System.Net
+@using System.IdentityModel.Tokens.Jwt
+@using System.Security.Claims
 @using BlazorWebAssemblyVisaApiClient.Components.Auth.Exceptions
 @using BlazorWebAssemblyVisaApiClient.ErrorHandling
 @using VisaApiClient
 
 @code {
     public static bool LoggedIn;
+    public static ApplicantModel? CurrentApplicant; //todo api action
+    public static string? CurrentRole;
     private static AuthData savedData = null!;
+    private static readonly JwtSecurityTokenHandler TokenHandler = new();
 
     [CascadingParameter] private GlobalErrorHandler ErrorHandler { get; set; } = null!;
 
@@ -24,6 +29,10 @@
         {
             var token = await Client.LoginAsync(authData.Email, authData.Password);
             Client.SetAuthToken(token);
+            CurrentRole = TokenHandler.ReadJwtToken(token.Token)
+                .Claims
+                .FirstOrDefault(claim => claim.Type == ClaimTypes.Role)?
+                .Value;
             savedData = authData;
 
             Status?.SetSucces("Logged in successfully.");

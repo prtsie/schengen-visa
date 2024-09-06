@@ -1,4 +1,4 @@
-﻿namespace BlazorWebAssemblyVisaApiClient.Infrastructure.Services
+﻿namespace BlazorWebAssemblyVisaApiClient.Infrastructure.Services.DateTimeProvider
 {
     public class DateTimeProvider : IDateTimeProvider
     {

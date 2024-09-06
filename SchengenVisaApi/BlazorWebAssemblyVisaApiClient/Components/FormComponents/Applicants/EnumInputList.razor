@@ -1,6 +1,6 @@
-﻿@using System.ComponentModel.DataAnnotations
-@using System.Linq.Expressions
+﻿@using System.Linq.Expressions
 @using System.Reflection
+@using BlazorWebAssemblyVisaApiClient.Infrastructure.Helpers
 @typeparam TItem where TItem : class
     @typeparam TMember where TMember : struct, Enum
 
@@ -22,18 +22,12 @@
 
     protected override void OnInitialized()
     {
-        var enumMembers = typeof(TMember).GetMembers();
         var modelMemberName = ((MemberExpression)EnumProperty.Body).Member.Name;
         modelMemberInfo = typeof(TItem).GetProperty(modelMemberName)!;
 
         foreach (var value in Enum.GetValues<TMember>())
         {
-            var member = enumMembers.First(info => info.Name == value.ToString());
-            var displayAttribute = (DisplayAttribute?)member
-                .GetCustomAttributes(typeof(DisplayAttribute), false)
-                .FirstOrDefault();
-            var displayName = displayAttribute?.Name ?? value.ToString();
-            enumValues.Add(value, displayName);
+            enumValues.Add(value, value.GetDisplayName());
         }
     }
 

@@ -1,0 +1,56 @@
+@page "/applications"
+@using System.Net
+@using System.Text
+@using BlazorWebAssemblyVisaApiClient.Components
+@using BlazorWebAssemblyVisaApiClient.Components.Auth
+@using BlazorWebAssemblyVisaApiClient.Infrastructure.Helpers
+@using VisaApiClient
+@inherits BlazorWebAssemblyVisaApiClient.Components.Base.VisaClientComponentBase
+
+<PageTitle>@(AuthComponent.CurrentRole ?? "bruh")</PageTitle>
+
+@((MarkupString)htmlMarkup)
+
+@code {
+    private string htmlMarkup = "bruh";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var stringBuilder = new StringBuilder();
+
+        try
+        {
+            switch (AuthComponent.CurrentRole)
+        {
+            case "Applicant":
+                var applications = await Client.GetForApplicantAsync();
+
+                stringBuilder.AppendLine("<table><tr><th>Destination Country</th><th>Visa Category</th><th>Request date</th><th>Days requested</th><th>Status</th></tr>");
+                foreach (var application in applications)
+                {
+                    stringBuilder.AppendLine($"<tr><th>{application.DestinationCountry}</th><th>{application.VisaCategory.GetDisplayName()}</th><th>{application.RequestDate.ToString("d")}</th><th>{application.ValidDaysRequested}</th><th>{application.Status.GetDisplayName()}</th></tr>");
+                }
+
+                stringBuilder.AppendLine("</table >");
+                htmlMarkup = stringBuilder.ToString();
+                break;
+                default:
+                htmlMarkup = AuthComponent.CurrentRole;
+                break;
+        }
+        }
+        catch (Exception e)
+        {
+            if (e is ApiException<ProblemDetails> { Result.Status: (int)HttpStatusCode.Unauthorized } problemDetailsException)
+            {
+                htmlMarkup = problemDetailsException.Result.Detail!;
+            }
+            else
+            {
+                //ErrorHandler.Handle(e);
+                throw;
+            }
+        }
+    }
+
+}
