@@ -20,4 +20,6 @@ public static class ConfigurationConstraints
     public const int ApplicantMinAge = 14;
     public const int JobTitleLength = 50;
     public const int MaxValidDays = 90;
+    public const int MaxPastVisas = 10;
+    public const int MaxPastVisits = 10;
 }

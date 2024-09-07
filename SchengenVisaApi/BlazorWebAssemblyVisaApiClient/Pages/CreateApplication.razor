@@ -9,8 +9,8 @@
 @using BlazorWebAssemblyVisaApiClient.Infrastructure.Helpers
 @using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.DateTimeProvider
 @using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvider
+@using BlazorWebAssemblyVisaApiClient.Validation
 @using FluentValidation
-@using Newtonsoft.Json
 @using Newtonsoft.Json.Linq
 @inherits BlazorWebAssemblyVisaApiClient.Components.Base.VisaClientComponentBase
 
@@ -54,6 +54,62 @@
             <ValidationMessage For="() => requestModel.ValidDaysRequested"></ValidationMessage><br/>
         </div>
 
+        <div class="form-block">
+            <h5>Past visas</h5>
+            @if (currentPastVisa > 0)
+            {
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Name</th><th>Issue date</th><th>Expiration date</th><th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @for (var i = 0; i < currentPastVisa; i++)
+                    {
+                        var visa = requestModel.PastVisas[i];
+                        <tr>
+                            <th>@visa.Name</th>
+                            <th>@visa.IssueDate.ToString("d.MM.yyyy")</th>
+                            <th>@visa.ExpirationDate.ToString("d.MM.yyyy")</th>
+                            <th>
+                                <input type="button" class="border-danger" @onclick="() => RemovePastVisa(visa)" value="X"/>
+                            </th>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }
+            <label>
+                Name:
+                <InputText DisplayName="Past visa name" @bind-Value="requestModel.PastVisas[currentPastVisa].Name"/>
+            </label><br/>
+            <ValidationMessage For="() => requestModel.PastVisas[currentPastVisa].Name"></ValidationMessage><br/>
+
+            <label>
+                Issue date:<br/>
+                <InputDate DisplayName="Past visa issue date"
+                           class="rounded"
+                           @bind-Value="requestModel.PastVisas[currentPastVisa].IssueDate"
+                           max="@formattedNow"/>
+            </label><br/>
+            <ValidationMessage For="() => requestModel.PastVisas[currentPastVisa].IssueDate"></ValidationMessage><br/>
+
+            <label>
+                Expiration date:<br/>
+                <InputDate DisplayName="Past visa expiration date"
+                           class="rounded"
+                           @bind-Value="requestModel.PastVisas[currentPastVisa].ExpirationDate"
+                           min="@formattedNow"/>
+            </label><br/>
+            <ValidationMessage For="() => requestModel.PastVisas[currentPastVisa].ExpirationDate"></ValidationMessage><br/>
+
+            <input type="button" class="btn-outline-primary"
+                   disabled="@(currentPastVisa == requestModel.PastVisas.Length - 1)"
+                   @onclick="AddPastVisa" value="Add"/>
+            <Status @ref="pastVisaStatus"/>
+        </div>
+
         @if (requestModel.VisaCategory is VisaCategory.Transit)
         {
             <div class="form-block">
@@ -61,12 +117,16 @@
                 <PermissionToDestCountryInput PermissionToDestCountry="requestModel.PermissionToDestCountry"/>
             </div>
         }
+        else
+        {
+            requestModel.PermissionToDestCountry = null;
+        }
 
         @if (isNonResident)
         {
             <div class="form-block">
                 <h5>Re-entry permission</h5>
-                <ReentryPermitInput ReentryPermit="requestModel.ReentryPermit" />
+                <ReentryPermitInput ReentryPermit="requestModel.ReentryPermit"/>
             </div>
             <br/>
         }
@@ -76,12 +136,17 @@
         <Status @ref="status"/>
     </EditForm>
 </div>
-//todo past visas and visits
 
 @code {
+
+//todo past visas and visits
     private VisaApplicationCreateRequestModel requestModel = new();
     private Status status = null!;
+    private Status pastVisaStatus = null!;
     private bool isNonResident;
+    private int currentPastVisa;
+    private int currentPastVisit;
+    private string formattedNow = null!;
 
     [Inject] IDateTimeProvider DateTimeProvider { get; set; } = null!;
 
@@ -89,10 +154,22 @@
 
     [Inject] IValidator<VisaApplicationCreateRequestModel> VisaApplicationCreateRequestValidator { get; set; } = null!;
 
+    [Inject] IValidator<PastVisaModel> PastVisaModelValidator { get; set; } = null!;
+
     [Inject] IMapper Mapper { get; set; } = null!;
 
     protected override async Task OnInitializedAsync()
     {
+        requestModel.PastVisas = new PastVisaModel[ConfigurationConstraints.MaxPastVisas];
+        for (var i = 0; i < requestModel.PastVisas.Length; i++)
+        {
+            requestModel.PastVisas[i] = new()
+            {
+                IssueDate = DateTimeProvider.Now(),
+                ExpirationDate = DateTimeProvider.Now()
+            };
+        }
+
         try
         {
             isNonResident = (await UserDataProvider.GetApplicant()).IsNonResident;
@@ -102,11 +179,15 @@
             ErrorHandler.Handle(e);
         }
 
+        formattedNow = DateTimeProvider.FormattedNow();
         requestModel.PermissionToDestCountry!.ExpirationDate = DateTimeProvider.Now();
     }
 
     private async Task TryCreate()
     {
+        requestModel.PastVisas = currentPastVisa == 0 ? [] : requestModel.PastVisas[..currentPastVisa];
+        requestModel.PastVisits = currentPastVisit == 0 ? [] : requestModel.PastVisits[..currentPastVisit];
+
         var validationResult = await VisaApplicationCreateRequestValidator.ValidateAsync(requestModel);
         if (!validationResult.IsValid)
         {
@@ -127,15 +208,16 @@
             if (e.StatusCode == (int)HttpStatusCode.BadRequest
                 && e.Result.AdditionalProperties.TryGetValue("errors", out var errors))
             {
-                var errorsList = ((JArray)errors).ToObject<List<string>>();
-                if (errorsList is null)
+                try
                 {
-                    ErrorHandler.Handle(new JsonException("Can't convert validation errors to list"));
-
-                    return;
+                    var errorsList = ((JArray)errors).ToObject<List<string>>();
+                    status.SetError(string.Join("<br/>", errorsList!));
                 }
-
-                status.SetError(string.Join("<br/>", errorsList));
+                catch (Exception inner)
+                {
+                    ErrorHandler.Handle(inner);
+                    status.SetError("Error occured");
+                }
             }
             else
             {
@@ -145,6 +227,51 @@
         catch (Exception e)
         {
             ErrorHandler.Handle(e);
+        }
+    }
+
+    private void AddPastVisa()
+    {
+        var validationResult = PastVisaModelValidator.Validate(requestModel.PastVisas[currentPastVisa]);
+        if (!validationResult.IsValid)
+        {
+            pastVisaStatus.SetError(validationResult.ToErrorsString());
+            return;
+        }
+
+        if (currentPastVisa < requestModel.PastVisas.Length - 1)
+        {
+            currentPastVisa++;
+            pastVisaStatus.SetSucces("Added");
+        }
+        else
+        {
+            pastVisaStatus.SetError($"{requestModel.PastVisas.Length} past visas is maximum");
+        }
+    }
+
+    private void RemovePastVisa(PastVisaModel visa)
+    {
+        currentPastVisa--;
+        var found = false;
+
+        if (requestModel.PastVisas[^1] == visa)
+        {
+            requestModel.PastVisas[^1] = new();
+            return;
+        }
+
+        for (var i = 0; i < requestModel.PastVisas.Length - 1; i++)
+        {
+            if (requestModel.PastVisas[i] == visa)
+            {
+                found = true;
+            }
+
+            if (found)
+            {
+                requestModel.PastVisas[i] = requestModel.PastVisas[i + 1];
+            }
         }
     }
 

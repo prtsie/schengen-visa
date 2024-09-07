@@ -15,7 +15,6 @@ public class PastVisitModel
     public DateTime EndDate { get; set; }
 
     /// Destination country of past visit
-    [Required]
     [MaxLength(ConfigurationConstraints.CountryNameLength)]
     public string DestinationCountry { get; set; } = null!;
 }

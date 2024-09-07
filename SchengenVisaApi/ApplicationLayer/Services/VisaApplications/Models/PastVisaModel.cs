@@ -11,7 +11,6 @@ public class PastVisaModel
     public DateTime IssueDate { get; set; }
 
     /// Name of visa
-    [Required]
     [MaxLength(ConfigurationConstraints.VisaNameLength)]
     public string Name { get; set; } = null!;
 

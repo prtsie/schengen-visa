@@ -26,13 +26,11 @@ namespace BlazorWebAssemblyVisaApiClient.Validation.VisaApplications.Models
         [Range(0, ConfigurationConstraints.MaxValidDays)]
         public int ValidDaysRequested { get; set; }
 
-        [ValidateComplexType]
-        public PastVisaModel[] PastVisas { get; set; } = default!;
+        [ValidateComplexType] public PastVisaModel[] PastVisas { get; set; } = default!;
 
         [ValidateComplexType]
         public PermissionToDestCountryModel? PermissionToDestCountry { get; set; } = new();
 
-        [ValidateComplexType]
-        public PastVisitModel[] PastVisits { get; set; } = default!;
+        [ValidateComplexType] public PastVisitModel[] PastVisits { get; set; } = default!;
     }
 }

@@ -1799,10 +1799,9 @@ namespace VisaApiClient
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public System.DateTimeOffset IssueDate { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(70, MinimumLength = 1)]
-        public string Name { get; set; } = default!;
+        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(70)]
+        public string? Name { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("expirationDate", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -1821,10 +1820,9 @@ namespace VisaApiClient
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public System.DateTimeOffset EndDate { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("destinationCountry", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(70, MinimumLength = 1)]
-        public string DestinationCountry { get; set; } = default!;
+        [Newtonsoft.Json.JsonProperty("destinationCountry", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(70)]
+        public string? DestinationCountry { get; set; } = default!;
 
     }
 
@@ -1835,10 +1833,9 @@ namespace VisaApiClient
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public System.DateTimeOffset ExpirationDate { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("issuer", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(200, MinimumLength = 1)]
-        public string Issuer { get; set; } = default!;
+        [Newtonsoft.Json.JsonProperty("issuer", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(200)]
+        public string? Issuer { get; set; } = default!;
 
     }
 
