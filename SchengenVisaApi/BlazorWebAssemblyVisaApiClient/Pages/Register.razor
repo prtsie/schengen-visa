@@ -8,7 +8,6 @@
 @using Newtonsoft.Json.Linq
 @using BlazorWebAssemblyVisaApiClient.Components
 @using BlazorWebAssemblyVisaApiClient.Infrastructure.Helpers
-@using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.DateTimeProvider
 @using BlazorWebAssemblyVisaApiClient.Validation
 @using BlazorWebAssemblyVisaApiClient.Validation.Applicants.Models
 @inherits BlazorWebAssemblyVisaApiClient.Components.Base.VisaClientComponentBase
@@ -138,8 +137,6 @@
     [Inject] IValidator<RegisterApplicantRequestModel> RegisterApplicantRequestValidator { get; set; } = null!;
 
     [Inject] IMapper Mapper { get; set; } = null!;
-
-    [Inject] IDateTimeProvider DateTimeProvider { get; set; } = null!;
 
     protected override void OnInitialized()
     {

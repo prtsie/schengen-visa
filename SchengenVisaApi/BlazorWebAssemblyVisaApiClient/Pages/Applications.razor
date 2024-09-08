@@ -1,25 +1,63 @@
 @page "/applications"
-@using System.Text
+@using System.Reflection
 @using BlazorWebAssemblyVisaApiClient.Infrastructure.Helpers
 @using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvider
+@using BlazorWebAssemblyVisaApiClient.PagesExceptions.Applications
 @using VisaApiClient
 @inherits BlazorWebAssemblyVisaApiClient.Components.Base.VisaClientComponentBase
 
 <PageTitle>Applications</PageTitle>
 
 <table class="table table-bordered">
-    <thead>
-    @((MarkupString)htmlHead)
-    </thead>
-    <tbody>
-    @((MarkupString)htmlBody)
-    </tbody>
+    @switch (currentRole)
+    {
+        case "Applicant":
+            <thead>
+            <tr>
+                <th>Destination Country</th>
+                <th>Visa Category</th>
+                <th>Request date</th>
+                <th>Days requested</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            @foreach (var application in applications.Cast<VisaApplicationModelForApplicant>())
+            {
+                var rowClass = application.Status switch
+                {
+                    ApplicationStatus.Pending => "",
+                    ApplicationStatus.Approved => "table-success",
+                    ApplicationStatus.Rejected => "table-danger",
+                    ApplicationStatus.Closed => "table-danger",
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+
+                <tr class="@rowClass">
+                    <th>@application.DestinationCountry</th>
+                    <th>@application.VisaCategory.GetDisplayName()</th>
+                    <th>@application.RequestDate.ToString("d")</th>
+                    <th>@application.ValidDaysRequested</th>
+                    <th>@application.Status.GetDisplayName()</th>
+                    <th>
+                        <input type="button" class="border-danger" @onclick="() => CloseApplication(application)" value="Close"/>
+                    </th>
+                </tr>
+            }
+            </tbody>
+
+            break;
+        default:
+            Nav.NavigateTo("/"); //todo feedback
+            break;
+    }
 </table >
 
 @code {
-    private string htmlBody = null!;
-
-    private string htmlHead = null!;
+    private string currentRole = null!;
+    private IEnumerable<object> applications = [];
 
     [Inject] private IUserDataProvider UserDataProvider { get; set; } = null!;
 
@@ -27,41 +65,59 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var stringBuilder = new StringBuilder();
+        currentRole = UserDataProvider.GetCurrentRole()!;
+        await Fetch();
+    }
 
+    private async Task Fetch()
+    {
         try
         {
-            switch (UserDataProvider.GetCurrentRole())
+            applications = currentRole switch
             {
-                case "Applicant":
-                    htmlHead = "<tr><th>Destination Country</th><th>Visa Category</th><th>Request date</th><th>Days requested</th><th>Status</th></tr>";
-                    var applications = await Client.GetForApplicantAsync();
-
-                    foreach (var application in applications)
-                    {
-                        var rowClass = application.Status switch
-                        {
-                            ApplicationStatus.Pending => "",
-                            ApplicationStatus.Approved => "table-success",
-                            ApplicationStatus.Rejected => "table-danger",
-                            ApplicationStatus.Closed => "table-danger",
-                            _ => throw new ArgumentOutOfRangeException()
-                        };
-
-                        stringBuilder.AppendLine($"<tr class=\"{rowClass}\"><th>{application.DestinationCountry}</th><th>{application.VisaCategory.GetDisplayName()}</th><th>{application.RequestDate.ToString("d")}</th><th>{application.ValidDaysRequested}</th><th>{application.Status.GetDisplayName()}</th></tr>");
-                    }
-
-                    htmlBody = stringBuilder.ToString();
-                    break;
-                default:
-                    Nav.NavigateTo("/"); //todo feedback
-                    break;
-            }
+                "Applicant" => (await Client.GetForApplicantAsync()).OrderByDescending(a => a.RequestDate),
+                _ => throw new ArgumentOutOfRangeException()
+            };
         }
         catch (Exception e)
         {
-                ErrorHandler.Handle(e);
+            ErrorHandler.Handle(e);
         }
+    }
+
+    private async Task CloseApplication(object application)
+    {
+        try
+        {
+            PropertyInfo idProp;
+            PropertyInfo statusProp;
+            try
+            {
+                var type = applications.First().GetType();
+                idProp = type.GetProperty("Id")!;
+                statusProp = type.GetProperty("Status")!;
+                if (idProp.PropertyType != typeof(Guid)
+                || statusProp.PropertyType != typeof(ApplicationStatus))
+                {
+                    throw new();
+                }
+            }
+            catch (Exception)
+            {
+                throw new UnknownApplicationTypeException();
+            }
+
+            var id = (Guid)idProp.GetValue(application)!;
+            await Client.CloseApplicationAsync(id);
+
+            statusProp.SetValue(application, ApplicationStatus.Closed);
+            StateHasChanged();
+        }
+        catch (Exception e)
+        {
+            ErrorHandler.Handle(e);
+        }
+
     }
 
 }

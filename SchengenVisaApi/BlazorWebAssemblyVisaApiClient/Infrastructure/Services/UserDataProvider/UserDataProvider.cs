@@ -1,12 +1,14 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvider.Exceptions;
 using VisaApiClient;
 
 namespace BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvider
 {
     public class UserDataProvider(Client client) : IUserDataProvider
     {
-        private static readonly JwtSecurityTokenHandler tokenHandler = new ();
+        private readonly static JwtSecurityTokenHandler tokenHandler = new ();
+        private readonly static string[] knownRoles = ["Applicant", "ApprovingAuthority", "Admin"];
 
         public async Task<ApplicantModel> GetApplicant()
         {
@@ -22,6 +24,11 @@ namespace BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvide
 
             var token = tokenHandler.ReadJwtToken(client.AuthToken.Token);
             var role = token.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Role)?.Value;
+
+            if (!knownRoles.Contains(role))
+            {
+                throw new UnknownRoleException();
+            }
 
             return role;
         }
