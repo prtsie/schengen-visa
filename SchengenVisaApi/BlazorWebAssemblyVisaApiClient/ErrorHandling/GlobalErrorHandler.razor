@@ -1,4 +1,5 @@
 ﻿@using System.Net
+@using BlazorWebAssemblyVisaApiClient.Common.Exceptions
 @using VisaApiClient
 <CascadingValue Value="this">
     @ChildContent
@@ -13,7 +14,11 @@
 
     public void Handle(Exception ex)
     {
-        if (ex is ApiException<ProblemDetails> { StatusCode: (int)HttpStatusCode.Unauthorized or (int)HttpStatusCode.Forbidden })
+        if (ex is ApiException<ProblemDetails>
+            {
+                StatusCode: (int)HttpStatusCode.Unauthorized or (int)HttpStatusCode.Forbidden
+            }
+            or NotLoggedInException)
         {
             Nav.NavigateTo("/");
         }

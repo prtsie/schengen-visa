@@ -1,4 +1,5 @@
 @page "/applications"
+@using BlazorWebAssemblyVisaApiClient.Common.Exceptions
 @using BlazorWebAssemblyVisaApiClient.Infrastructure.Helpers
 @using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvider
 @using VisaApiClient
@@ -71,7 +72,7 @@
             {
                 Constants.ApplicantRole => (await Client.GetForApplicantAsync()).OrderByDescending(a => a.RequestDate).ToList(),
                 Constants.ApprovingAuthorityRole => (await Client.GetPendingAsync()).OrderByDescending(a => a.RequestDate).ToList(),
-                _ => throw new ArgumentOutOfRangeException()
+                _ => throw new NotLoggedInException()
             };
         }
         catch (Exception e)
