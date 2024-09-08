@@ -12,6 +12,7 @@ public class PastVisaModel
 
     /// Name of visa
     [MaxLength(ConfigurationConstraints.VisaNameLength)]
+    [Required]
     public string Name { get; set; } = null!;
 
     /// Date when visa expires

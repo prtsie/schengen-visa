@@ -17,6 +17,8 @@ public class PermissionToDestCountryModelValidator : AbstractValidator<Permissio
         RuleFor(p => p!.Issuer)
             .NotEmpty()
             .WithMessage("Issuer of permission for destination Country can not be empty")
+            .Matches(Constants.EnglishPhraseRegex)
+            .WithMessage("Issuer of permission for destination Country can contain only english letters, digits and special symbols")
             .MaximumLength(ConfigurationConstraints.IssuerNameLength)
             .WithMessage($"Issuer of permission to destination Country length must be less than {ConfigurationConstraints.IssuerNameLength}");
     }

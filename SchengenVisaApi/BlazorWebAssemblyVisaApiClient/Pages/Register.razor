@@ -9,6 +9,7 @@
 @using BlazorWebAssemblyVisaApiClient.Components
 @using BlazorWebAssemblyVisaApiClient.Infrastructure.Helpers
 @using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.DateTimeProvider
+@using BlazorWebAssemblyVisaApiClient.Validation
 @using BlazorWebAssemblyVisaApiClient.Validation.Applicants.Models
 @inherits BlazorWebAssemblyVisaApiClient.Components.Base.VisaClientComponentBase
 
@@ -20,7 +21,7 @@
         <ObjectGraphDataAnnotationsValidator/>
 
         <div class="form-block">
-            <h5>Authentication data</h5>
+            <h5>Authentication data@(Constants.RequiredFieldMarkup)</h5>
             <AuthDataInput AuthData="requestModel.RegisterRequest.AuthData"/>
         </div>
 
@@ -40,12 +41,12 @@
         </div>
 
         <div class="form-block">
-            <h5>Your passport</h5>
+            <h5>Your passport@(Constants.RequiredFieldMarkup)</h5>
             <PassportInput Passport="requestModel.Passport"/>
         </div>
 
         <div class="form-block">
-            <h5>Birth data</h5>
+            <h5>Birth data@(Constants.RequiredFieldMarkup)</h5>
             <div >
                 <label>
                     Country of birth:<br/>
@@ -59,14 +60,14 @@
                 <ValidationMessage For="() => requestModel.CityOfBirth"></ValidationMessage><br/>
                 <label>
                     Birth date:<br/>
-                    <InputDate DisplayName="Birth date" class="rounded" @bind-Value="requestModel.BirthDate" max="@DateTimeProvider.FormattedNow()"/>
+                    <InputDate DisplayName="Birth date" class="rounded" @bind-Value="requestModel.BirthDate" max="@formattedMaxBirthdayDate"/>
                 </label><br/>
                 <ValidationMessage For="() => requestModel.BirthDate"></ValidationMessage>
             </div>
         </div>
 
         <div class="form-block">
-            <h5>Citizenship</h5>
+            <h5>Citizenship@(Constants.RequiredFieldMarkup)</h5>
             <div >
                 <label>
                     Citizenship:<br/>
@@ -82,14 +83,14 @@
         </div>
 
         <div class="form-block">
-            <h5>Address of your place of work</h5>
+            <h5>Address of your place of work@(Constants.RequiredFieldMarkup)</h5>
             <div >
                 <AddressInput Address="requestModel.PlaceOfWork.Address"/>
             </div>
         </div>
 
         <div class="form-block">
-            <h5>Place of work data</h5>
+            <h5>Place of work data@(Constants.RequiredFieldMarkup)</h5>
             <div >
                 <PlaceOfWorkInput PlaceOfWork="requestModel.PlaceOfWork"/><br/>
 
@@ -132,6 +133,7 @@
 {
     private RegisterApplicantRequestModel requestModel = new();
     private Status status = null!;
+    private string formattedMaxBirthdayDate = null!;
 
     [Inject] IValidator<RegisterApplicantRequestModel> RegisterApplicantRequestValidator { get; set; } = null!;
 
@@ -141,7 +143,8 @@
 
     protected override void OnInitialized()
     {
-        requestModel.BirthDate = DateTime.Now;
+        requestModel.BirthDate = DateTime.Now.AddYears(-ConfigurationConstraints.ApplicantMinAge);
+        formattedMaxBirthdayDate = requestModel.BirthDate.ToString("yyyy-MM-dd");
     }
 
     private async void TryRegisterApplicant()
@@ -161,7 +164,7 @@
         try
         {
             await Client.RegisterAsync(request);
-            status.SetSucces("Register successful. Now log in.");
+            status.SetSuccess("Register successful. Now log in.");
         }
         catch (ApiException<ProblemDetails> e)
         {

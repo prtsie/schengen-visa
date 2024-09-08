@@ -23,6 +23,8 @@ public class PastVisitModelValidator : AbstractValidator<PastVisitModel>
         RuleFor(v => v.DestinationCountry)
             .NotEmpty()
             .WithMessage("Destination Country of past visit can not be null")
+            .Matches(Constants.EnglishPhraseRegex)
+            .WithMessage("Destination Country of past visit can contain only english letters, digits and special symbols")
             .MaximumLength(ConfigurationConstraints.CountryNameLength)
             .WithMessage($"Destination Country of past visit length must be less than {ConfigurationConstraints.CountryNameLength}");
     }

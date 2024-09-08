@@ -9,6 +9,7 @@ public class RegisterRequestValidator : AbstractValidator<RegisterRequest>
     public RegisterRequestValidator(IUsersRepository users, IValidator<AuthData> authDataValidator)
     {
         RuleFor(r => r.AuthData)
+            .NotEmpty()
             .SetValidator(authDataValidator)
             .MustAsync(async (authData, ct) => await users.FindByEmailAsync(authData.Email, ct) is null)
             .WithMessage("Email already exists");

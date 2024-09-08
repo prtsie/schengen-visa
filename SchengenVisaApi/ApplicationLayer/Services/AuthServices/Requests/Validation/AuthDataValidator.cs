@@ -19,6 +19,8 @@ public class AuthDataValidator : AbstractValidator<AuthData>
         RuleFor(d => d.Password)
             .NotEmpty()
             .WithMessage("Password can not be empty")
+            .Matches(Constants.EnglishPhraseRegex)
+            .WithMessage("Password can contain only english letters, digits and special symbols")
             .MaximumLength(ConfigurationConstraints.PasswordLength)
             .WithMessage($"Password length must be less than {ConfigurationConstraints.PasswordLength}");
     }

@@ -3,7 +3,7 @@
 <div>
     <div >
         <label>
-            First name:<br/>
+            First name@(Constants.RequiredFieldMarkup):<br/>
             <InputText DisplayName="First name" class="rounded" @bind-Value="Name.FirstName"/>
         </label><br/>
         <ValidationMessage For="() => Name.FirstName"></ValidationMessage>
@@ -11,7 +11,7 @@
 
     <div >
         <label>
-            Surname:<br/>
+            Surname@(Constants.RequiredFieldMarkup):<br/>
             <InputText class="rounded" @bind-Value="Name.Surname"/>
         </label><br/>
         <ValidationMessage For="() => Name.Surname"></ValidationMessage>

@@ -1,4 +1,5 @@
 ﻿using ApplicationLayer.InfrastructureServicesInterfaces;
+using Domains;
 using FluentValidation;
 
 namespace ApplicationLayer.Services.VisaApplications.Models.Validation;
@@ -21,6 +22,10 @@ public class PastVisaModelValidator : AbstractValidator<PastVisaModel>
 
         RuleFor(v => v.Name)
             .NotEmpty()
-            .WithMessage("Name of past visa can not be empty");
+            .WithMessage("Name of past visa can not be empty")
+            .Matches(Constants.EnglishPhraseRegex)
+            .WithMessage("Name of past visa can contain only english letters, digits and special symbols")
+            .MaximumLength(ConfigurationConstraints.VisaNameLength)
+            .WithMessage($"Past visa name length must be less than {ConfigurationConstraints.VisaNameLength}");
     }
 }

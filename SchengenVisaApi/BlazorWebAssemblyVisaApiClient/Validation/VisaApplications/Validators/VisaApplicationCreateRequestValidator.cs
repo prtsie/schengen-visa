@@ -1,21 +1,31 @@
-﻿using BlazorWebAssemblyVisaApiClient.Validation.VisaApplications.Models;
+﻿using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvider;
+using BlazorWebAssemblyVisaApiClient.Validation.VisaApplications.Models;
 using FluentValidation;
 using VisaApiClient;
 
 namespace BlazorWebAssemblyVisaApiClient.Validation.VisaApplications.Validators;
 
-public class VisaApplicationCreateRequestModelValidator : AbstractValidator<VisaApplicationCreateRequestModel>
+public class VisaApplicationCreateRequestValidator : AbstractValidator<VisaApplicationCreateRequestModel>
 {
-    public VisaApplicationCreateRequestModelValidator(
+    public VisaApplicationCreateRequestValidator(
+        IValidator<ReentryPermitModel?> reentryPermitModelValidator,
         IValidator<PastVisaModel> pastVisaModelValidator,
         IValidator<PermissionToDestCountryModel?> permissionToDestCountryModelValidator,
-        IValidator<PastVisitModel> pastVisitModelValidator)
+        IValidator<PastVisitModel> pastVisitModelValidator,
+        IUserDataProvider userDataProvider)
     {
         RuleFor(r => r.PermissionToDestCountry)
             .NotEmpty()
             .WithMessage("For transit you must provide permission to destination country")
             .SetValidator(permissionToDestCountryModelValidator)
             .When(r => r.VisaCategory is VisaCategory.Transit);
+
+        RuleFor(r => r.ReentryPermit)
+            .NotEmpty()
+            .WithMessage("Non-residents must provide re-entry permission")
+            .SetValidator(reentryPermitModelValidator)
+            .WhenAsync(async (_, _) =>
+                (await userDataProvider.GetApplicant()).IsNonResident);
 
         RuleFor(r => r.DestinationCountry)
             .NotEmpty()

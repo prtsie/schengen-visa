@@ -12,5 +12,6 @@ public class PermissionToDestCountryModel
 
     /// Issuing authority
     [MaxLength(ConfigurationConstraints.IssuerNameLength)]
+    [Required]
     public string Issuer { get; set; } = null!;
 }

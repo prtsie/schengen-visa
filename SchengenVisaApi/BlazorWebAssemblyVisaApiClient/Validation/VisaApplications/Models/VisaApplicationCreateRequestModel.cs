@@ -7,7 +7,7 @@ namespace BlazorWebAssemblyVisaApiClient.Validation.VisaApplications.Models
     public class VisaApplicationCreateRequestModel
     {
         [ValidateComplexType]
-        public ReentryPermitModel? ReentryPermit { get; set; } = new();
+        public ReentryPermitModel? ReentryPermit { get; set; } = default!;
 
         [Required]
         [MaxLength(ConfigurationConstraints.CountryNameLength)]
@@ -26,11 +26,13 @@ namespace BlazorWebAssemblyVisaApiClient.Validation.VisaApplications.Models
         [Range(0, ConfigurationConstraints.MaxValidDays)]
         public int ValidDaysRequested { get; set; }
 
-        [ValidateComplexType] public PastVisaModel[] PastVisas { get; set; } = default!;
+        [ValidateComplexType]
+        public List<PastVisaModel> PastVisas { get; set; } = [];
 
         [ValidateComplexType]
-        public PermissionToDestCountryModel? PermissionToDestCountry { get; set; } = new();
+        public PermissionToDestCountryModel? PermissionToDestCountry { get; set; } = default!;
 
-        [ValidateComplexType] public PastVisitModel[] PastVisits { get; set; } = default!;
+        [ValidateComplexType]
+        public List<PastVisitModel> PastVisits { get; set; } = [];
     }
 }

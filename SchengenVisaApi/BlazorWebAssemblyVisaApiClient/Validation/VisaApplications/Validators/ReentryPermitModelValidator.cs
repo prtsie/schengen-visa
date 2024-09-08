@@ -1,8 +1,8 @@
-﻿using ApplicationLayer.InfrastructureServicesInterfaces;
-using Domains;
+﻿using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.DateTimeProvider;
 using FluentValidation;
+using VisaApiClient;
 
-namespace ApplicationLayer.Services.VisaApplications.Models.Validation;
+namespace BlazorWebAssemblyVisaApiClient.Validation.VisaApplications.Validators;
 
 public class ReentryPermitModelValidator : AbstractValidator<ReentryPermitModel?>
 {
