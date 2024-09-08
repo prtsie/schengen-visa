@@ -1,4 +1,4 @@
-﻿using BlazorWebAssemblyVisaApiClient.Common;
+﻿using BlazorWebAssemblyVisaApiClient.Common.Exceptions;
 
 namespace BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvider.Exceptions
 {

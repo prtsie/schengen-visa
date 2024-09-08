@@ -58,7 +58,7 @@
             <h5>Past visas</h5>
             @if (requestModel.PastVisas.Count > 0)
             {
-                <table class="table table-bordered">
+                <table class="table table-bordered table-hover">
                     <thead>
                     <tr>
                         <th>Name</th><th>Issue date</th><th>Expiration date</th><th></th>
@@ -68,12 +68,12 @@
                     @foreach (var visa in requestModel.PastVisas)
                     {
                         <tr>
-                            <th>@visa.Name</th>
-                            <th>@visa.IssueDate.ToString("d.MM.yyyy")</th>
-                            <th>@visa.ExpirationDate.ToString("d.MM.yyyy")</th>
-                            <th>
+                            <td>@visa.Name</td>
+                            <td>@visa.IssueDate.ToString("d.MM.yyyy")</td>
+                            <td>@visa.ExpirationDate.ToString("d.MM.yyyy")</td>
+                            <td>
                                 <input type="button" class="border-danger" @onclick="() => RemovePastVisa(visa)" value="X"/>
-                            </th>
+                            </td>
                         </tr>
                     }
                     </tbody>
@@ -112,7 +112,7 @@
             <h5>Past visits</h5>
             @if (requestModel.PastVisits.Count > 0)
             {
-                <table class="table table-bordered">
+                <table class="table table-bordered table-hover">
                     <thead>
                     <tr>
                         <th>Destination Country</th><th>Start date</th><th>End date</th><th></th>
@@ -122,12 +122,12 @@
                     @foreach (var visit in requestModel.PastVisits)
                     {
                         <tr>
-                            <th>@visit.DestinationCountry</th>
-                            <th>@visit.StartDate.ToString("d.MM.yyyy")</th>
-                            <th>@visit.EndDate.ToString("d.MM.yyyy")</th>
-                            <th>
+                            <td>@visit.DestinationCountry</td>
+                            <td>@visit.StartDate.ToString("d.MM.yyyy")</td>
+                            <td>@visit.EndDate.ToString("d.MM.yyyy")</td>
+                            <td>
                                 <input type="button" class="border-danger" @onclick="() => RemovePastVisit(visit)" value="X"/>
-                            </th>
+                            </td>
                         </tr>
                     }
                     </tbody>

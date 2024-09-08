@@ -9,9 +9,9 @@ public class VisaApplicationProfile : Profile
 {
     public VisaApplicationProfile()
     {
-        CreateMap<VisaApplication, VisaApplicationModelForApplicant>(MemberList.Destination);
+        CreateMap<VisaApplication, VisaApplicationPreview>(MemberList.Destination);
 
-        CreateMap<VisaApplication, VisaApplicationModelForAuthority>(MemberList.Destination)
+        CreateMap<VisaApplication, VisaApplicationModel>(MemberList.Destination)
             .ForMember(model => model.Applicant,
                 opts => opts.Ignore());
 

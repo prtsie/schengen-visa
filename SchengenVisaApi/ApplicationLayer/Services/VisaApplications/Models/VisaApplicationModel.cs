@@ -5,7 +5,7 @@ using Domains.VisaApplicationDomain;
 namespace ApplicationLayer.Services.VisaApplications.Models;
 
 /// Model of <see cref="VisaApplication" /> with applicant property
-public class VisaApplicationModelForAuthority
+public class VisaApplicationModel
 {
     /// <inheritdoc cref="VisaApplication.Id" />
     [Required]

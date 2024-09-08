@@ -7,8 +7,7 @@ namespace BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvide
 {
     public class UserDataProvider(Client client) : IUserDataProvider
     {
-        private readonly static JwtSecurityTokenHandler tokenHandler = new ();
-        private readonly static string[] knownRoles = ["Applicant", "ApprovingAuthority", "Admin"];
+        private readonly static JwtSecurityTokenHandler tokenHandler = new();
 
         public async Task<ApplicantModel> GetApplicant()
         {
@@ -25,9 +24,12 @@ namespace BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvide
             var token = tokenHandler.ReadJwtToken(client.AuthToken.Token);
             var role = token.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Role)?.Value;
 
-            if (!knownRoles.Contains(role))
+            switch (role)
             {
-                throw new UnknownRoleException();
+                case Constants.ApplicantRole: break;
+                case Constants.ApprovingAuthorityRole: break;
+                case Constants.AdminRole: break;
+                default: throw new UnknownRoleException();
             }
 
             return role;

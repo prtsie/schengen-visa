@@ -1,0 +1,213 @@
+﻿@page "/applications/{ApplicationId}"
+@using BlazorWebAssemblyVisaApiClient.Common.Exceptions
+@using BlazorWebAssemblyVisaApiClient.Infrastructure.Helpers
+@using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvider
+@using VisaApiClient
+@inherits BlazorWebAssemblyVisaApiClient.Components.Base.VisaClientComponentBase
+
+<PageTitle>Application</PageTitle>
+
+<table class="table table-bordered table-hover table-sm">
+    <tbody>
+    <tr>
+        <td >
+            Applicant's fullname:<br/>
+            <em>@NameToString(application.Applicant.Name)</em>
+        </td>
+        <td colspan="2">
+            Date of birth:<br/>
+            <em>@application.Applicant.BirthDate.ToString("d")</em>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            Country and city of birth:<br/>
+            <em>@application.Applicant.Passport.Number</em>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            Citizenship:<br/>
+            <em>@application.Applicant.Citizenship</em>
+        </td>
+        <td >
+            Citizenship by birth:<br/>
+            <em>@application.Applicant.CitizenshipByBirth</em>
+        </td>
+    </tr>
+    <tr>
+        <td >
+            Gender:<br/>
+            <em>@application.Applicant.Gender.GetDisplayName()</em>
+        </td>
+        <td >
+            Marital status:<br/>
+            <em>@application.Applicant.MaritalStatus.GetDisplayName()</em>
+        </td>
+    </tr>
+    <tr>
+        <td >
+            Father's fullname:<br/>
+            <em>@NameToString(application.Applicant.FatherName)</em>
+        </td>
+        <td colspan="2">
+            Mother's fullname:<br/>
+            <em>@NameToString(application.Applicant.MotherName)</em>
+        </td>
+    </tr>
+    <tr>
+        <td >
+            Passport number:<br/>
+            <em>@application.Applicant.Passport.Number</em>
+        </td>
+        <td >
+            Issue date:<br/>
+            <em>@application.Applicant.Passport.IssueDate.ToString("d")</em>
+        </td>
+        <td >
+            Expiration date:<br/>
+            <em>@application.Applicant.Passport.ExpirationDate.ToString("d")</em>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            Passport issuer:<br/>
+            <em>@application.Applicant.Passport.Issuer</em>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            Re-entry permission (for non-residents):<br/>
+            @if (application.Applicant.IsNonResident)
+            {
+                <em>@(application.ReentryPermit is null ? "None" : $"{application.ReentryPermit.Number}, expires at {application.ReentryPermit.ExpirationDate:d}")</em>
+            }
+            else
+            {
+                <em>Not non-resident</em>
+            }
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            Job title:<br/>
+            <em>@application.Applicant.JobTitle</em>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            Place of work, address, hirer's phone number:<br/>
+            <em>
+                @((MarkupString)$"{application.Applicant.PlaceOfWork.Name}<br>Address: {AddressToString(application.Applicant.PlaceOfWork.Address)}<br>Phone num: {application.Applicant.PlaceOfWork.PhoneNum}")
+            </em>
+        </td>
+    </tr>
+    <tr>
+        <td >
+            Destination Country:<br/>
+            <em>@application.DestinationCountry</em>
+        </td>
+        <td >
+            Visa category:<br/>
+            <em>@application.VisaCategory</em>
+        </td>
+        <td >
+            Visa:<br/>
+            <em>@(application.ForGroup ? "For group" : "Individual")</em>
+        </td>
+    </tr>
+    <tr>
+        <td >
+            Requested number of entries:<br/>
+            <em>@application.RequestedNumberOfEntries.GetDisplayName()</em>
+        </td>
+        <td colspan="2">
+            Valid for:<br/>
+            <em>@($"{application.ValidDaysRequested} days")</em>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            Past visas:<br/>
+            @if (application.PastVisas.Any())
+            {
+                foreach (var visa in application.PastVisas)
+                {
+                    <em>@($"{visa.Name} issued at {visa.IssueDate:d} and was valid until {visa.ExpirationDate:d}")</em>
+                    <br/>
+                }
+            }
+            else
+            {
+                <em>None</em>
+            }
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            Permission to destination Country, if transit:<br/>
+            @if (application.VisaCategory is VisaCategory.Transit)
+            {
+                <em>@(application.PermissionToDestCountry is null ? "None" : $"Expires at {application.PermissionToDestCountry.ExpirationDate}, issued by: {application.PermissionToDestCountry.Issuer}")</em>
+            }
+            else
+            {
+                <em>Non-transit</em>
+            }
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            Past visits:<br/>
+            @if (application.PastVisas.Any())
+            {
+                foreach (var visit in application.PastVisits)
+                {
+                    <em>@($"Visit to {visit.DestinationCountry}, entered at {visit.StartDate:d} and lasts until {visit.EndDate:d}")</em>
+                    <br/>
+                }
+            }
+            else
+            {
+                <em>None</em>
+            }
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+@code {
+    private VisaApplicationModel application = new();
+    private string currentRole = null!;
+
+    [Parameter] public string ApplicationId { get; set; } = null!;
+
+    [Inject] private IUserDataProvider UserDataProvider { get; set; } = null!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var applicationId = Guid.Parse(ApplicationId);
+            currentRole = UserDataProvider.GetCurrentRole() ?? throw new NotLoggedInException();
+
+            application = currentRole switch
+            {
+                Constants.ApplicantRole => await Client.GetApplicationForApplicantAsync(applicationId),
+                Constants.ApprovingAuthorityRole => await Client.GetApplicationForAuthorityAsync(applicationId),
+                _ => throw new NotLoggedInException()
+            };
+        }
+        catch (Exception e)
+        {
+            ErrorHandler.Handle(e);
+        }
+    }
+
+    private static string NameToString(NameModel name)
+        => $"{name.FirstName} {name.Surname} {name.Patronymic}".TrimEnd();
+
+    private static string AddressToString(AddressModel address)
+        => $"{address.Country}, {address.City}, {address.Street} {address.Building}";
+
+}
