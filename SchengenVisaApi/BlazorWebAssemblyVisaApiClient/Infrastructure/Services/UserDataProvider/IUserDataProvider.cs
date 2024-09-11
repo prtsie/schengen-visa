@@ -4,9 +4,12 @@ namespace BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvide
 {
     public interface IUserDataProvider
     {
+        public string? CurrentRole { get; }
+
+        public Action? OnRoleChanged { get; set; }
 
         public Task<ApplicantModel> GetApplicant();
 
-        public string? GetCurrentRole();
+        public void UpdateCurrentRole();
     }
 }

@@ -9,16 +9,21 @@ namespace BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvide
     {
         private readonly static JwtSecurityTokenHandler tokenHandler = new();
 
+        public string? CurrentRole { get; private set; }
+
+        public Action? OnRoleChanged { get; set; }
+
         public async Task<ApplicantModel> GetApplicant()
         {
             return await client.GetApplicantAsync();
         }
 
-        public string? GetCurrentRole()
+        public void UpdateCurrentRole()
         {
             if (client.AuthToken is null)
             {
-                return null;
+                CurrentRole = null;
+                return;
             }
 
             var token = tokenHandler.ReadJwtToken(client.AuthToken.Token);
@@ -32,7 +37,11 @@ namespace BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvide
                 default: throw new UnknownRoleException();
             }
 
-            return role;
+            if (CurrentRole != role)
+            {
+                CurrentRole = role;
+                OnRoleChanged?.Invoke();
+            }
         }
     }
 }

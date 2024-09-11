@@ -178,7 +178,7 @@
 
         @if (isNonResident)
         {
-            requestModel.ReentryPermit = NewReentryPermit();
+            requestModel.ReentryPermit ??= NewReentryPermit();
             <div class="form-block">
                 <h5>Re-entry permission@(Constants.RequiredFieldMarkup)</h5>
                 <ReentryPermitInput ReentryPermit="requestModel.ReentryPermit"/>

@@ -199,7 +199,7 @@
         try
         {
             var applicationId = Guid.Parse(ApplicationId);
-            currentRole = UserDataProvider.GetCurrentRole() ?? throw new NotLoggedInException();
+            currentRole = UserDataProvider.CurrentRole ?? throw new NotLoggedInException();
 
                 application = currentRole switch
                 {

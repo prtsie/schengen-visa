@@ -60,7 +60,14 @@
 
     protected override async Task OnInitializedAsync()
     {
-        currentRole = UserDataProvider.GetCurrentRole()!;
+        try
+        {
+            currentRole = UserDataProvider.CurrentRole ?? throw new NotLoggedInException();
+        }
+        catch (Exception e)
+        {
+            ErrorHandler.Handle(e);
+        }
         await Fetch();
     }
 

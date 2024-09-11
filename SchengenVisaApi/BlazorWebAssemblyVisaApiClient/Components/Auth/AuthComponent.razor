@@ -26,6 +26,7 @@
             var token = await Client.LoginAsync(authData.Email, authData.Password);
             Client.AuthToken = token;
             AuthData = authData;
+            UserDataProvider.UpdateCurrentRole();
 
             Status?.SetSuccess("Logged in successfully.");
         }
