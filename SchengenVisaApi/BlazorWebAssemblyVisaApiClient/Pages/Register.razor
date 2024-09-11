@@ -172,7 +172,6 @@
                 if (errorsList is null)
                 {
                     ErrorHandler.Handle(new JsonException("Can't convert validation errors to list"));
-
                     return;
                 }
 
@@ -180,7 +179,7 @@
             }
             else
             {
-                ErrorHandler.Handle(e);
+                throw;
             }
         }
         catch (Exception e)

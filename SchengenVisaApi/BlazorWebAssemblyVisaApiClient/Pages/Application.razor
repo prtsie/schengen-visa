@@ -1,5 +1,6 @@
 ﻿@page "/applications/{ApplicationId}"
 @using BlazorWebAssemblyVisaApiClient.Common.Exceptions
+@using BlazorWebAssemblyVisaApiClient.Components
 @using BlazorWebAssemblyVisaApiClient.Infrastructure.Helpers
 @using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvider
 @using VisaApiClient
@@ -175,14 +176,23 @@
     </tr>
     </tbody>
 </table>
+@if (currentRole == Constants.ApprovingAuthorityRole)
+{
+    <button class="btn-outline-primary" @onclick="Approve">Approve</button>
+    <button class="btn-outline-danger" @onclick="Reject">Reject</button>
+    <Status @ref="status"/>
+}
 
 @code {
     private VisaApplicationModel application = new();
     private string currentRole = null!;
+    private Status status = null!;
 
     [Parameter] public string ApplicationId { get; set; } = null!;
 
     [Inject] private IUserDataProvider UserDataProvider { get; set; } = null!;
+
+    [Inject] private NavigationManager Nav { get; set; } = null!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -191,12 +201,12 @@
             var applicationId = Guid.Parse(ApplicationId);
             currentRole = UserDataProvider.GetCurrentRole() ?? throw new NotLoggedInException();
 
-            application = currentRole switch
-            {
-                Constants.ApplicantRole => await Client.GetApplicationForApplicantAsync(applicationId),
-                Constants.ApprovingAuthorityRole => await Client.GetApplicationForAuthorityAsync(applicationId),
-                _ => throw new NotLoggedInException()
-            };
+                application = currentRole switch
+                {
+                    Constants.ApplicantRole => await Client.GetApplicationForApplicantAsync(applicationId),
+                    Constants.ApprovingAuthorityRole => await Client.GetApplicationForAuthorityAsync(applicationId),
+                    _ => throw new NotLoggedInException()
+                };
         }
         catch (Exception e)
         {
@@ -209,5 +219,35 @@
 
     private static string AddressToString(AddressModel address)
         => $"{address.Country}, {address.City}, {address.Street} {address.Building}";
+
+    private async void Approve()
+    {
+        try
+        {
+            status.SetMessage("Wait...");
+            await Client.SetStatusFromAuthorityAsync(application.Id, AuthorityRequestStatuses.Approved);
+            Nav.NavigateTo("/applications");
+        }
+        catch (Exception e)
+        {
+            status.SetError("Error occured.");
+            ErrorHandler.Handle(e);
+        }
+    }
+
+    private async void Reject()
+    {
+        try
+        {
+            status.SetMessage("Wait...");
+            await Client.SetStatusFromAuthorityAsync(application.Id, AuthorityRequestStatuses.Rejected);
+            Nav.NavigateTo("/applications");
+        }
+        catch (Exception e)
+        {
+            status.SetError("Error occured.");
+            ErrorHandler.Handle(e);
+        }
+    }
 
 }
