@@ -1,26 +1,52 @@
 ﻿@using System.Net
 @using BlazorWebAssemblyVisaApiClient.Common.Exceptions
 @using VisaApiClient
+
 <CascadingValue Value="this">
+    <Modal @ref="modal">
+        <BodyTemplate>
+            @errorDetails
+        </BodyTemplate>
+        <FooterTemplate>
+            <Button Color="ButtonColor.Secondary" @onclick="modal.HideAsync">Okaaaay</Button>
+        </FooterTemplate>
+    </Modal>
     @ChildContent
 </CascadingValue>
 
 @code
 {
-    [Parameter]
-    public RenderFragment? ChildContent { get; set; }
+    private Modal modal = null!;
+    private string errorDetails = null!;
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
 
     [Inject] private NavigationManager Nav { get; set; } = null!;
 
     public void Handle(Exception ex)
     {
-        if (ex is ApiException<ProblemDetails>
+        switch (ex)
+        {
+            case ApiException<ProblemDetails>
             {
                 StatusCode: (int)HttpStatusCode.Unauthorized or (int)HttpStatusCode.Forbidden
-            }
-            or NotLoggedInException)
-        {
-            Nav.NavigateTo("/");
+            } or NotLoggedInException:
+                Nav.NavigateTo("/");
+                modal.Title = "Authorization failed";
+                errorDetails = "You are not authorized or your authorization is expired";
+                break;
+
+            case ApiException<ProblemDetails> problemDetails:
+                modal.Title = problemDetails.Result.Title!;
+                errorDetails = problemDetails.Result.Detail!;
+                modal.ShowAsync();
+                break;
+
+            default:
+                modal.Title = "Something went wrong";
+                errorDetails = "Please, text an email with your problem definition on nasrudin@mail.ru";
+                modal.ShowAsync();
+                break;
         }
     }
 }

@@ -21,6 +21,7 @@ public class Program
 
         //todo make pretty
         builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri(baseAddress) });
+        builder.Services.AddBlazorBootstrap();
         builder.Services.AddScoped<Client>(sp => new Client(baseAddress, sp.GetRequiredService<HttpClient>()));
 
         builder.Services.AddSingleton<IDateTimeProvider, DateTimeProvider>();

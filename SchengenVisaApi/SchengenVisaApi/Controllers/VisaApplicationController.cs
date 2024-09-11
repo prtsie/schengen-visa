@@ -35,6 +35,7 @@ public class VisaApplicationController(
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
     [Authorize(policy: PolicyConstants.ApprovingAuthorityPolicy)]
     public async Task<IActionResult> GetApplicationForAuthority(Guid applicationId, CancellationToken cancellationToken)
     {
@@ -60,11 +61,11 @@ public class VisaApplicationController(
     /// <remarks> Returns applications of authorized applicant </remarks>
     [HttpGet("ofApplicant")]
     [ProducesResponseType<List<VisaApplicationPreview>>(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Authorize(policy: PolicyConstants.ApplicantPolicy)]
-    public async Task<IActionResult> GetForApplicant(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetApplicationsForApplicant(CancellationToken cancellationToken)
     {
         var result = await visaApplicationRequestsHandler.GetForApplicantAsync(cancellationToken);
         return Ok(result);
@@ -74,10 +75,10 @@ public class VisaApplicationController(
     /// <remarks> Adds application for authorized applicant </remarks>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Authorize(policy: PolicyConstants.ApplicantPolicy)]
     public async Task<IActionResult> CreateApplication(VisaApplicationCreateRequest request, CancellationToken cancellationToken)
     {
@@ -91,10 +92,10 @@ public class VisaApplicationController(
     /// <remarks> Accessible only for applicant</remarks>
     [HttpPatch("{applicationId:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Authorize(policy: PolicyConstants.ApplicantPolicy)]
     public async Task<IActionResult> CloseApplication(Guid applicationId, CancellationToken cancellationToken)
     {
@@ -106,9 +107,10 @@ public class VisaApplicationController(
     /// <remarks> Accessible only for authorities</remarks>
     [HttpPatch("approving/{applicationId:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
     [Authorize(policy: PolicyConstants.ApprovingAuthorityPolicy)]
     public async Task<IActionResult> SetStatusFromAuthority(Guid applicationId,
         AuthorityRequestStatuses status,

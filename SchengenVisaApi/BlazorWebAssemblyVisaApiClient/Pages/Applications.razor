@@ -41,7 +41,7 @@
                 <NavLink href="@($"/applications/{application.Id}")">
                     <button class="btn-outline-primary">See</button>
                 </NavLink>
-                @if (currentRole == Constants.ApplicantRole && application.Status is not ApplicationStatus.Closed)
+                @if (currentRole == Constants.ApplicantRole && application.Status is ApplicationStatus.Pending)
                 {
                     <span> | </span>
                     <input type="button" class="border-danger" @onclick="() => CloseApplication(application)" value="Close"/>
@@ -70,7 +70,7 @@
         {
             applications = currentRole switch
             {
-                Constants.ApplicantRole => (await Client.GetForApplicantAsync()).OrderByDescending(a => a.RequestDate).ToList(),
+                Constants.ApplicantRole => (await Client.GetApplicationsForApplicantAsync()).OrderByDescending(a => a.RequestDate).ToList(),
                 Constants.ApprovingAuthorityRole => (await Client.GetPendingAsync()).OrderByDescending(a => a.RequestDate).ToList(),
                 _ => throw new NotLoggedInException()
             };
