@@ -1,0 +1,60 @@
+﻿@page "/authorities/add"
+@using AutoMapper
+@using BlazorWebAssemblyVisaApiClient.Validation.Applicants.Models
+@using VisaApiClient
+@using BlazorWebAssemblyVisaApiClient.Components
+@using BlazorWebAssemblyVisaApiClient.Infrastructure.Helpers
+@using FluentValidation
+@inherits BlazorWebAssemblyVisaApiClient.Components.Base.VisaClientComponentBase
+
+<EditForm Model="requestModel" class="with-centered-content">
+    <ObjectGraphDataAnnotationsValidator/>
+    <div >
+        <label>
+            Email:<br/>
+            <InputText class="rounded" @bind-Value="requestModel.AuthData.Email"/>
+            <ValidationMessage For="() => requestModel.AuthData.Email"/>
+        </label><br/>
+        <p/>
+
+        <label>
+            Password:<br/>
+            <InputText class="rounded" @bind-Value="requestModel.AuthData.Password"/>
+            <ValidationMessage For="() => requestModel.AuthData.Password"/>
+        </label><br/>
+        <p/>
+
+        <button class="btn-primary rounded" @onclick="Add">Add</button><br/>
+        <Status @ref="status"/>
+    </div>
+</EditForm>
+
+@code
+{
+    private RegisterRequestModel requestModel = new();
+    private Status status = new();
+
+    [Inject] private IValidator<RegisterRequestModel> RegisterRequestModelValidator { get; set; } = null!;
+    [Inject] private IMapper Mapper { get; set; } = null!;
+
+    private async Task Add()
+    {
+        var validationResult = await RegisterRequestModelValidator.ValidateAsync(requestModel);
+        if (!validationResult.IsValid)
+        {
+            status.SetError(validationResult.ToErrorsString());
+            return;
+        }
+
+        try
+        {
+            status.SetMessage("Wait...");
+            await Client.RegisterAuthorityAsync(Mapper.Map<RegisterRequest>(requestModel));
+            status.SetSuccess("Success");
+        }
+        catch (Exception e)
+        {
+            ErrorHandler.Handle(e);
+        }
+    }
+}

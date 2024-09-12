@@ -4,9 +4,9 @@ using VisaApiClient;
 
 namespace BlazorWebAssemblyVisaApiClient.Validation.Auth;
 
-public class RegisterRequestValidator : AbstractValidator<RegisterRequestModel>
+public class RegisterRequestModelValidator : AbstractValidator<RegisterRequestModel>
 {
-    public RegisterRequestValidator(IValidator<AuthData> authDataValidator)
+    public RegisterRequestModelValidator(IValidator<AuthData> authDataValidator)
     {
         RuleFor(r => r.AuthData)
             .NotEmpty()
