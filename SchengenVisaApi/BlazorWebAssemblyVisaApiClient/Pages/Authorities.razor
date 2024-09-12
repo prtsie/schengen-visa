@@ -1,0 +1,42 @@
+﻿@page "/authorities"
+@using VisaApiClient
+@inherits BlazorWebAssemblyVisaApiClient.Components.Base.VisaClientComponentBase
+
+<table class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th>Email</th><th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var authority in authorities)
+    {
+        var path = $"authorities/{authority.Id}/{authority.Email}";
+        <tr>
+            <td>@authority.Email</td>
+            <td>
+                <NavLink href="@path">
+                    <button class="btn-outline-primary">Change</button>
+                </NavLink>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@code {
+    private IEnumerable<UserModel> authorities = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            authorities = await Client.GetAuthorityAccountsAsync();
+        }
+        catch (Exception e)
+        {
+            ErrorHandler.Handle(e);
+        }
+    }
+
+}

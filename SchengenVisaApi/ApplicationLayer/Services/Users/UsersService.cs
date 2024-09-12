@@ -1,7 +1,6 @@
 ﻿using ApplicationLayer.InfrastructureServicesInterfaces;
 using ApplicationLayer.Services.Applicants.Models;
 using ApplicationLayer.Services.Applicants.NeededServices;
-using ApplicationLayer.Services.AuthServices.Common;
 using ApplicationLayer.Services.AuthServices.NeededServices;
 using ApplicationLayer.Services.Users.Exceptions;
 using ApplicationLayer.Services.Users.Models;
@@ -53,10 +52,10 @@ public class UsersService(
     /// <param name="user">User to remove</param>
     /// <param name="authData">New auth data</param>
     /// <param name="cancellationToken">Cancellation token</param>
-    private async Task ChangeAccountAuthDataAsync(User user, AuthData authData, CancellationToken cancellationToken)
+    private async Task ChangeAccountAuthDataAsync(User user, ChangeAuthData authData, CancellationToken cancellationToken)
     {
         user.Email = authData.Email;
-        user.Password = authData.Password;
+        user.Password = authData.Password ?? user.Password;
         await users.UpdateAsync(user, cancellationToken);
 
         await unitOfWork.SaveAsync(cancellationToken);

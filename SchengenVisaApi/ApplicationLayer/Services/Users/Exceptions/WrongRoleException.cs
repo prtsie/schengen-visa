@@ -1,4 +1,4 @@
-﻿using ApplicationLayer.Services.GeneralExceptions;
+﻿using ApplicationLayer.GeneralExceptions;
 using Domains.Users;
 
 namespace ApplicationLayer.Services.Users.Exceptions;

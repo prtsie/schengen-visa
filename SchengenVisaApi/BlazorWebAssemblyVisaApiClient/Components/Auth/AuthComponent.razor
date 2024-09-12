@@ -49,6 +49,20 @@
         }
     }
 
+    public void Logout()
+    {
+        Client.AuthToken = null;
+        AuthData = null;
+        try
+        {
+            UserDataProvider.UpdateCurrentRole();
+        }
+        catch (Exception e)
+        {
+            ErrorHandler.Handle(e);
+        }
+    }
+
     ///Re-auth if token expired or something
     public async Task ReAuthenticate()
     {

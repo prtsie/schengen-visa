@@ -1,6 +1,5 @@
 ﻿using ApplicationLayer.GeneralExceptions;
 using ApplicationLayer.Services.AuthServices.LoginService.Exceptions;
-using ApplicationLayer.Services.GeneralExceptions;
 using ApplicationLayer.Services.VisaApplications.Exceptions;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;

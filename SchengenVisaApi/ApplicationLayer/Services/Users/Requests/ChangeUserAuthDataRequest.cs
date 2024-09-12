@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using ApplicationLayer.Services.AuthServices.Common;
+using ApplicationLayer.Services.Users.Models;
 
 namespace ApplicationLayer.Services.Users.Requests;
 
-public class ChangeUserAuthDataRequest(Guid userId, AuthData newAuthData)
+public class ChangeUserAuthDataRequest(Guid userId, ChangeAuthData newAuthData)
 {
     [Required] public Guid UserId { get; set; } = userId;
 
-    [Required] public AuthData NewAuthData { get; set; } = newAuthData;
+    [Required] public ChangeAuthData NewAuthData { get; set; } = newAuthData;
 }

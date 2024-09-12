@@ -1,4 +1,5 @@
 ﻿@page "/applications/{ApplicationId}"
+@using System.Net
 @using BlazorWebAssemblyVisaApiClient.Common.Exceptions
 @using BlazorWebAssemblyVisaApiClient.Components
 @using BlazorWebAssemblyVisaApiClient.Infrastructure.Helpers
@@ -210,6 +211,11 @@
         }
         catch (Exception e)
         {
+
+            if (e is ApiException<ProblemDetails> { Result.Status: (int)HttpStatusCode.Conflict })
+            {
+                Nav.NavigateTo("/applications");
+            }
             ErrorHandler.Handle(e);
         }
     }

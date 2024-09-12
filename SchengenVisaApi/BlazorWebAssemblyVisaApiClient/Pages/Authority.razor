@@ -1,0 +1,83 @@
+﻿@page "/authorities/{authorityId}/{oldEmail}"
+@inherits BlazorWebAssemblyVisaApiClient.Components.Base.VisaClientComponentBase
+@using BlazorWebAssemblyVisaApiClient.Common.Exceptions
+@using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvider
+@using VisaApiClient
+@using BlazorWebAssemblyVisaApiClient.Components
+@using BlazorWebAssemblyVisaApiClient.Infrastructure.Helpers
+@using FluentValidation
+
+<EditForm Model="model" class="with-centered-content">
+    <div >
+        <label>
+            New email:<br/>
+            <InputText class="rounded" @bind-Value="model.Email"/>
+        </label><br/><p/>
+
+        <label>
+            New password (leave blank if shouldn't be changed):<br/>
+            <InputText class="rounded" @bind-Value="model.Password"/>
+        </label><br/><p/>
+
+        <button class="btn-primary rounded" @onclick="Save">Save</button><br/>
+        <Status @ref="status"/>
+    </div>
+</EditForm>
+
+@code
+{
+    private Status status = null!;
+    private ChangeAuthData model = new();
+
+    [Parameter] public string AuthorityId { get; set; } = null!;
+
+    [Parameter] public string OldEmail { get; set; } = null!;
+
+    [Inject] private IUserDataProvider UserDataProvider { get; set; } = null!;
+
+    [Inject] private IValidator<ChangeUserAuthDataRequest> ChangeUserAuthDataRequestValidator { get; set; } = null!;
+
+    protected override void OnInitialized()
+    {
+        try
+        {
+            if (UserDataProvider.CurrentRole is not Constants.AdminRole)
+            {
+                throw new NotLoggedInException();
+            }
+
+            model.Email = OldEmail;
+        }
+        catch (Exception e)
+        {
+            ErrorHandler.Handle(e);
+        }
+    }
+
+    private async Task Save()
+    {
+        var request = new ChangeUserAuthDataRequest
+        {
+            UserId = Guid.Parse(AuthorityId),
+            NewAuthData = model
+        };
+
+        var validationResult = await ChangeUserAuthDataRequestValidator.ValidateAsync(request);
+        if (!validationResult.IsValid)
+        {
+            status.SetError(validationResult.ToErrorsString());
+            return;
+        }
+
+        try
+        {
+            status.SetMessage("Wait...");
+            await Client.ChangeAuthorityAuthDataAsync(request);
+            status.SetSuccess("Success");
+        }
+        catch (Exception e)
+        {
+            ErrorHandler.Handle(e);
+        }
+    }
+}

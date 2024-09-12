@@ -21,7 +21,7 @@ public class UsersController(
     ILoginService loginService,
     IUsersService usersService,
     IValidator<RegisterApplicantRequest> registerApplicantRequestValidator,
-    IValidator<AuthData> authDataValidator,
+    IValidator<ChangeUserAuthDataRequest> changeUserAuthDataRequestValidator,
     IValidator<RegisterRequest> registerRequestValidator) : ControllerBase
 {
     /// <summary> Adds applicant with user account </summary>
@@ -60,7 +60,7 @@ public class UsersController(
     {
         var loginRequest = new LoginRequest
         {
-            AuthData = new AuthData { Email = email, Password = password }
+            AuthData = new() { Email = email, Password = password }
         };
 
         var result = await loginService.LoginAsync(loginRequest, cancellationToken);
@@ -82,18 +82,18 @@ public class UsersController(
 
     /// <summary> Changes authority's account authentication data </summary>
     /// <remarks> Accessible only for admins </remarks>
-    [HttpPut("authorities/{authorityAccountId:guid}")]
+    [HttpPut("authorities")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [Authorize(policy: PolicyConstants.AdminPolicy)]
-    public async Task<IActionResult> ChangeAuthorityAuthData(Guid authorityAccountId, AuthData authData, CancellationToken cancellationToken)
+    public async Task<IActionResult> ChangeAuthorityAuthData(ChangeUserAuthDataRequest request, CancellationToken cancellationToken)
     {
-        await authDataValidator.ValidateAndThrowAsync(authData, cancellationToken);
+        await changeUserAuthDataRequestValidator.ValidateAndThrowAsync(request, cancellationToken);
 
-        await usersService.ChangeAuthorityAuthDataAsync(new ChangeUserAuthDataRequest(authorityAccountId, authData), cancellationToken);
+        await usersService.ChangeAuthorityAuthDataAsync(request, cancellationToken);
         return Ok();
     }
 

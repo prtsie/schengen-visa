@@ -20,21 +20,27 @@ namespace BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvide
 
         public void UpdateCurrentRole()
         {
+            var role = CurrentRole;
+
             if (client.AuthToken is null)
             {
-                CurrentRole = null;
-                return;
+                if (CurrentRole is not null)
+                {
+                    role = null;
+                }
             }
-
-            var token = tokenHandler.ReadJwtToken(client.AuthToken.Token);
-            var role = token.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Role)?.Value;
-
-            switch (role)
+            else
             {
-                case Constants.ApplicantRole: break;
-                case Constants.ApprovingAuthorityRole: break;
-                case Constants.AdminRole: break;
-                default: throw new UnknownRoleException();
+                var token = tokenHandler.ReadJwtToken(client.AuthToken.Token);
+                role = token.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Role)?.Value;
+
+                switch (role)
+                {
+                    case Constants.ApplicantRole: break;
+                    case Constants.ApprovingAuthorityRole: break;
+                    case Constants.AdminRole: break;
+                    default: throw new UnknownRoleException();
+                }
             }
 
             if (CurrentRole != role)

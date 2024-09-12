@@ -102,7 +102,7 @@
             </label><br/>
             <ValidationMessage For="() => editableVisa.ExpirationDate"></ValidationMessage><br/>
 
-            <input type="button" class="btn-outline-primary"
+            <input type="button" class="btn-outline-primary rounded"
                    disabled="@(requestModel.PastVisas.Count == ConfigurationConstraints.MaxPastVisas)"
                    @onclick="AddPastVisa" value="Add"/>
             <Status @ref="pastVisaStatus"/>
@@ -157,7 +157,7 @@
             </label><br/>
             <ValidationMessage For="() => editableVisit.EndDate"></ValidationMessage><br/>
 
-            <input type="button" class="btn-outline-primary"
+            <input type="button" class="btn-outline-primary rounded"
                    disabled="@(requestModel.PastVisits.Count == ConfigurationConstraints.MaxPastVisits)"
                    @onclick="AddPastVisit" value="Add"/>
             <Status @ref="pastVisitStatus"/>
@@ -185,7 +185,7 @@
             </div>
         }
 
-        <br/><input type="submit" class="btn-outline-primary" value="Register"/>
+        <br/><input type="submit" class="btn-outline-primary rounded" value="Register"/>
         <ValidationSummary/>
         <Status @ref="status"/>
     </EditForm>
