@@ -1,0 +1,79 @@
+﻿@using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvider
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">Schengen Visa</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Login
+            </NavLink>
+        </div>
+    </nav>
+    @if (UserDataProvider.CurrentRole is Constants.ApplicantRole or Constants.ApprovingAuthorityRole)
+    {
+        <nav class="flex-column">
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="applications" Match="NavLinkMatch.All">
+                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Applications
+                </NavLink>
+            </div>
+        </nav>
+    }
+    @if (UserDataProvider.CurrentRole is Constants.ApplicantRole)
+    {
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="applications/new" Match="NavLinkMatch.All">
+                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> New application
+            </NavLink>
+        </div>
+    </nav>
+    }
+    @if (UserDataProvider.CurrentRole is Constants.AdminRole)
+    {
+        <nav class="flex-column">
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="authorities" Match="NavLinkMatch.All">
+                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Authorities
+                </NavLink>
+            </div>
+        </nav>
+    }
+    @if (UserDataProvider.CurrentRole is Constants.AdminRole)
+    {
+        <nav class="flex-column">
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="authorities/add" Match="NavLinkMatch.All">
+                    <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Add authority
+                </NavLink>
+            </div>
+        </nav>
+    }
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+    private string? currentRole = null!;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    [Inject] private IUserDataProvider UserDataProvider { get; set; } = null!;
+
+    protected override void OnInitialized()
+    {
+        UserDataProvider.OnRoleChanged += StateHasChanged;
+    }
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+}

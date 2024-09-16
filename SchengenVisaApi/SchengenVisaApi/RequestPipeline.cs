@@ -13,6 +13,8 @@ public static class PipelineRequest
 
         app.UseStatusCodePages();
 
+        app.UseCors("policy");
+
         app.UseAuthentication()
             .UseAuthorization();
 

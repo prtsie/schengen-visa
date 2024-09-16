@@ -1,0 +1,362 @@
+﻿@page "/applications/new"
+@using System.Net
+@using AutoMapper
+@using BlazorWebAssemblyVisaApiClient.Validation.VisaApplications.Models
+@using BlazorWebAssemblyVisaApiClient.Components.FormComponents.Applicants
+@using VisaApiClient
+@using BlazorWebAssemblyVisaApiClient.Components
+@using BlazorWebAssemblyVisaApiClient.Components.FormComponents.VisaApplications
+@using BlazorWebAssemblyVisaApiClient.Infrastructure.Helpers
+@using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.DateTimeProvider
+@using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvider
+@using BlazorWebAssemblyVisaApiClient.Validation
+@using FluentValidation
+@using Newtonsoft.Json.Linq
+@inherits BlazorWebAssemblyVisaApiClient.Components.Base.VisaClientComponentBase
+
+<PageTitle>New Application</PageTitle>
+
+<div class="horizontal-centered-content">
+    <h3>New application</h3>
+    <EditForm class="form" Model="requestModel" OnValidSubmit="TryCreate">
+        <ObjectGraphDataAnnotationsValidator/>
+
+        <div class="form-block">
+            <h5>Visa@(Constants.RequiredFieldMarkup)</h5>
+            <label>
+                Destination Country:<br/>
+                <InputText DisplayName="Destination Country" class="rounded" @bind-Value="requestModel.DestinationCountry"/>
+            </label><br/>
+            <ValidationMessage For="() => requestModel.DestinationCountry"></ValidationMessage><br/>
+
+            <label>
+                Category:
+                <EnumInputList Model="requestModel"
+                               EnumProperty="r => r.VisaCategory"
+                               OnChanged="StateHasChanged"/>
+            </label><br/>
+            <ValidationMessage For="() => requestModel.VisaCategory"></ValidationMessage><br/>
+
+            <label>
+                Number of entries: <EnumInputList Model="requestModel" EnumProperty="r => r.RequestedNumberOfEntries"/>
+            </label><br/>
+            <ValidationMessage For="() => requestModel.RequestedNumberOfEntries"></ValidationMessage><br/>
+
+            <label>
+                For group: <InputCheckbox @bind-Value="requestModel.IsForGroup"/>
+            </label><br/>
+            <ValidationMessage For="() => requestModel.IsForGroup"></ValidationMessage><br/>
+
+            <label>
+                Valid for days:<br/>
+                <InputNumber DisplayName="Valid days" class="rounded" @bind-Value="requestModel.ValidDaysRequested"/>
+            </label>
+            <ValidationMessage For="() => requestModel.ValidDaysRequested"></ValidationMessage><br/>
+        </div>
+
+        <div class="form-block">
+            <h5>Past visas</h5>
+            @if (requestModel.PastVisas.Count > 0)
+            {
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>Name</th><th>Issue date</th><th>Expiration date</th><th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var visa in requestModel.PastVisas)
+                    {
+                        <tr>
+                            <td>@visa.Name</td>
+                            <td>@visa.IssueDate.ToString("d.MM.yyyy")</td>
+                            <td>@visa.ExpirationDate.ToString("d.MM.yyyy")</td>
+                            <td>
+                                <input type="button" class="border-danger" @onclick="() => RemovePastVisa(visa)" value="X"/>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }
+            <label>
+                Name:<br/>
+                <InputText DisplayName="Past visa name" class="rounded" @bind-Value="editableVisa.Name"/>
+            </label><br/>
+            <ValidationMessage For="() => editableVisa.Name"></ValidationMessage><br/>
+
+            <label>
+                Issue date:<br/>
+                <InputDate DisplayName="Past visa issue date"
+                           class="rounded"
+                           @bind-Value="editableVisa.IssueDate"
+                           max="@formattedNow"/>
+            </label><br/>
+            <ValidationMessage For="() => editableVisa.IssueDate"></ValidationMessage><br/>
+
+            <label>
+                Expiration date:<br/>
+                <InputDate DisplayName="Past visa expiration date"
+                           class="rounded"
+                           @bind-Value="editableVisa.ExpirationDate"/>
+            </label><br/>
+            <ValidationMessage For="() => editableVisa.ExpirationDate"></ValidationMessage><br/>
+
+            <input type="button" class="btn-outline-primary rounded"
+                   disabled="@(requestModel.PastVisas.Count == ConfigurationConstraints.MaxPastVisas)"
+                   @onclick="AddPastVisa" value="Add"/>
+            <Status @ref="pastVisaStatus"/>
+        </div>
+
+        <div class="form-block">
+            <h5>Past visits</h5>
+            @if (requestModel.PastVisits.Count > 0)
+            {
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>Destination Country</th><th>Start date</th><th>End date</th><th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var visit in requestModel.PastVisits)
+                    {
+                        <tr>
+                            <td>@visit.DestinationCountry</td>
+                            <td>@visit.StartDate.ToString("d.MM.yyyy")</td>
+                            <td>@visit.EndDate.ToString("d.MM.yyyy")</td>
+                            <td>
+                                <input type="button" class="border-danger" @onclick="() => RemovePastVisit(visit)" value="X"/>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }
+            <label>
+                Destination Country:<br/>
+                <InputText DisplayName="Past visit destination Country" class="rounded" @bind-Value="editableVisit.DestinationCountry"/>
+            </label><br/>
+            <ValidationMessage For="() => editableVisit.DestinationCountry"></ValidationMessage><br/>
+
+            <label>
+                Start date:<br/>
+                <InputDate DisplayName="Past visit start date"
+                           class="rounded"
+                           @bind-Value="editableVisit.StartDate"
+                           max="@formattedNow"/>
+            </label><br/>
+            <ValidationMessage For="() => editableVisit.StartDate"></ValidationMessage><br/>
+
+            <label>
+                End date:<br/>
+                <InputDate DisplayName="Past visit end date"
+                           class="rounded"
+                           @bind-Value="editableVisit.EndDate"
+                           max="@formattedNow"/>
+            </label><br/>
+            <ValidationMessage For="() => editableVisit.EndDate"></ValidationMessage><br/>
+
+            <input type="button" class="btn-outline-primary rounded"
+                   disabled="@(requestModel.PastVisits.Count == ConfigurationConstraints.MaxPastVisits)"
+                   @onclick="AddPastVisit" value="Add"/>
+            <Status @ref="pastVisitStatus"/>
+        </div>
+
+        @if (requestModel.VisaCategory is VisaCategory.Transit)
+        {
+            requestModel.PermissionToDestCountry ??= NewPermissionToDestCountry();
+            <div class="form-block">
+                <h5>Permission to destination Country@(Constants.RequiredFieldMarkup)</h5>
+                <PermissionToDestCountryInput PermissionToDestCountry="requestModel.PermissionToDestCountry"/>
+            </div>
+        }
+        else
+        {
+            requestModel.PermissionToDestCountry = null;
+        }
+
+        @if (isNonResident)
+        {
+            requestModel.ReentryPermit ??= NewReentryPermit();
+            <div class="form-block">
+                <h5>Re-entry permission@(Constants.RequiredFieldMarkup)</h5>
+                <ReentryPermitInput ReentryPermit="requestModel.ReentryPermit"/>
+            </div>
+        }
+
+        <br/><input type="submit" class="btn-outline-primary rounded" value="Register"/>
+        <ValidationSummary/>
+        <Status @ref="status"/>
+    </EditForm>
+</div>
+
+@code {
+
+//todo past visas and visits
+    private VisaApplicationCreateRequestModel requestModel = new();
+    private Status status = null!;
+    private Status pastVisaStatus = null!;
+    private Status pastVisitStatus = null!;
+    private bool isNonResident;
+    private string formattedNow = null!;
+    private PastVisaModel editableVisa = null!;
+    private PastVisitModel editableVisit = null!;
+
+    [Inject] IDateTimeProvider DateTimeProvider { get; set; } = null!;
+
+    [Inject] IUserDataProvider UserDataProvider { get; set; } = null!;
+
+    [Inject] IValidator<VisaApplicationCreateRequestModel> VisaApplicationCreateRequestValidator { get; set; } = null!;
+
+    [Inject] IValidator<PastVisaModel> PastVisaModelValidator { get; set; } = null!;
+
+    [Inject] IValidator<PastVisitModel> PastVisitModelValidator { get; set; } = null!;
+
+    [Inject] IMapper Mapper { get; set; } = null!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        editableVisa = NewPastVisa();
+        editableVisit = NewPastVisit();
+        requestModel.PermissionToDestCountry = NewPermissionToDestCountry();
+        formattedNow = DateTimeProvider.FormattedNow();
+
+        try
+        {
+            isNonResident = (await UserDataProvider.GetApplicant()).IsNonResident;
+        }
+        catch (Exception e)
+        {
+            ErrorHandler.Handle(e);
+        }
+    }
+
+    private async Task TryCreate()
+    {
+        var validationResult = await VisaApplicationCreateRequestValidator.ValidateAsync(requestModel);
+        if (!validationResult.IsValid)
+        {
+            var errorsString = validationResult.ToErrorsString();
+            status.SetError(errorsString);
+        }
+
+        status.SetMessage("Wait...");
+
+        var request = Mapper.Map<VisaApplicationCreateRequest>(requestModel);
+        try
+        {
+            await Client.CreateApplicationAsync(request);
+            status.SetSuccess("Application created successfully.");
+        }
+        catch (ApiException<ProblemDetails> e)
+        {
+            if (e.StatusCode == (int)HttpStatusCode.BadRequest
+                && e.Result.AdditionalProperties.TryGetValue("errors", out var errors))
+            {
+                try
+                {
+                    var errorsList = ((JArray)errors).ToObject<List<string>>();
+                    status.SetError(string.Join("<br/>", errorsList!));
+                }
+                catch (Exception inner)
+                {
+                    ErrorHandler.Handle(inner);
+                    status.SetError("Error occured");
+                }
+            }
+            else
+            {
+                throw;
+            }
+        }
+        catch (Exception e)
+        {
+            ErrorHandler.Handle(e);
+        }
+    }
+
+    private PastVisaModel NewPastVisa()
+    {
+        return new()
+        {
+            ExpirationDate = DateTimeProvider.Now(),
+            IssueDate = DateTimeProvider.Now()
+        };
+    }
+
+    private ReentryPermitModel NewReentryPermit()
+    {
+        return new()
+        {
+            ExpirationDate = DateTimeProvider.Now()
+        };
+    }
+
+    private PermissionToDestCountryModel NewPermissionToDestCountry()
+    {
+        return new()
+        {
+            ExpirationDate = DateTimeProvider.Now()
+        };
+    }
+
+    private PastVisitModel NewPastVisit()
+    {
+        return new()
+        {
+            StartDate = DateTimeProvider.Now(),
+            EndDate = DateTimeProvider.Now()
+        };
+    }
+
+    private void AddPastVisa()
+    {
+        if (requestModel.PastVisas.Count >= ConfigurationConstraints.MaxPastVisas)
+        {
+            pastVisaStatus.SetError($"{ConfigurationConstraints.MaxPastVisas} past visas is maximum");
+            return;
+        }
+
+        var validationResult = PastVisaModelValidator.Validate(editableVisa);
+        if (!validationResult.IsValid)
+        {
+            pastVisaStatus.SetError(validationResult.ToErrorsString());
+            return;
+        }
+
+        requestModel.PastVisas.Add(editableVisa);
+        editableVisa = NewPastVisa();
+        pastVisaStatus.SetSuccess("Added successfully");
+    }
+
+    private void RemovePastVisa(PastVisaModel visa)
+    {
+        requestModel.PastVisas.Remove(visa);
+    }
+
+    private void AddPastVisit()
+    {
+        if (requestModel.PastVisits.Count >= ConfigurationConstraints.MaxPastVisits)
+        {
+            pastVisitStatus.SetError($"{ConfigurationConstraints.MaxPastVisits} past visits is maximum");
+            return;
+        }
+
+        var validationResult = PastVisitModelValidator.Validate(editableVisit);
+        if (!validationResult.IsValid)
+        {
+            pastVisitStatus.SetError(validationResult.ToErrorsString());
+            return;
+        }
+
+        requestModel.PastVisits.Add(editableVisit);
+        editableVisit = NewPastVisit();
+        pastVisitStatus.SetSuccess("Added successfully");
+    }
+
+    private void RemovePastVisit(PastVisitModel visit)
+    {
+        requestModel.PastVisits.Remove(visit);
+    }
+}

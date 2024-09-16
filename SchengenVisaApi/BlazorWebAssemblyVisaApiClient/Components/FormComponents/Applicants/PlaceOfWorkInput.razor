@@ -1,0 +1,22 @@
+﻿@using BlazorWebAssemblyVisaApiClient.Validation.Applicants.Models
+<div>
+    <div >
+        <label >
+            Name:<br/>
+            <InputText class="rounded" @bind-Value="PlaceOfWork.Name"/>
+        </label><br/>
+        <ValidationMessage For="() => PlaceOfWork.Name"></ValidationMessage><br/>
+    </div>
+
+    <div >
+        <label >
+            Phone number:<br/>
+            <InputText DisplayName="Phone number" class="rounded" @bind-Value="PlaceOfWork.PhoneNum"/>
+        </label><br/>
+        <ValidationMessage For="() => PlaceOfWork.PhoneNum"></ValidationMessage>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public PlaceOfWorkModel PlaceOfWork { get; set; } = null!;
+}

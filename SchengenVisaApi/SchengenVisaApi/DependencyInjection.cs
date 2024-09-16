@@ -43,6 +43,9 @@ public static class DependencyInjection
 
         services.AddProblemDetails();
 
+        services.AddCors(options => options.AddPolicy("policy", builder =>
+            builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+
         services.AddControllers(opts => opts.Filters.Add<GlobalExceptionsFilter>())
             .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
     }

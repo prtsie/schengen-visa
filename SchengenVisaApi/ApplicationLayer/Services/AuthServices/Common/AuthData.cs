@@ -1,3 +1,15 @@
-﻿namespace ApplicationLayer.Services.AuthServices.Common;
+﻿using System.ComponentModel.DataAnnotations;
+using Domains;
 
-public record AuthData(string Email, string Password);
+namespace ApplicationLayer.Services.AuthServices.Common;
+
+public class AuthData
+{
+    [Required]
+    [MaxLength(ConfigurationConstraints.EmailLength)]
+    public string Email { get; set; } = null!;
+
+    [Required]
+    [MaxLength(ConfigurationConstraints.PasswordLength)]
+    public string Password { get; set; } = null!;
+}

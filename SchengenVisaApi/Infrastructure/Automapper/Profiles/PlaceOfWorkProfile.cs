@@ -8,8 +8,11 @@ public class PlaceOfWorkProfile : Profile
 {
     public PlaceOfWorkProfile()
     {
-            CreateMap<PlaceOfWorkModel, PlaceOfWork>(MemberList.Destination)
-                .ForMember(p => p.Id,
-                    opts => opts.UseDestinationValue());
-        }
+        CreateMap<PlaceOfWorkModel, PlaceOfWork>(MemberList.Destination)
+            .ForMember(p => p.Id,
+                opts => opts.UseDestinationValue())
+            .ReverseMap();
+
+        CreateMap<AddressModel, Address>().ReverseMap();
+    }
 }

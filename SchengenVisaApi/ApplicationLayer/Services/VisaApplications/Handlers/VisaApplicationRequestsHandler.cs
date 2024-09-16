@@ -19,36 +19,41 @@ public class VisaApplicationRequestsHandler(
     IDateTimeProvider dateTimeProvider,
     IUserIdProvider userIdProvider) : IVisaApplicationRequestsHandler
 {
-    async Task<List<VisaApplicationModelForAuthority>> IVisaApplicationRequestsHandler.GetPendingAsync(CancellationToken cancellationToken)
+    async Task<List<VisaApplicationPreview>> IVisaApplicationRequestsHandler.GetPendingAsync(CancellationToken cancellationToken)
     {
         var applicationsList = await applications.GetPendingApplicationsAsync(cancellationToken);
 
-        var applicationModels = applicationsList
-            .Select(a => MapVisaApplicationToModelForAuthorities(a, cancellationToken).Result)
-            .ToList();
+        var applicationModels = mapper.Map<List<VisaApplicationPreview>>(applicationsList);
         return applicationModels;
     }
 
-    private async Task<VisaApplicationModelForAuthority> MapVisaApplicationToModelForAuthorities(VisaApplication visaApplication,
-        CancellationToken cancellationToken)
-    {
-        var applicant = await applicants.GetByIdAsync(visaApplication.ApplicantId, cancellationToken);
-        var applicantModel = mapper.Map<ApplicantModel>(applicant);
-
-        var model = mapper.Map<VisaApplicationModelForAuthority>(visaApplication);
-        model.Applicant = applicantModel;
-
-        return model;
-    }
-
-    public async Task<List<VisaApplicationModelForApplicant>> GetForApplicantAsync(CancellationToken cancellationToken)
+    async Task<List<VisaApplicationPreview>> IVisaApplicationRequestsHandler.GetForApplicantAsync(CancellationToken cancellationToken)
     {
         var applicantId = await applicants.GetApplicantIdByUserId(userIdProvider.GetUserId(), cancellationToken);
         var visaApplications = await applications.GetOfApplicantAsync(applicantId, cancellationToken);
-        return mapper.Map<List<VisaApplicationModelForApplicant>>(visaApplications);
+        return mapper.Map<List<VisaApplicationPreview>>(visaApplications);
     }
 
-    public async Task HandleCreateRequestAsync(VisaApplicationCreateRequest request, CancellationToken cancellationToken)
+    async Task<VisaApplicationModel> IVisaApplicationRequestsHandler.GetApplicationForApplicantAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var applicant = await applicants.FindByUserIdAsync(userIdProvider.GetUserId(), cancellationToken);
+        var application = await applications.GetByApplicantAndApplicationIdAsync(applicant.Id, id, cancellationToken);
+        var mapped = mapper.Map<VisaApplicationModel>(application);
+        mapped.Applicant = mapper.Map<ApplicantModel>(applicant);
+        return mapped;
+    }
+
+    async Task<VisaApplicationModel> IVisaApplicationRequestsHandler.GetApplicationForAuthorityAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var pending = await applications.GetPendingApplicationsAsync(cancellationToken);
+        var application = pending.SingleOrDefault(a => a.Id == id) ?? throw new ApplicationAlreadyProcessedException();
+        var mapped = mapper.Map<VisaApplicationModel>(application);
+        var applicant = await applicants.GetByIdAsync(application.ApplicantId, cancellationToken);
+        mapped.Applicant = mapper.Map<ApplicantModel>(applicant);
+        return mapped;
+    }
+
+    async Task IVisaApplicationRequestsHandler.HandleCreateRequestAsync(VisaApplicationCreateRequest request, CancellationToken cancellationToken)
     {
         var applicant = await applicants.FindByUserIdAsync(userIdProvider.GetUserId(), cancellationToken);
 
@@ -65,6 +70,10 @@ public class VisaApplicationRequestsHandler(
     {
         var applicantId = await applicants.GetApplicantIdByUserId(userIdProvider.GetUserId(), cancellationToken);
         var application = await applications.GetByApplicantAndApplicationIdAsync(applicantId, applicationId, cancellationToken);
+        if (application.Status is ApplicationStatus.Approved or ApplicationStatus.Rejected)
+        {
+            throw new ApplicationAlreadyProcessedException();
+        }
 
         application.Status = ApplicationStatus.Closed;
         await applications.UpdateAsync(application, cancellationToken);
@@ -83,7 +92,7 @@ public class VisaApplicationRequestsHandler(
             throw new ApplicationAlreadyProcessedException();
         }
 
-        ApplicationStatus statusToSet = status switch
+        var statusToSet = status switch
         {
             AuthorityRequestStatuses.Approved => ApplicationStatus.Approved,
             AuthorityRequestStatuses.Rejected => ApplicationStatus.Rejected,

@@ -1,0 +1,41 @@
+﻿@using BlazorWebAssemblyVisaApiClient.Components.Auth
+@using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvider
+@inherits LayoutComponentBase
+<div class="page">
+    <div class="sidebar">
+        <NavMenu/>
+    </div>
+
+    <main class="fullscreen">
+        <div class="top-row px-4">
+            <AuthComponent @ref="authComponent"/>
+            @if (UserDataProvider.CurrentRole is not null)
+            {
+                <p>
+                    Logged as @UserDataProvider.CurrentRole (@AuthComponent.AuthData?.Email)
+                    <button class="btn-secondary" @onclick="authComponent.Logout">Log out</button>
+                </p>
+            }
+            else
+            {
+                <NavLink href="/">Log in</NavLink>
+            }
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+@code
+{
+    private AuthComponent authComponent = null!;
+
+    [Inject] private IUserDataProvider UserDataProvider { get; set; } = null!;
+
+    protected override void OnInitialized()
+    {
+        UserDataProvider.OnRoleChanged += StateHasChanged;
+    }
+}

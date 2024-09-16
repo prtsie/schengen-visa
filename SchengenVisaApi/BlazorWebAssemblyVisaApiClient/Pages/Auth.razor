@@ -1,0 +1,32 @@
+﻿@page "/"
+@using BlazorWebAssemblyVisaApiClient.Components.Auth
+@using VisaApiClient
+@using BlazorWebAssemblyVisaApiClient.Components.FormComponents.Applicants
+@using BlazorWebAssemblyVisaApiClient.Components
+@inherits BlazorWebAssemblyVisaApiClient.Components.Base.VisaClientComponentBase
+
+<PageTitle>Authentication</PageTitle>
+
+<div class="with-centered-content">
+    <EditForm class="form" Model="loginData" OnValidSubmit="TryLogin">
+        <DataAnnotationsValidator/>
+
+        <AuthDataInput AuthData="loginData"/><br/>
+
+        <input class="btn-outline-primary rounded" type="submit" value="Login"/>
+        or
+        <NavLink href="register">Register</NavLink >
+        <Status><AuthComponent @ref="auth"/></Status>
+    </EditForm>
+</div>
+
+@code
+{
+    private AuthData loginData = new();
+    private AuthComponent auth = null!;
+
+    private async Task TryLogin()
+    {
+        await auth.TryAuthorize(loginData);
+    }
+}

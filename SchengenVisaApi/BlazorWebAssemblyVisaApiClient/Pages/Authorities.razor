@@ -1,0 +1,58 @@
+﻿@page "/authorities"
+@using VisaApiClient
+@inherits BlazorWebAssemblyVisaApiClient.Components.Base.VisaClientComponentBase
+
+<table class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th>Email</th><th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var authority in authorities)
+    {
+        var path = $"authorities/{authority.Id}/{authority.Email}";
+        <tr>
+            <td>@authority.Email</td>
+            <td>
+                <NavLink href="@path">
+                    <button class="btn-outline-primary">Change</button>
+                </NavLink>
+                |
+                    <button class="btn-outline-danger" @onclick="() => Delete(authority)">Delete</button>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@code {
+    private List<UserModel> authorities = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            authorities = (await Client.GetAuthorityAccountsAsync()).ToList();
+        }
+        catch (Exception e)
+        {
+            ErrorHandler.Handle(e);
+        }
+    }
+
+    private async Task Delete(UserModel authority)
+    {
+        try
+        {
+            await Client.RemoveAuthorityAccountAsync(authority.Id);
+            authorities.Remove(authority);
+            StateHasChanged();
+        }
+        catch (Exception e)
+        {
+            ErrorHandler.Handle(e);
+        }
+    }
+
+}

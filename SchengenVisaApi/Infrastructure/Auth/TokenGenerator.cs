@@ -1,7 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using ApplicationLayer.InfrastructureServicesInterfaces;
-using ApplicationLayer.Services.AuthServices.NeededServices;
+using ApplicationLayer.Services.AuthServices.Common;
 using Domains.Users;
 
 namespace Infrastructure.Auth;
@@ -14,7 +14,7 @@ public class TokenGenerator(TokenGeneratorOptions options, JwtSecurityTokenHandl
     : ITokenGenerator
 {
     /// <inheritdoc cref="ITokenGenerator.CreateToken"/>
-    public string CreateToken(User user)
+    public AuthToken CreateToken(User user)
     {
         var claims = new List<Claim>
         {
@@ -29,6 +29,6 @@ public class TokenGenerator(TokenGeneratorOptions options, JwtSecurityTokenHandl
             signingCredentials: options.Credentials,
             claims: claims);
 
-        return tokenHandler.WriteToken(token);
+        return new AuthToken { Token = tokenHandler.WriteToken(token) };
     }
 }

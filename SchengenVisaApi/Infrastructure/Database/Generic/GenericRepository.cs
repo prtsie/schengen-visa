@@ -1,5 +1,5 @@
-﻿using ApplicationLayer.InfrastructureServicesInterfaces;
-using ApplicationLayer.Services.GeneralExceptions;
+﻿using ApplicationLayer.GeneralExceptions;
+using ApplicationLayer.InfrastructureServicesInterfaces;
 using Domains;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,10 +1,11 @@
-﻿using ApplicationLayer.Services.AuthServices.Common;
+﻿using ApplicationLayer.Services.Applicants.Models;
+using ApplicationLayer.Services.AuthServices.Common;
 using ApplicationLayer.Services.AuthServices.LoginService;
 using ApplicationLayer.Services.AuthServices.RegisterService;
 using ApplicationLayer.Services.AuthServices.Requests;
 using ApplicationLayer.Services.Users;
+using ApplicationLayer.Services.Users.Models;
 using ApplicationLayer.Services.Users.Requests;
-using Domains.Users;
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,12 +21,12 @@ public class UsersController(
     ILoginService loginService,
     IUsersService usersService,
     IValidator<RegisterApplicantRequest> registerApplicantRequestValidator,
-    IValidator<AuthData> authDataValidator) : ControllerBase
+    IValidator<ChangeUserAuthDataRequest> changeUserAuthDataRequestValidator,
+    IValidator<RegisterRequest> registerRequestValidator) : ControllerBase
 {
     /// <summary> Adds applicant with user account </summary>
     [HttpPost("register")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status409Conflict)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Register(RegisterApplicantRequest request, CancellationToken cancellationToken)
     {
@@ -39,14 +40,13 @@ public class UsersController(
     ///<remarks> Accessible only for admins </remarks>
     [HttpPost("authorities")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status409Conflict)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [Authorize(policy: PolicyConstants.AdminPolicy)]
     public async Task<IActionResult> RegisterAuthority(RegisterRequest request, CancellationToken cancellationToken)
     {
-        await authDataValidator.ValidateAndThrowAsync(request.AuthData, cancellationToken);
+        await registerRequestValidator.ValidateAndThrowAsync(request, cancellationToken);
 
         await registerService.RegisterAuthority(request, cancellationToken);
         return Ok();
@@ -54,18 +54,23 @@ public class UsersController(
 
     /// <summary> Returns JWT-token for authentication </summary>
     [HttpGet("login")]
-    [ProducesResponseType<string>(StatusCodes.Status200OK)]
+    [ProducesResponseType<AuthToken>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> Login(string email, string password, CancellationToken cancellationToken)
     {
-        var result = await loginService.LoginAsync(email, password, cancellationToken);
+        var loginRequest = new LoginRequest
+        {
+            AuthData = new() { Email = email, Password = password }
+        };
+
+        var result = await loginService.LoginAsync(loginRequest, cancellationToken);
         return Ok(result);
     }
 
     /// <summary> Returns list of authority accounts </summary>
     /// <remarks> Accessible only for admins </remarks>
     [HttpGet("authorities")]
-    [ProducesResponseType<List<User>>(StatusCodes.Status200OK)]
+    [ProducesResponseType<List<UserModel>>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [Authorize(policy: PolicyConstants.AdminPolicy)]
@@ -77,18 +82,18 @@ public class UsersController(
 
     /// <summary> Changes authority's account authentication data </summary>
     /// <remarks> Accessible only for admins </remarks>
-    [HttpPut("authorities/{authorityAccountId:guid}")]
+    [HttpPut("authorities")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [Authorize(policy: PolicyConstants.AdminPolicy)]
-    public async Task<IActionResult> ChangeAuthorityAuthData(Guid authorityAccountId, AuthData authData, CancellationToken cancellationToken)
+    public async Task<IActionResult> ChangeAuthorityAuthData(ChangeUserAuthDataRequest request, CancellationToken cancellationToken)
     {
-        await authDataValidator.ValidateAndThrowAsync(authData, cancellationToken);
+        await changeUserAuthDataRequestValidator.ValidateAndThrowAsync(request, cancellationToken);
 
-        await usersService.ChangeAccountAuthDataAsync(new ChangeUserAuthDataRequest(authorityAccountId, authData), cancellationToken);
+        await usersService.ChangeAuthorityAuthDataAsync(request, cancellationToken);
         return Ok();
     }
 
@@ -102,7 +107,20 @@ public class UsersController(
     [Authorize(policy: PolicyConstants.AdminPolicy)]
     public async Task<IActionResult> RemoveAuthorityAccount(Guid authorityAccountId, CancellationToken cancellationToken)
     {
-        await usersService.RemoveUserAccount(authorityAccountId, cancellationToken);
+        await usersService.RemoveAuthorityAccount(authorityAccountId, cancellationToken);
         return Ok();
+    }
+
+    /// <summary> Returns applicant info </summary>
+    [HttpGet("applicant")]
+    [ProducesResponseType<ApplicantModel>(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [Authorize(policy: PolicyConstants.ApplicantPolicy)]
+    public async Task<IActionResult> GetApplicant(CancellationToken cancellationToken)
+    {
+
+        var result = await usersService.GetAuthenticatedApplicant(cancellationToken);
+        return Ok(result);
     }
 }

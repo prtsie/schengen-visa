@@ -1,0 +1,39 @@
+﻿@using VisaApiClient
+
+<div>
+    <div >
+        <label >
+            Country:<br/>
+            <InputText class="rounded" @bind-Value="Address.Country"/>
+        </label><br/>
+        <ValidationMessage For="() => Address.Country"></ValidationMessage><br/>
+    </div>
+
+    <div >
+        <label >
+            City:<br/>
+            <InputText class="rounded" @bind-Value="Address.City"/>
+        </label><br/>
+        <ValidationMessage For="() => Address.City"></ValidationMessage><br/>
+    </div>
+
+    <div >
+        <label >
+            Street:<br/>
+            <InputText class="rounded" @bind-Value="Address.Street"/>
+        </label><br/>
+        <ValidationMessage For="() => Address.Street"></ValidationMessage><br/>
+    </div>
+
+    <div >
+        <label >
+            Building:<br/>
+            <InputText class="rounded" @bind-Value="Address.Building"/>
+        </label><br/>
+        <ValidationMessage For="() => Address.Building"></ValidationMessage>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public AddressModel Address { get; set; } = null!;
+}

@@ -1,0 +1,81 @@
+﻿@using System.Net
+@using BlazorWebAssemblyVisaApiClient.ErrorHandling
+@using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvider
+@using VisaApiClient
+
+@code {
+    public static AuthData? AuthData;
+
+    [CascadingParameter] private GlobalErrorHandler ErrorHandler { get; set; } = null!;
+
+    [CascadingParameter] private Status? Status { get; set; }
+
+    [Inject] private Client Client { get; set; } = null!;
+
+    [Inject] private NavigationManager Nav { get; set; } = null!;
+
+    [Inject] private IUserDataProvider UserDataProvider { get; set; } = null!;
+
+    ///Authorize with email and password
+    /// <returns>Message to user</returns>
+    public async Task TryAuthorize(AuthData authData)
+    {
+        Status?.SetMessage("Wait...");
+        try
+        {
+            var token = await Client.LoginAsync(authData.Email, authData.Password);
+            Client.AuthToken = token;
+            AuthData = authData;
+            UserDataProvider.UpdateCurrentRole();
+
+            Status?.SetSuccess("Logged in successfully.");
+        }
+        catch (ApiException<ProblemDetails> e)
+        {
+            if (e.Result.Status == (int)HttpStatusCode.Forbidden)
+            {
+                Status?.SetError(e.Result.Detail!);
+            }
+            else
+            {
+                Status?.SetError("Error occured");
+                ErrorHandler.Handle(e);
+            }
+        }
+        catch (Exception e)
+        {
+            Status?.SetError("Error occured");
+            ErrorHandler.Handle(e);
+        }
+    }
+
+    public void Logout()
+    {
+        Client.AuthToken = null;
+        AuthData = null;
+        try
+        {
+            UserDataProvider.UpdateCurrentRole();
+        }
+        catch (Exception e)
+        {
+            ErrorHandler.Handle(e);
+        }
+    }
+
+    ///Re-auth if token expired or something
+    public async Task ReAuthenticate()
+    {
+        if (AuthData is not null)
+        {
+            await TryAuthorize(AuthData);
+        }
+        else
+        {
+            Client.AuthToken = null;
+            AuthData = null;
+            Nav.NavigateTo("/");
+        }
+    }
+
+}

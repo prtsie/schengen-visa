@@ -17,7 +17,7 @@ public class RegisterService(
 {
     async Task IRegisterService.RegisterApplicant(RegisterApplicantRequest request, CancellationToken cancellationToken)
     {
-        var user = mapper.Map<User>(request.AuthData);
+        var user = mapper.Map<User>(request.RegisterRequest.AuthData);
         user.Role = Role.Applicant;
 
         var applicant = mapper.Map<Applicant>(request);

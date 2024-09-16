@@ -1,4 +1,4 @@
-﻿using ApplicationLayer.Services.GeneralExceptions;
+﻿using ApplicationLayer.GeneralExceptions;
 
 namespace Infrastructure.Database.VisaApplications.Repositories.Exceptions;
 
