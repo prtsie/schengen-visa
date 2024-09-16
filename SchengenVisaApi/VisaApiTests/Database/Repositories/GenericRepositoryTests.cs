@@ -1,4 +1,4 @@
-namespace VisaApi.Repositories;
+namespace VisaApi.Database.Repositories;
 
 public class GenericRepositoryTests
 {
