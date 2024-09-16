@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisaApiClient", "VisaApiCli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorWebAssemblyVisaApiClient", "BlazorWebAssemblyVisaApiClient\BlazorWebAssemblyVisaApiClient.csproj", "{3DB49E3C-AAC3-452C-AEBE-F4F72D6134F8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisaApiTests", "VisaApiTests\VisaApiTests.csproj", "{4CB6FBC4-99CB-453D-8499-A498FAE9683D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{3DB49E3C-AAC3-452C-AEBE-F4F72D6134F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DB49E3C-AAC3-452C-AEBE-F4F72D6134F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DB49E3C-AAC3-452C-AEBE-F4F72D6134F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CB6FBC4-99CB-453D-8499-A498FAE9683D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CB6FBC4-99CB-453D-8499-A498FAE9683D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CB6FBC4-99CB-453D-8499-A498FAE9683D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CB6FBC4-99CB-453D-8499-A498FAE9683D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
