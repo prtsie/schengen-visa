@@ -5,6 +5,9 @@ using Domains.ApplicantDomain;
 
 namespace VisaApi.Fakers.Applicants
 {
+    /// <summary>
+    /// Generates applicants
+    /// </summary>
     public sealed class ApplicantFaker : Faker<Applicant>
     {
         public ApplicantFaker(IDateTimeProvider dateTimeProvider)

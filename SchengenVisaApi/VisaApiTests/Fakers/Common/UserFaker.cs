@@ -3,6 +3,9 @@ using Domains.Users;
 
 namespace VisaApi.Fakers.Common
 {
+    /// <summary>
+    /// Generates users
+    /// </summary>
     public sealed class UserFaker : Faker<User>
     {
         public UserFaker()
