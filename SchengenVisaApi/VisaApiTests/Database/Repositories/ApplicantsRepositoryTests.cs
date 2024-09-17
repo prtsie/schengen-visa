@@ -4,7 +4,8 @@ using FluentAssertions;
 using Infrastructure.Database;
 using Infrastructure.Database.Applicants.Repositories;
 using Infrastructure.Database.Applicants.Repositories.Exceptions;
-using VisaApi.Fakers;
+using VisaApi.Fakers.Applicants;
+using VisaApi.Fakers.Common;
 using VisaApi.Services;
 
 namespace VisaApi.Database.Repositories
