@@ -8,6 +8,9 @@ namespace VisaApi.Database.Repositories.Generic;
 
 public class GenericRepositoryTests
 {
+    /// <summary> Returns <see cref="GenericRepository{T}"/> </summary>
+    /// <param name="context"> Database context </param>
+    /// <returns>Repository</returns>
     private static GenericRepository<User> GetRepository(DbContext context) => new TestGenericRepository(context, context);
 
     /// <summary> Test for <see cref="GenericRepository{T}.GetAllAsync"/> method that should return empty collection if nothing added </summary>
