@@ -2,13 +2,12 @@ using ApplicationLayer.InfrastructureServicesInterfaces;
 using Bogus;
 using Domains;
 using Domains.ApplicantDomain;
-using Domains.Users;
 
 namespace VisaApi.Fakers
 {
     public sealed class ApplicantFaker : Faker<Applicant>
     {
-        public ApplicantFaker(User user, IDateTimeProvider dateTimeProvider)
+        public ApplicantFaker(IDateTimeProvider dateTimeProvider)
         {
             RuleFor(a => a.Citizenship, f => f.Address.Country());
 
@@ -38,11 +37,11 @@ namespace VisaApi.Fakers
 
             RuleFor(a => a.MaritalStatus, f => f.Random.Enum<MaritalStatus>());
 
-            RuleFor(a => a.UserId, () => user.Id);
-
             RuleFor(a => a.CitizenshipByBirth, f => f.Address.Country());
 
             RuleFor(a => a.CityOfBirth, f => f.Address.City());
+
+            RuleFor(a => a.CountryOfBirth, f => f.Address.Country());
 
             RuleFor(a => a.IsNonResident, f => f.Random.Bool());
 
