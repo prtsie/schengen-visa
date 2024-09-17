@@ -3,7 +3,7 @@ using Bogus;
 using Domains;
 using Domains.ApplicantDomain;
 
-namespace VisaApi.Fakers
+namespace VisaApi.Fakers.Applicants
 {
     public sealed class ApplicantFaker : Faker<Applicant>
     {

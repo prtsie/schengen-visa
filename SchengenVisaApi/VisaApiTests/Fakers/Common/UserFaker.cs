@@ -1,7 +1,7 @@
 using Bogus;
 using Domains.Users;
 
-namespace VisaApi.Fakers
+namespace VisaApi.Fakers.Common
 {
     public sealed class UserFaker : Faker<User>
     {
