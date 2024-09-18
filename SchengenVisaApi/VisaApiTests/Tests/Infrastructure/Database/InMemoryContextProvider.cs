@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using DbContext = Infrastructure.Database.DbContext;
 
-namespace VisaApi.Database
+namespace VisaApi.Tests.Infrastructure.Database
 {
     public static class InMemoryContextProvider
     {

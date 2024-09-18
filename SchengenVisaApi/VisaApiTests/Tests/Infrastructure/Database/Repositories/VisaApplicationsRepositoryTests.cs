@@ -11,7 +11,7 @@ using VisaApi.Fakers.VisaApplications;
 using VisaApi.Services;
 using Xunit;
 
-namespace VisaApi.Database.Repositories
+namespace VisaApi.Tests.Infrastructure.Database.Repositories
 {
     [Collection(Collections.ContextUsingTestCollection)]
     public class VisaApplicationsRepositoryTests

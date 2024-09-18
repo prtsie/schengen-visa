@@ -5,7 +5,7 @@ using Infrastructure.Database;
 using Infrastructure.Database.Generic;
 using Xunit;
 
-namespace VisaApi.Database.Repositories.Generic;
+namespace VisaApi.Tests.Infrastructure.Database.Repositories.Generic;
 
 [Collection(Collections.ContextUsingTestCollection)]
 public class GenericRepositoryTests
