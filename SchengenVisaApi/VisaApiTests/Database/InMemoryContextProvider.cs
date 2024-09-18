@@ -11,6 +11,14 @@ namespace VisaApi.Database
             .ConfigureWarnings(b => b.Ignore(InMemoryEventId.TransactionIgnoredWarning))
             .Options;
 
-        public static DbContext GetDbContext() => new(opts);
+        public static DbContext GetDbContext()
+        {
+            var result = new DbContext(opts);
+
+            result.Database.EnsureDeleted();
+            result.Database.EnsureCreated();
+
+            return result;
+        }
     }
 }

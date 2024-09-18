@@ -7,11 +7,16 @@ using Infrastructure.Database.Applicants.Repositories.Exceptions;
 using VisaApi.Fakers.Applicants;
 using VisaApi.Fakers.Common;
 using VisaApi.Services;
+using Xunit;
 
 namespace VisaApi.Database.Repositories
 {
+    [Collection(Collections.ContextUsingTestCollection)]
     public class ApplicantsRepositoryTests
     {
+        private static UserFaker userFaker = new();
+        private static ApplicantFaker applicantFaker = new(GetDateTimeProvider());
+
         /// <summary> Returns <see cref="IApplicantsRepository"/> </summary>
         /// <param name="context"> Database context </param>
         /// <returns>Repository</returns>
@@ -51,8 +56,8 @@ namespace VisaApi.Database.Repositories
         {
             await using var context = InMemoryContextProvider.GetDbContext();
             var repository = GetRepository(context);
-            var user = new UserFaker().Generate();
-            var applicant = new ApplicantFaker(GetDateTimeProvider()).Generate();
+            var user = userFaker.Generate();
+            var applicant = applicantFaker.Generate();
             applicant.UserId = user.Id;
             await context.AddAsync(user);
             await repository.AddAsync(applicant, CancellationToken.None);
@@ -93,8 +98,8 @@ namespace VisaApi.Database.Repositories
         {
             await using var context = InMemoryContextProvider.GetDbContext();
             var repository = GetRepository(context);
-            var user = new UserFaker().Generate();
-            var applicant = new ApplicantFaker(GetDateTimeProvider()).Generate();
+            var user = userFaker.Generate();
+            var applicant = applicantFaker.Generate();
             applicant.UserId = user.Id;
             await context.AddAsync(user);
             await repository.AddAsync(applicant, CancellationToken.None);
@@ -135,7 +140,7 @@ namespace VisaApi.Database.Repositories
         {
             await using var context = InMemoryContextProvider.GetDbContext();
             var repository = GetRepository(context);
-            var user = new UserFaker().Generate();
+            var user = userFaker.Generate();
             var applicant = new ApplicantFaker(GetDateTimeProvider()).Generate();
             applicant.UserId = user.Id;
             await context.AddAsync(user);

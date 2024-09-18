@@ -3,9 +3,11 @@ using Domains.Users;
 using FluentAssertions;
 using Infrastructure.Database;
 using Infrastructure.Database.Generic;
+using Xunit;
 
 namespace VisaApi.Database.Repositories.Generic;
 
+[Collection(Collections.ContextUsingTestCollection)]
 public class GenericRepositoryTests
 {
     /// <summary> Returns <see cref="GenericRepository{T}"/> </summary>
@@ -15,21 +17,21 @@ public class GenericRepositoryTests
 
     /// <summary> Test for <see cref="GenericRepository{T}.GetAllAsync"/> method that should return empty collection if nothing added </summary>
     [Fact]
-    public async Task GetAllForEmptyShouldReturnEmpty()
+    public void GetAllForEmptyShouldReturnEmpty()
     {
-        await using var context = InMemoryContextProvider.GetDbContext();
+        using var context = InMemoryContextProvider.GetDbContext();
         var repository = GetRepository(context);
 
-        var result = await repository.GetAllAsync(CancellationToken.None);
+        var result = repository.GetAllAsync(CancellationToken.None).Result;
 
         result.Should().BeEmpty();
     }
 
     /// <summary> Test for <see cref="GenericRepository{T}.GetAllAsync"/> method that should return collection with added entities </summary>
     [Fact]
-    public async Task GetAllForNotEmptyShouldReturnEntities()
+    public void GetAllForNotEmptyShouldReturnEntities()
     {
-        await using var context = InMemoryContextProvider.GetDbContext();
+        using var context = InMemoryContextProvider.GetDbContext();
         var repository = GetRepository(context);
         User[] users =
         [
@@ -38,49 +40,49 @@ public class GenericRepositoryTests
         ];
         foreach (var user in users)
         {
-            await repository.AddAsync(user, CancellationToken.None);
+            repository.AddAsync(user, CancellationToken.None).Wait();
         }
 
-        await context.SaveChangesAsync();
+        context.SaveChanges();
 
-        var result = await repository.GetAllAsync(CancellationToken.None);
+        var result = repository.GetAllAsync(CancellationToken.None).Result;
 
-        result.Should().OnlyContain(user => users.Contains(user));
+        result.Should().Contain(users).And.HaveSameCount(users);
     }
 
     /// <summary> Test for <see cref="GenericRepository{T}.GetByIdAsync"/> method that should return existing entity </summary>
     [Fact]
-    public async Task GetByIdForExistingShouldReturnEntity()
+    public void GetByIdForExistingShouldReturnEntity()
     {
-        await using var context = InMemoryContextProvider.GetDbContext();
+        using var context = InMemoryContextProvider.GetDbContext();
         var repository = GetRepository(context);
         var user = new User { Email = "nasrudin@mail.ru", Password = "12345", Role = Role.Admin };
-        await repository.AddAsync(user, CancellationToken.None);
+        repository.AddAsync(user, CancellationToken.None).Wait();
 
-        await context.SaveChangesAsync();
+        context.SaveChanges();
 
-        var result = await repository.GetByIdAsync(user.Id, CancellationToken.None);
+        var result = repository.GetByIdAsync(user.Id, CancellationToken.None).Result;
 
         result.Should().Be(user);
     }
 
     /// <summary> Test for <see cref="GenericRepository{T}.GetByIdAsync"/> method that should throw exception for not found entity </summary>
     [Fact]
-    public async Task GetByIdForNotExistingShouldThrow()
+    public void GetByIdForNotExistingShouldThrow()
     {
-        await using var context = InMemoryContextProvider.GetDbContext();
+        using var context = InMemoryContextProvider.GetDbContext();
         var repository = GetRepository(context);
 
-        await context.SaveChangesAsync();
+        context.SaveChanges();
 
         EntityNotFoundByIdException<User>? result = null;
         try
         {
-            await repository.GetByIdAsync(Guid.NewGuid(), CancellationToken.None);
+            repository.GetByIdAsync(Guid.NewGuid(), CancellationToken.None).Wait();
         }
-        catch (Exception e)
+        catch (AggregateException e)
         {
-            result = e as EntityNotFoundByIdException<User>;
+            result = e.InnerException as EntityNotFoundByIdException<User>;
         }
 
         result.Should().NotBeNull();
