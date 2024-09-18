@@ -12,7 +12,7 @@ namespace VisaApi.Tests.Infrastructure.Database.Repositories
     [Collection(Collections.ContextUsingTestCollection)]
     public class UsersRepositoryTests
     {
-        private UserFaker userFaker = new();
+        private readonly static UserFaker userFaker = new();
 
         /// <summary> Returns <see cref="IVisaApplicationsRepository"/> </summary>
         /// <param name="context"> Database context </param>

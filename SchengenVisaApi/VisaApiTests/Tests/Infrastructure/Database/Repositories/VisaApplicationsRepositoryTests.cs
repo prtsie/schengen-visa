@@ -16,9 +16,9 @@ namespace VisaApi.Tests.Infrastructure.Database.Repositories
     [Collection(Collections.ContextUsingTestCollection)]
     public class VisaApplicationsRepositoryTests
     {
-        private UserFaker userFaker = new();
-        private ApplicantFaker applicantFaker = new(GetDateTimeProvider());
-        private VisaApplicationFaker applicationFaker = new(GetDateTimeProvider());
+        private readonly static UserFaker userFaker = new();
+        private readonly static ApplicantFaker applicantFaker = new(GetDateTimeProvider());
+        private readonly static VisaApplicationFaker applicationFaker = new(GetDateTimeProvider());
 
         /// <summary> Returns <see cref="IVisaApplicationsRepository"/> </summary>
         /// <param name="context"> Database context </param>
