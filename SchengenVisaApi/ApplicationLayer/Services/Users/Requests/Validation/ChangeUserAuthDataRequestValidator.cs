@@ -7,6 +7,9 @@ namespace ApplicationLayer.Services.Users.Requests.Validation
     {
         public ChangeUserAuthDataRequestValidator()
         {
+            RuleFor(r => r.UserId)
+                .NotEmpty();
+
             RuleFor(r => r.NewAuthData)
                 .NotEmpty();
 

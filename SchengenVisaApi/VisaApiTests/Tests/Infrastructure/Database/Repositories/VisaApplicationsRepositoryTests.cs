@@ -6,7 +6,7 @@ using Infrastructure.Database;
 using Infrastructure.Database.VisaApplications.Repositories;
 using Infrastructure.Database.VisaApplications.Repositories.Exceptions;
 using VisaApi.Fakers.Applicants;
-using VisaApi.Fakers.Common;
+using VisaApi.Fakers.Users;
 using VisaApi.Fakers.VisaApplications;
 using VisaApi.Services;
 using Xunit;

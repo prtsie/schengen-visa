@@ -4,7 +4,7 @@ using Domains.Users;
 using FluentAssertions;
 using Infrastructure.Database;
 using Infrastructure.Database.Users.Repositories;
-using VisaApi.Fakers.Common;
+using VisaApi.Fakers.Users;
 using Xunit;
 
 namespace VisaApi.Tests.Infrastructure.Database.Repositories

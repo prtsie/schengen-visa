@@ -1,7 +1,7 @@
 using Bogus;
 using Domains.Users;
 
-namespace VisaApi.Fakers.Common
+namespace VisaApi.Fakers.Users
 {
     /// <summary>
     /// Generates users
