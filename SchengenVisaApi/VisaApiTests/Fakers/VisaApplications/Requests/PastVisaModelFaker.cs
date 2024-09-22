@@ -1,24 +1,24 @@
 ﻿using ApplicationLayer.InfrastructureServicesInterfaces;
+using ApplicationLayer.Services.VisaApplications.Models;
 using Bogus;
-using Domains.VisaApplicationDomain;
 
-namespace VisaApi.Fakers.VisaApplications;
+namespace VisaApi.Fakers.VisaApplications.Requests;
 
 /// <summary>
 /// Generates past visas
 /// </summary>
-public sealed class PastVisaFaker : Faker<PastVisa>
+public sealed class PastVisaModelFaker : Faker<PastVisaModel>
 {
     private IDateTimeProvider dateTimeProvider;
 
-    public PastVisaFaker(IDateTimeProvider dateTimeProvider)
+    public PastVisaModelFaker(IDateTimeProvider dateTimeProvider)
     {
             this.dateTimeProvider = dateTimeProvider;
 
             RuleFor(pv => pv.Name, f => f.Random.Words());
         }
 
-    public PastVisa GenerateValid()
+    public PastVisaModel GenerateValid()
     {
             var result = Generate();
             result.IssueDate = dateTimeProvider.Now().AddDays(-Random.Shared.Next(11, 900));

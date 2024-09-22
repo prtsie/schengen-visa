@@ -1,6 +1,5 @@
 using ApplicationLayer.Services.Applicants.Models;
 using Bogus;
-using Domains.ApplicantDomain;
 
 namespace VisaApi.Fakers.Applicants.Requests;
 
