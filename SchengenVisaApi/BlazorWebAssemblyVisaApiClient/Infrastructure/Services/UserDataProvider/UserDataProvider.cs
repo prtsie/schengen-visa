@@ -3,23 +3,23 @@ using System.Security.Claims;
 using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvider.Exceptions;
 using VisaApiClient;
 
-namespace BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvider
+namespace BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvider;
+
+public class UserDataProvider(Client client) : IUserDataProvider
 {
-    public class UserDataProvider(Client client) : IUserDataProvider
+    private readonly static JwtSecurityTokenHandler tokenHandler = new();
+
+    public string? CurrentRole { get; private set; }
+
+    public Action? OnRoleChanged { get; set; }
+
+    public async Task<ApplicantModel> GetApplicant()
     {
-        private readonly static JwtSecurityTokenHandler tokenHandler = new();
-
-        public string? CurrentRole { get; private set; }
-
-        public Action? OnRoleChanged { get; set; }
-
-        public async Task<ApplicantModel> GetApplicant()
-        {
             return await client.GetApplicantAsync();
         }
 
-        public void UpdateCurrentRole()
-        {
+    public void UpdateCurrentRole()
+    {
             var role = CurrentRole;
 
             if (client.AuthToken is null)
@@ -49,5 +49,4 @@ namespace BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvide
                 OnRoleChanged?.Invoke();
             }
         }
-    }
 }

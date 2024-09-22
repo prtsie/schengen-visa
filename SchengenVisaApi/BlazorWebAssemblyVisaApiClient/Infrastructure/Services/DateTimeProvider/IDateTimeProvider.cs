@@ -1,9 +1,8 @@
-﻿namespace BlazorWebAssemblyVisaApiClient.Infrastructure.Services.DateTimeProvider
-{
-    public interface IDateTimeProvider
-    {
-        DateTime Now();
+﻿namespace BlazorWebAssemblyVisaApiClient.Infrastructure.Services.DateTimeProvider;
 
-        string FormattedNow();
-    }
+public interface IDateTimeProvider
+{
+    DateTime Now();
+
+    string FormattedNow();
 }

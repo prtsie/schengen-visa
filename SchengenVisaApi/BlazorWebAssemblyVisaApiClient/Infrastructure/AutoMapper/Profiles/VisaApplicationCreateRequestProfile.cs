@@ -2,13 +2,12 @@
 using BlazorWebAssemblyVisaApiClient.Validation.VisaApplications.Models;
 using VisaApiClient;
 
-namespace BlazorWebAssemblyVisaApiClient.Infrastructure.AutoMapper.Profiles
+namespace BlazorWebAssemblyVisaApiClient.Infrastructure.AutoMapper.Profiles;
+
+public class VisaApplicationCreateRequestProfile : Profile
 {
-    public class VisaApplicationCreateRequestProfile : Profile
+    public VisaApplicationCreateRequestProfile()
     {
-        public VisaApplicationCreateRequestProfile()
-        {
             CreateMap<VisaApplicationCreateRequestModel, VisaApplicationCreateRequest>(MemberList.Destination);
         }
-    }
 }

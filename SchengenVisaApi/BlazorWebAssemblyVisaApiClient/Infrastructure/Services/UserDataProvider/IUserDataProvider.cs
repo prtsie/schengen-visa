@@ -1,15 +1,14 @@
 ﻿using VisaApiClient;
 
-namespace BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvider
+namespace BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvider;
+
+public interface IUserDataProvider
 {
-    public interface IUserDataProvider
-    {
-        public string? CurrentRole { get; }
+    public string? CurrentRole { get; }
 
-        public Action? OnRoleChanged { get; set; }
+    public Action? OnRoleChanged { get; set; }
 
-        public Task<ApplicantModel> GetApplicant();
+    public Task<ApplicantModel> GetApplicant();
 
-        public void UpdateCurrentRole();
-    }
+    public void UpdateCurrentRole();
 }
