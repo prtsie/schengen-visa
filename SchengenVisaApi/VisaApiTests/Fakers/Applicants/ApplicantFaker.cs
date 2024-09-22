@@ -31,7 +31,7 @@ namespace VisaApi.Fakers.Applicants
                 => new Passport
                 {
                     Issuer = f.Company.CompanyName(),
-                    Number = f.Random.String(ConfigurationConstraints.PasswordLength),
+                    Number = f.Random.String(ConfigurationConstraints.PasswordLength, 'a', 'z'),
                     ExpirationDate = f.Date.Future(4, dateTimeProvider.Now()),
                     IssueDate = f.Date.Past(4, dateTimeProvider.Now())
                 });

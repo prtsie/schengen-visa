@@ -60,7 +60,7 @@ public class PlaceOfWorkModelValidator : AbstractValidator<PlaceOfWorkModel>
             .WithMessage("Building of place of work can not be empty")
             .Matches(Constants.EnglishPhraseRegex)
             .WithMessage("Place of work building field can contain only english letters, digits and special symbols")
-            .MaximumLength(ConfigurationConstraints.CountryNameLength)
+            .MaximumLength(ConfigurationConstraints.BuildingNumberLength)
             .WithMessage($"Building of place of work length must be less than {ConfigurationConstraints.BuildingNumberLength}");
     }
 }

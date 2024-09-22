@@ -9,7 +9,7 @@ using Xunit;
 
 namespace VisaApi.Tests.Application.Validation.Applicants
 {
-    public class NameValidatorTests
+    public class NameModelValidatorTests
     {
         private static IValidator<NameModel> validator = new NameModelValidator();
         private static NameModelFaker faker = new();
