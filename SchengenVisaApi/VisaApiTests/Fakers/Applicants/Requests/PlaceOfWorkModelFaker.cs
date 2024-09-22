@@ -2,12 +2,12 @@ using ApplicationLayer.Services.Applicants.Models;
 using Bogus;
 using Domains.ApplicantDomain;
 
-namespace VisaApi.Fakers.Applicants.Requests
+namespace VisaApi.Fakers.Applicants.Requests;
+
+public sealed class PlaceOfWorkModelFaker : Faker<PlaceOfWorkModel>
 {
-    public sealed class PlaceOfWorkModelFaker : Faker<PlaceOfWorkModel>
+    public PlaceOfWorkModelFaker()
     {
-        public PlaceOfWorkModelFaker()
-        {
             RuleFor(m => m.Name, f => f.Company.CompanyName());
 
             RuleFor(m => m.PhoneNum, f => f.Phone.PhoneNumber("###########"));
@@ -21,5 +21,4 @@ namespace VisaApi.Fakers.Applicants.Requests
                     Building = f.Address.BuildingNumber()
                 });
         }
-    }
 }

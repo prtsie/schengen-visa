@@ -1,7 +1,6 @@
-﻿namespace VisaApi
+﻿namespace VisaApi;
+
+public static class Collections
 {
-    public static class Collections
-    {
-        public const string ContextUsingTestCollection = "ContextUsingTestCollection";
-    }
+    public const string ContextUsingTestCollection = "ContextUsingTestCollection";
 }

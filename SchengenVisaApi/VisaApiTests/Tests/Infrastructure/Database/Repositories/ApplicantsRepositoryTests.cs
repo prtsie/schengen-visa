@@ -9,29 +9,29 @@ using VisaApi.Fakers.Users;
 using VisaApi.Services;
 using Xunit;
 
-namespace VisaApi.Tests.Infrastructure.Database.Repositories
+namespace VisaApi.Tests.Infrastructure.Database.Repositories;
+
+[Collection(Collections.ContextUsingTestCollection)]
+public class ApplicantsRepositoryTests
 {
-    [Collection(Collections.ContextUsingTestCollection)]
-    public class ApplicantsRepositoryTests
+    private readonly static UserFaker userFaker = new();
+    private readonly static ApplicantFaker applicantFaker = new(GetDateTimeProvider());
+
+    /// <summary> Returns <see cref="IApplicantsRepository"/> </summary>
+    /// <param name="context"> Database context </param>
+    /// <returns>Repository</returns>
+    private static IApplicantsRepository GetRepository(DbContext context)
+        => new ApplicantsRepository(context, context);
+
+    /// <summary> Returns <see cref="IDateTimeProvider"/> </summary>
+    private static IDateTimeProvider GetDateTimeProvider() => new TestDateTimeProvider();
+
+    /// <summary>
+    /// Test for <see cref="IApplicantsRepository.FindByUserIdAsync"/> method that should throw exception for not existing entity
+    /// </summary>
+    [Fact]
+    private async Task FindByUserIdForNotExistingShouldThrow()
     {
-        private readonly static UserFaker userFaker = new();
-        private readonly static ApplicantFaker applicantFaker = new(GetDateTimeProvider());
-
-        /// <summary> Returns <see cref="IApplicantsRepository"/> </summary>
-        /// <param name="context"> Database context </param>
-        /// <returns>Repository</returns>
-        private static IApplicantsRepository GetRepository(DbContext context)
-            => new ApplicantsRepository(context, context);
-
-        /// <summary> Returns <see cref="IDateTimeProvider"/> </summary>
-        private static IDateTimeProvider GetDateTimeProvider() => new TestDateTimeProvider();
-
-        /// <summary>
-        /// Test for <see cref="IApplicantsRepository.FindByUserIdAsync"/> method that should throw exception for not existing entity
-        /// </summary>
-        [Fact]
-        private async Task FindByUserIdForNotExistingShouldThrow()
-        {
             await using var context = InMemoryContextProvider.GetDbContext();
             var repository = GetRepository(context);
             ApplicantNotFoundByUserIdException? result = null;
@@ -48,12 +48,12 @@ namespace VisaApi.Tests.Infrastructure.Database.Repositories
             result.Should().NotBeNull();
         }
 
-        /// <summary>
-        /// Test for <see cref="IApplicantsRepository.FindByUserIdAsync"/> method that should return existing entity
-        /// </summary>
-        [Fact]
-        private async Task FindByUserIdForExistingShouldReturnApplicant()
-        {
+    /// <summary>
+    /// Test for <see cref="IApplicantsRepository.FindByUserIdAsync"/> method that should return existing entity
+    /// </summary>
+    [Fact]
+    private async Task FindByUserIdForExistingShouldReturnApplicant()
+    {
             await using var context = InMemoryContextProvider.GetDbContext();
             var repository = GetRepository(context);
             var user = userFaker.Generate();
@@ -68,12 +68,12 @@ namespace VisaApi.Tests.Infrastructure.Database.Repositories
             result.Should().BeEquivalentTo(applicant);
         }
 
-        /// <summary>
-        /// Test for <see cref="IApplicantsRepository.GetApplicantIdByUserId"/> method that should throw exception for not existing entity
-        /// </summary>
-        [Fact]
-        private async Task GetApplicantIdByUserIdForNotExistingShouldThrow()
-        {
+    /// <summary>
+    /// Test for <see cref="IApplicantsRepository.GetApplicantIdByUserId"/> method that should throw exception for not existing entity
+    /// </summary>
+    [Fact]
+    private async Task GetApplicantIdByUserIdForNotExistingShouldThrow()
+    {
             await using var context = InMemoryContextProvider.GetDbContext();
             var repository = GetRepository(context);
             ApplicantNotFoundByUserIdException? result = null;
@@ -90,12 +90,12 @@ namespace VisaApi.Tests.Infrastructure.Database.Repositories
             result.Should().NotBeNull();
         }
 
-        /// <summary>
-        /// Test for <see cref="IApplicantsRepository.GetApplicantIdByUserId"/> method that should return existing entity's identifier
-        /// </summary>
-        [Fact]
-        private async Task GetApplicantIdByUserIdForExistingShouldReturnApplicant()
-        {
+    /// <summary>
+    /// Test for <see cref="IApplicantsRepository.GetApplicantIdByUserId"/> method that should return existing entity's identifier
+    /// </summary>
+    [Fact]
+    private async Task GetApplicantIdByUserIdForExistingShouldReturnApplicant()
+    {
             await using var context = InMemoryContextProvider.GetDbContext();
             var repository = GetRepository(context);
             var user = userFaker.Generate();
@@ -110,12 +110,12 @@ namespace VisaApi.Tests.Infrastructure.Database.Repositories
             result.Should().Be(applicant.Id);
         }
 
-        /// <summary>
-        /// Test for <see cref="IApplicantsRepository.IsApplicantNonResidentByUserId"/> method that should throw exception for not existing entity
-        /// </summary>
-        [Fact]
-        private async Task IsApplicantNonResidentByUserIdForNotExistingShouldThrow()
-        {
+    /// <summary>
+    /// Test for <see cref="IApplicantsRepository.IsApplicantNonResidentByUserId"/> method that should throw exception for not existing entity
+    /// </summary>
+    [Fact]
+    private async Task IsApplicantNonResidentByUserIdForNotExistingShouldThrow()
+    {
             await using var context = InMemoryContextProvider.GetDbContext();
             var repository = GetRepository(context);
             ApplicantNotFoundByUserIdException? result = null;
@@ -132,12 +132,12 @@ namespace VisaApi.Tests.Infrastructure.Database.Repositories
             result.Should().NotBeNull();
         }
 
-        /// <summary>
-        /// Test for <see cref="IApplicantsRepository.IsApplicantNonResidentByUserId"/> method that should return existing entity's IsNonResident property
-        /// </summary>
-        [Fact]
-        private async Task IsApplicantNonResidentByUserIdForExistingShouldReturnApplicant()
-        {
+    /// <summary>
+    /// Test for <see cref="IApplicantsRepository.IsApplicantNonResidentByUserId"/> method that should return existing entity's IsNonResident property
+    /// </summary>
+    [Fact]
+    private async Task IsApplicantNonResidentByUserIdForExistingShouldReturnApplicant()
+    {
             await using var context = InMemoryContextProvider.GetDbContext();
             var repository = GetRepository(context);
             var user = userFaker.Generate();
@@ -151,5 +151,4 @@ namespace VisaApi.Tests.Infrastructure.Database.Repositories
 
             result.Should().Be(applicant.IsNonResident);
         }
-    }
 }

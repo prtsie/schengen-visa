@@ -3,15 +3,15 @@ using Bogus;
 using Domains;
 using Domains.ApplicantDomain;
 
-namespace VisaApi.Fakers.Applicants
+namespace VisaApi.Fakers.Applicants;
+
+/// <summary>
+/// Generates applicants
+/// </summary>
+public sealed class ApplicantFaker : Faker<Applicant>
 {
-    /// <summary>
-    /// Generates applicants
-    /// </summary>
-    public sealed class ApplicantFaker : Faker<Applicant>
+    public ApplicantFaker(IDateTimeProvider dateTimeProvider)
     {
-        public ApplicantFaker(IDateTimeProvider dateTimeProvider)
-        {
             RuleFor(a => a.Citizenship, f => f.Address.Country());
 
             RuleFor(a => a.Gender, f => f.Random.Enum<Gender>());
@@ -62,5 +62,4 @@ namespace VisaApi.Fakers.Applicants
                     PhoneNum = f.Phone.PhoneNumber()
                 });
         }
-    }
 }

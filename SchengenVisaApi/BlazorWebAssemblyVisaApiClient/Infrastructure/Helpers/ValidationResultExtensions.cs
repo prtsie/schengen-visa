@@ -1,15 +1,15 @@
 ﻿using System.Text;
 using FluentValidation.Results;
 
-namespace BlazorWebAssemblyVisaApiClient.Infrastructure.Helpers
-{
-    public static class ValidationResultExtensions
-    {
-        public static string ToErrorsString(this ValidationResult validationResult)
-            => ErrorsToString(validationResult.Errors.Select(e => e.ErrorMessage));
+namespace BlazorWebAssemblyVisaApiClient.Infrastructure.Helpers;
 
-        private static string ErrorsToString(IEnumerable<string> errors)
-        {
+public static class ValidationResultExtensions
+{
+    public static string ToErrorsString(this ValidationResult validationResult)
+        => ErrorsToString(validationResult.Errors.Select(e => e.ErrorMessage));
+
+    private static string ErrorsToString(IEnumerable<string> errors)
+    {
             var stringBuilder = new StringBuilder();
             foreach (var error in errors)
             {
@@ -18,5 +18,4 @@ namespace BlazorWebAssemblyVisaApiClient.Infrastructure.Helpers
 
             return stringBuilder.ToString();
         }
-    }
 }

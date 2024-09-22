@@ -1,12 +1,12 @@
 ﻿using FluentValidation;
 using VisaApiClient;
 
-namespace BlazorWebAssemblyVisaApiClient.Validation.Auth
+namespace BlazorWebAssemblyVisaApiClient.Validation.Auth;
+
+public class ChangeUserAuthDataRequestValidator : AbstractValidator<ChangeUserAuthDataRequest>
 {
-    public class ChangeUserAuthDataRequestValidator : AbstractValidator<ChangeUserAuthDataRequest>
+    public ChangeUserAuthDataRequestValidator()
     {
-        public ChangeUserAuthDataRequestValidator()
-        {
             RuleFor(r => r.NewAuthData)
                 .NotEmpty();
 
@@ -17,5 +17,4 @@ namespace BlazorWebAssemblyVisaApiClient.Validation.Auth
                 .MaximumLength(ConfigurationConstraints.EmailLength)
                 .WithMessage($"Email address length must be less than {ConfigurationConstraints.EmailLength}");
         }
-    }
 }

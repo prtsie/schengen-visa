@@ -4,18 +4,18 @@ using Domains;
 using Domains.ApplicantDomain;
 using Domains.VisaApplicationDomain;
 
-namespace VisaApi.Fakers.VisaApplications
-{
-    /// <summary>
-    /// Generates visa applications
-    /// </summary>
-    public sealed class VisaApplicationFaker : Faker<VisaApplication>
-    {
-        private static ReentryPermitFaker reentryPermitFaker = null!;
-        private static PermissionToDestCountryFaker permissionToDestCountryFaker = null!;
+namespace VisaApi.Fakers.VisaApplications;
 
-        public VisaApplicationFaker(IDateTimeProvider dateTimeProvider)
-        {
+/// <summary>
+/// Generates visa applications
+/// </summary>
+public sealed class VisaApplicationFaker : Faker<VisaApplication>
+{
+    private static ReentryPermitFaker reentryPermitFaker = null!;
+    private static PermissionToDestCountryFaker permissionToDestCountryFaker = null!;
+
+    public VisaApplicationFaker(IDateTimeProvider dateTimeProvider)
+    {
             reentryPermitFaker = new(dateTimeProvider);
             permissionToDestCountryFaker = new(dateTimeProvider);
             var pastVisaFaker = new PastVisaFaker(dateTimeProvider);
@@ -44,8 +44,8 @@ namespace VisaApi.Fakers.VisaApplications
                 f => f.Random.Int(1, ConfigurationConstraints.MaxValidDays));
         }
 
-        public VisaApplication GenerateValid(Applicant applicant)
-        {
+    public VisaApplication GenerateValid(Applicant applicant)
+    {
             var result = Generate();
 
             result.ApplicantId = applicant.Id;
@@ -61,5 +61,4 @@ namespace VisaApi.Fakers.VisaApplications
 
             return result;
         }
-    }
 }

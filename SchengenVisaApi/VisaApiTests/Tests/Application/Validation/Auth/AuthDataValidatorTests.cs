@@ -7,19 +7,19 @@ using FluentValidation;
 using VisaApi.Fakers.Auth;
 using Xunit;
 
-namespace VisaApi.Tests.Application.Validation.Auth
-{
-    public class AuthDataValidatorTests
-    {
-        private readonly static IValidator<AuthData> validator = new AuthDataValidator();
-        private readonly static AuthDataFaker faker = new();
+namespace VisaApi.Tests.Application.Validation.Auth;
 
-        /// <summary>
-        /// Test for <see cref="AuthData"/> validator that should return validation error for invalid email
-        /// </summary>
-        [Fact]
-        private async Task ValidateForInvalidEmailShouldReturnError()
-        {
+public class AuthDataValidatorTests
+{
+    private readonly static IValidator<AuthData> validator = new AuthDataValidator();
+    private readonly static AuthDataFaker faker = new();
+
+    /// <summary>
+    /// Test for <see cref="AuthData"/> validator that should return validation error for invalid email
+    /// </summary>
+    [Fact]
+    private async Task ValidateForInvalidEmailShouldReturnError()
+    {
             var authData = faker.Generate();
             authData.Email = "alsdas'dsa";
 
@@ -30,12 +30,12 @@ namespace VisaApi.Tests.Application.Validation.Auth
                 .And.Contain(error => error.PropertyName == nameof(authData.Email));
         }
 
-        /// <summary>
-        /// Test for <see cref="AuthData"/> validator that should return validation error for too long email
-        /// </summary>
-        [Fact]
-        private async Task ValidateForLongEmailShouldReturnError()
-        {
+    /// <summary>
+    /// Test for <see cref="AuthData"/> validator that should return validation error for too long email
+    /// </summary>
+    [Fact]
+    private async Task ValidateForLongEmailShouldReturnError()
+    {
             var authData = faker.Generate();
             var stringBuilder = new StringBuilder();
             stringBuilder.Append('d', ConfigurationConstraints.EmailLength);
@@ -49,12 +49,12 @@ namespace VisaApi.Tests.Application.Validation.Auth
                 .And.Contain(error => error.PropertyName == nameof(authData.Email));
         }
 
-        /// <summary>
-        /// Test for <see cref="AuthData"/> validator that should return no errors for valid email
-        /// </summary>
-        [Fact]
-        private async Task ValidateForValidEmailShouldReturnNoError()
-        {
+    /// <summary>
+    /// Test for <see cref="AuthData"/> validator that should return no errors for valid email
+    /// </summary>
+    [Fact]
+    private async Task ValidateForValidEmailShouldReturnNoError()
+    {
             var authData = faker.Generate();
 
             var result = await validator.ValidateAsync(authData);
@@ -63,12 +63,12 @@ namespace VisaApi.Tests.Application.Validation.Auth
                 .Should().BeEmpty();
         }
 
-        /// <summary>
-        /// Test for <see cref="AuthData"/> validator that should return validation error for empty password
-        /// </summary>
-        [Fact]
-        private async Task ValidateForEmptyPasswordShouldReturnError()
-        {
+    /// <summary>
+    /// Test for <see cref="AuthData"/> validator that should return validation error for empty password
+    /// </summary>
+    [Fact]
+    private async Task ValidateForEmptyPasswordShouldReturnError()
+    {
             var authData = faker.Generate();
             authData.Password = string.Empty;
 
@@ -79,12 +79,12 @@ namespace VisaApi.Tests.Application.Validation.Auth
                 .And.Contain(error => error.PropertyName == nameof(authData.Password));
         }
 
-        /// <summary>
-        /// Test for <see cref="AuthData"/> validator that should return validation error for too long password
-        /// </summary>
-        [Fact]
-        private async Task ValidateForLongPasswordShouldReturnError()
-        {
+    /// <summary>
+    /// Test for <see cref="AuthData"/> validator that should return validation error for too long password
+    /// </summary>
+    [Fact]
+    private async Task ValidateForLongPasswordShouldReturnError()
+    {
             var authData = faker.Generate();
             var stringBuilder = new StringBuilder();
             stringBuilder.Append('d', ConfigurationConstraints.PasswordLength + 1);
@@ -97,12 +97,12 @@ namespace VisaApi.Tests.Application.Validation.Auth
                 .And.Contain(error => error.PropertyName == nameof(authData.Password));
         }
 
-        /// <summary>
-        /// Test for <see cref="AuthData"/> validator that should return no errors for valid password
-        /// </summary>
-        [Fact]
-        private async Task ValidateForValidPasswordShouldReturnNoError()
-        {
+    /// <summary>
+    /// Test for <see cref="AuthData"/> validator that should return no errors for valid password
+    /// </summary>
+    [Fact]
+    private async Task ValidateForValidPasswordShouldReturnNoError()
+    {
             var authData = faker.Generate();
 
             var result = await validator.ValidateAsync(authData);
@@ -110,5 +110,4 @@ namespace VisaApi.Tests.Application.Validation.Auth
             result.Errors.Where(error => error.PropertyName == nameof(authData.Password))
                 .Should().BeEmpty();
         }
-    }
 }

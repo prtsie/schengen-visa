@@ -11,30 +11,30 @@ using VisaApi.Fakers.VisaApplications;
 using VisaApi.Services;
 using Xunit;
 
-namespace VisaApi.Tests.Infrastructure.Database.Repositories
+namespace VisaApi.Tests.Infrastructure.Database.Repositories;
+
+[Collection(Collections.ContextUsingTestCollection)]
+public class VisaApplicationsRepositoryTests
 {
-    [Collection(Collections.ContextUsingTestCollection)]
-    public class VisaApplicationsRepositoryTests
+    private readonly static UserFaker userFaker = new();
+    private readonly static ApplicantFaker applicantFaker = new(GetDateTimeProvider());
+    private readonly static VisaApplicationFaker applicationFaker = new(GetDateTimeProvider());
+
+    /// <summary> Returns <see cref="IVisaApplicationsRepository"/> </summary>
+    /// <param name="context"> Database context </param>
+    /// <returns>Repository</returns>
+    private static IVisaApplicationsRepository GetRepository(DbContext context)
+        => new VisaApplicationsRepository(context, context);
+
+    /// <summary> Returns <see cref="IDateTimeProvider"/> </summary>
+    private static IDateTimeProvider GetDateTimeProvider() => new TestDateTimeProvider();
+
+    /// <summary>
+    /// Test for <see cref="IVisaApplicationsRepository.GetOfApplicantAsync"/> method that should return empty if no applications added
+    /// </summary>
+    [Fact]
+    private async Task GetOfApplicantForEmptyShouldReturnEmpty()
     {
-        private readonly static UserFaker userFaker = new();
-        private readonly static ApplicantFaker applicantFaker = new(GetDateTimeProvider());
-        private readonly static VisaApplicationFaker applicationFaker = new(GetDateTimeProvider());
-
-        /// <summary> Returns <see cref="IVisaApplicationsRepository"/> </summary>
-        /// <param name="context"> Database context </param>
-        /// <returns>Repository</returns>
-        private static IVisaApplicationsRepository GetRepository(DbContext context)
-            => new VisaApplicationsRepository(context, context);
-
-        /// <summary> Returns <see cref="IDateTimeProvider"/> </summary>
-        private static IDateTimeProvider GetDateTimeProvider() => new TestDateTimeProvider();
-
-        /// <summary>
-        /// Test for <see cref="IVisaApplicationsRepository.GetOfApplicantAsync"/> method that should return empty if no applications added
-        /// </summary>
-        [Fact]
-        private async Task GetOfApplicantForEmptyShouldReturnEmpty()
-        {
             await using var context = InMemoryContextProvider.GetDbContext();
             var repository = GetRepository(context);
             var user = userFaker.Generate();
@@ -49,12 +49,12 @@ namespace VisaApi.Tests.Infrastructure.Database.Repositories
             result.Should().BeEmpty();
         }
 
-        /// <summary>
-        /// Test for <see cref="IVisaApplicationsRepository.GetOfApplicantAsync"/> method that should return added entities
-        /// </summary>
-        [Fact]
-        private async Task GetOfApplicantForExistingShouldReturnEntities()
-        {
+    /// <summary>
+    /// Test for <see cref="IVisaApplicationsRepository.GetOfApplicantAsync"/> method that should return added entities
+    /// </summary>
+    [Fact]
+    private async Task GetOfApplicantForExistingShouldReturnEntities()
+    {
             await using var context = InMemoryContextProvider.GetDbContext();
             var repository = GetRepository(context);
             var user = userFaker.Generate();
@@ -77,12 +77,12 @@ namespace VisaApi.Tests.Infrastructure.Database.Repositories
             result.Should().Contain(applications).And.HaveSameCount(applications);
         }
 
-        /// <summary>
-        /// Test for <see cref="IVisaApplicationsRepository.GetByApplicantAndApplicationIdAsync"/> method that should throw exception for not existing entities
-        /// </summary>
-        [Fact]
-        private async Task GetApplicantIdByUserIdForNotExistingShouldThrow()
-        {
+    /// <summary>
+    /// Test for <see cref="IVisaApplicationsRepository.GetByApplicantAndApplicationIdAsync"/> method that should throw exception for not existing entities
+    /// </summary>
+    [Fact]
+    private async Task GetApplicantIdByUserIdForNotExistingShouldThrow()
+    {
             await using var context = InMemoryContextProvider.GetDbContext();
             var repository = GetRepository(context);
             ApplicationNotFoundByApplicantAndApplicationIdException? result = null;
@@ -101,12 +101,12 @@ namespace VisaApi.Tests.Infrastructure.Database.Repositories
             result.Should().NotBeNull();
         }
 
-        /// <summary>
-        /// Test for <see cref="IVisaApplicationsRepository.GetByApplicantAndApplicationIdAsync"/> method that should throw exception for not existing applicant
-        /// </summary>
-        [Fact]
-        private async Task GetApplicantIdByUserIdForNotExistingApplicantShouldThrow()
-        {
+    /// <summary>
+    /// Test for <see cref="IVisaApplicationsRepository.GetByApplicantAndApplicationIdAsync"/> method that should throw exception for not existing applicant
+    /// </summary>
+    [Fact]
+    private async Task GetApplicantIdByUserIdForNotExistingApplicantShouldThrow()
+    {
             await using var context = InMemoryContextProvider.GetDbContext();
             var repository = GetRepository(context);
             var user = userFaker.Generate();
@@ -132,12 +132,12 @@ namespace VisaApi.Tests.Infrastructure.Database.Repositories
             result.Should().NotBeNull();
         }
 
-        /// <summary>
-        /// Test for <see cref="IVisaApplicationsRepository.GetByApplicantAndApplicationIdAsync"/> method that should throw exception for not existing application
-        /// </summary>
-        [Fact]
-        private async Task GetApplicantIdByUserIdForNotExistingApplicationShouldThrow()
-        {
+    /// <summary>
+    /// Test for <see cref="IVisaApplicationsRepository.GetByApplicantAndApplicationIdAsync"/> method that should throw exception for not existing application
+    /// </summary>
+    [Fact]
+    private async Task GetApplicantIdByUserIdForNotExistingApplicationShouldThrow()
+    {
             await using var context = InMemoryContextProvider.GetDbContext();
             var repository = GetRepository(context);
             var user = userFaker.Generate();
@@ -161,13 +161,13 @@ namespace VisaApi.Tests.Infrastructure.Database.Repositories
             result.Should().NotBeNull();
         }
 
-        /// <summary>
-        /// Test for <see cref="IVisaApplicationsRepository.GetByApplicantAndApplicationIdAsync"/> method
-        /// that should throw exception for not accessible application
-        /// </summary>
-        [Fact]
-        private async Task GetApplicantIdByUserIdForNotAccessibleApplicationShouldThrow()
-        {
+    /// <summary>
+    /// Test for <see cref="IVisaApplicationsRepository.GetByApplicantAndApplicationIdAsync"/> method
+    /// that should throw exception for not accessible application
+    /// </summary>
+    [Fact]
+    private async Task GetApplicantIdByUserIdForNotAccessibleApplicationShouldThrow()
+    {
             await using var context = InMemoryContextProvider.GetDbContext();
             var repository = GetRepository(context);
             var user = userFaker.Generate();
@@ -198,13 +198,13 @@ namespace VisaApi.Tests.Infrastructure.Database.Repositories
             result.Should().NotBeNull();
         }
 
-        /// <summary>
-        /// Test for <see cref="IVisaApplicationsRepository.GetByApplicantAndApplicationIdAsync"/> method
-        /// that should return application for valid identifiers
-        /// </summary>
-        [Fact]
-        private async Task GetApplicantIdByUserIdForValidIdsShouldReturnApplication()
-        {
+    /// <summary>
+    /// Test for <see cref="IVisaApplicationsRepository.GetByApplicantAndApplicationIdAsync"/> method
+    /// that should return application for valid identifiers
+    /// </summary>
+    [Fact]
+    private async Task GetApplicantIdByUserIdForValidIdsShouldReturnApplication()
+    {
             await using var context = InMemoryContextProvider.GetDbContext();
             var repository = GetRepository(context);
             var user = userFaker.Generate();
@@ -222,12 +222,12 @@ namespace VisaApi.Tests.Infrastructure.Database.Repositories
             result.Should().Be(application);
         }
 
-        /// <summary>
-        /// Test for <see cref="IVisaApplicationsRepository.GetPendingApplicationsAsync"/> method that should return empty from empty db
-        /// </summary>
-        [Fact]
-        private async Task GetPendingApplicationsForEmptyShouldReturnEmpty()
-        {
+    /// <summary>
+    /// Test for <see cref="IVisaApplicationsRepository.GetPendingApplicationsAsync"/> method that should return empty from empty db
+    /// </summary>
+    [Fact]
+    private async Task GetPendingApplicationsForEmptyShouldReturnEmpty()
+    {
             await using var context = InMemoryContextProvider.GetDbContext();
             var repository = GetRepository(context);
 
@@ -236,12 +236,12 @@ namespace VisaApi.Tests.Infrastructure.Database.Repositories
             result.Should().BeEmpty();
         }
 
-        /// <summary>
-        /// Test for <see cref="IVisaApplicationsRepository.GetPendingApplicationsAsync"/> method that should return pending applications from not empty db
-        /// </summary>
-        [Fact]
-        private async Task GetPendingApplicationsForExistingShouldReturnExistingPending()
-        {
+    /// <summary>
+    /// Test for <see cref="IVisaApplicationsRepository.GetPendingApplicationsAsync"/> method that should return pending applications from not empty db
+    /// </summary>
+    [Fact]
+    private async Task GetPendingApplicationsForExistingShouldReturnExistingPending()
+    {
             await using var context = InMemoryContextProvider.GetDbContext();
             var repository = GetRepository(context);
             var user = userFaker.Generate();
@@ -262,5 +262,4 @@ namespace VisaApi.Tests.Infrastructure.Database.Repositories
 
             result.Should().Contain(applicationPending).And.HaveCount(1);
         }
-    }
 }
