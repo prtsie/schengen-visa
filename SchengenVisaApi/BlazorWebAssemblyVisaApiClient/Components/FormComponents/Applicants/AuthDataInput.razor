@@ -12,7 +12,7 @@
     <div >
         <label >
             Password:<br/>
-            <InputText class="rounded" @bind-Value="AuthData.Password"/>
+            <InputText type="password" class="rounded" @bind-Value="AuthData.Password"/>
         </label><br/>
         <ValidationMessage For="() => AuthData.Password"></ValidationMessage>
     </div>

@@ -4,6 +4,8 @@
 @using BlazorWebAssemblyVisaApiClient.Components
 @using BlazorWebAssemblyVisaApiClient.Infrastructure.Helpers
 @using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvider
+@using BlazorWebAssemblyVisaApiClient.Validation.Applicants.Models
+@using BlazorWebAssemblyVisaApiClient.Validation.VisaApplications.Models
 @using VisaApiClient
 @inherits BlazorWebAssemblyVisaApiClient.Components.Base.VisaClientComponentBase
 
@@ -42,9 +44,9 @@
             Gender:<br/>
             <em>@application.Applicant.Gender.GetDisplayName()</em>
         </td>
-        <td >
+        <td colspan="2">
             Marital status:<br/>
-            <em>@application.Applicant.MaritalStatus.GetDisplayName()</em>
+            <em>@(((MaritalStatusModel)application.Applicant.MaritalStatus).GetDisplayName())</em>
         </td>
     </tr>
     <tr>
@@ -111,7 +113,7 @@
         </td>
         <td >
             Visa category:<br/>
-            <em>@application.VisaCategory</em>
+            <em>@(((VisaCategoryModel)application.VisaCategory).GetDisplayName())</em>
         </td>
         <td >
             Visa:<br/>

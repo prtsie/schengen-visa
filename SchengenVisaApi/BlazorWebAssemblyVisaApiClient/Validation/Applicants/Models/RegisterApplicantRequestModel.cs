@@ -45,7 +45,7 @@ public class RegisterApplicantRequestModel
 
     [Required(AllowEmptyStrings = true)]
     [JsonConverter(typeof(StringEnumConverter))]
-    public MaritalStatus MaritalStatus { get; set; }
+    public MaritalStatusModel MaritalStatus { get; set; }
 
     [Required]
     [ValidateComplexType]

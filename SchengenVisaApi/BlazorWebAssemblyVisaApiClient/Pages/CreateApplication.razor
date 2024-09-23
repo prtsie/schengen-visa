@@ -2,7 +2,6 @@
 @using System.Net
 @using AutoMapper
 @using BlazorWebAssemblyVisaApiClient.Validation.VisaApplications.Models
-@using BlazorWebAssemblyVisaApiClient.Components.FormComponents.Applicants
 @using VisaApiClient
 @using BlazorWebAssemblyVisaApiClient.Components
 @using BlazorWebAssemblyVisaApiClient.Components.FormComponents.VisaApplications
@@ -12,6 +11,7 @@
 @using BlazorWebAssemblyVisaApiClient.Validation
 @using FluentValidation
 @using Newtonsoft.Json.Linq
+@using BlazorWebAssemblyVisaApiClient.Components.FormComponents
 @inherits BlazorWebAssemblyVisaApiClient.Components.Base.VisaClientComponentBase
 
 <PageTitle>New Application</PageTitle>
@@ -163,7 +163,7 @@
             <Status @ref="pastVisitStatus"/>
         </div>
 
-        @if (requestModel.VisaCategory is VisaCategory.Transit)
+        @if (requestModel.VisaCategory is VisaCategoryModel.Transit)
         {
             requestModel.PermissionToDestCountry ??= NewPermissionToDestCountry();
             <div class="form-block">
