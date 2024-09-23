@@ -14,7 +14,7 @@ public class VisaApplicationCreateRequestModel
     public string DestinationCountry { get; set; } = default!;
 
     [Required]
-    public VisaCategory VisaCategory { get; set; }
+    public VisaCategoryModel VisaCategory { get; set; }
 
     [Required]
     public bool IsForGroup { get; set; }

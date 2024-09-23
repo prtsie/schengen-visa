@@ -18,7 +18,7 @@ public class VisaApplicationCreateRequestValidator : AbstractValidator<VisaAppli
             .NotEmpty()
             .WithMessage("For transit you must provide permission to destination country")
             .SetValidator(permissionToDestCountryModelValidator)
-            .When(r => r.VisaCategory is VisaCategory.Transit);
+            .When(r => r.VisaCategory is VisaCategoryModel.Transit);
 
         RuleFor(r => r.ReentryPermit)
             .NotEmpty()

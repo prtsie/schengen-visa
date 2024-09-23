@@ -19,7 +19,7 @@
 
         <label>
             Password:<br/>
-            <InputText class="rounded" @bind-Value="requestModel.AuthData.Password"/>
+            <InputText type="password" class="rounded" @bind-Value="requestModel.AuthData.Password"/>
             <ValidationMessage For="() => requestModel.AuthData.Password"/>
         </label><br/>
         <p/>

@@ -2,6 +2,7 @@
 @using BlazorWebAssemblyVisaApiClient.Common.Exceptions
 @using BlazorWebAssemblyVisaApiClient.Infrastructure.Helpers
 @using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvider
+@using BlazorWebAssemblyVisaApiClient.Validation.VisaApplications.Models
 @using VisaApiClient
 @inherits BlazorWebAssemblyVisaApiClient.Components.Base.VisaClientComponentBase
 
@@ -33,7 +34,7 @@
 
         <tr class="@rowClass">
             <td>@application.DestinationCountry</td>
-            <td>@application.VisaCategory.GetDisplayName()</td>
+            <td>@(((VisaCategoryModel)application.VisaCategory).GetDisplayName())</td>
             <td>@application.RequestDate.ToString("d")</td>
             <td>@application.ValidDaysRequested</td>
             <td>@application.Status.GetDisplayName()</td>
