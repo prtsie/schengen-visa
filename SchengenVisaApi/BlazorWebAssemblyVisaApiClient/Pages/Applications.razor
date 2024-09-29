@@ -40,12 +40,17 @@
             <td>@application.Status.GetDisplayName()</td>
             <td>
                 <NavLink href="@($"/applications/{application.Id}")">
-                    <button class="btn-outline-primary">See</button>
+                    <button class="btn-primary">See</button>
                 </NavLink>
-                @if (currentRole == Constants.ApplicantRole && application.Status is ApplicationStatus.Pending)
+                @if (currentRole == Constants.ApplicantRole)
                 {
                     <span> | </span>
-                    <input type="button" class="border-danger" @onclick="() => CloseApplication(application)" value="Close"/>
+                    <input type="button" class="btn-outline-primary" @onclick="() => DownloadApplication(application)" value="Download"/>
+                    if (application.Status is ApplicationStatus.Pending)
+                    {
+                        <span> | </span>
+                        <input type="button" class="border-danger" @onclick="() => CloseApplication(application)" value="Close"/>
+                    }
                 }
             </td>
         </tr>
@@ -53,11 +58,27 @@
     </tbody>
 </table >
 
+<script>
+    window.downloadFileFromStream = async (contentStreamReference) => {
+        const arrayBuffer = await contentStreamReference.arrayBuffer();
+        const blob = new Blob([arrayBuffer]);
+        const url = URL.createObjectURL(blob);
+        const anchorElement = document.createElement('a');
+        anchorElement.href = url;
+        anchorElement.download = 'Application.xlsx';
+        anchorElement.click();
+        anchorElement.remove();
+        URL.revokeObjectURL(url);
+    }
+</script>
+
 @code {
     private string currentRole = null!;
     private List<VisaApplicationPreview> applications = [];
 
     [Inject] private IUserDataProvider UserDataProvider { get; set; } = null!;
+
+    [Inject] private IJSRuntime JavaScriptInterop { get; set; } = null!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -69,6 +90,7 @@
         {
             ErrorHandler.Handle(e);
         }
+
         await Fetch();
     }
 
@@ -96,6 +118,21 @@
             await Client.CloseApplicationAsync(application.Id);
             application.Status = ApplicationStatus.Closed;
             StateHasChanged();
+        }
+        catch (Exception e)
+        {
+            ErrorHandler.Handle(e);
+        }
+    }
+
+    private async Task DownloadApplication(VisaApplicationPreview application)
+    {
+        try
+        {
+            var response = await Client.DownloadApplicationForApplicantAsync(application.Id);
+            using var streamRef = new DotNetStreamReference(stream: response.Stream);
+
+            await JavaScriptInterop.InvokeVoidAsync("downloadFileFromStream", streamRef);
         }
         catch (Exception e)
         {

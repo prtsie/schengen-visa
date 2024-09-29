@@ -8,6 +8,7 @@ using Infrastructure.Database.Applicants.Repositories;
 using Infrastructure.Database.Generic;
 using Infrastructure.Database.Users.Repositories;
 using Infrastructure.Database.VisaApplications.Repositories;
+using Infrastructure.EntityToExcelTemplateWriter;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,6 +38,7 @@ public static class DependencyInjection
         services.AddScoped<IUsersRepository, UsersRepository>();
 
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+        services.AddSingleton<IEntityWriter, ExcelWriter>();
 
         services.AddHttpContextAccessor();
         services.AddScoped<IUserIdProvider, UserIdProvider>();

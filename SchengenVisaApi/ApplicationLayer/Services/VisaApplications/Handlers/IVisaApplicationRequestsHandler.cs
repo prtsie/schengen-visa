@@ -23,5 +23,9 @@ public interface IVisaApplicationRequestsHandler
     /// Sets application status to closed
     Task HandleCloseRequestAsync(Guid applicationId, CancellationToken cancellationToken);
 
+    /// Sets application status to approved or rejected
     Task SetApplicationStatusFromAuthorityAsync(Guid applicationId, AuthorityRequestStatuses status, CancellationToken cancellationToken);
+
+    /// Returns stream with file with formatted application data to download
+    Task<Stream> ApplicationToStreamAsync(Guid applicationId, CancellationToken cancellationToken);
 }
