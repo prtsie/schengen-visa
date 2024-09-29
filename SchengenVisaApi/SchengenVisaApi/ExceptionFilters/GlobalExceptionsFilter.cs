@@ -61,6 +61,8 @@ public class GlobalExceptionsFilter : IAsyncExceptionFilter
                 problemDetails.Status = StatusCodes.Status500InternalServerError;
                 problemDetails.Title = "An unhandled error occured";
                 problemDetails.Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.6.1";
+
+                Console.WriteLine($"Error!!!: {exception.Message}");
                 break;
         }
 

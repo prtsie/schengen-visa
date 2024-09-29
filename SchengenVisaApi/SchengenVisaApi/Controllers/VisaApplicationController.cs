@@ -119,4 +119,20 @@ public class VisaApplicationController(
         await visaApplicationRequestsHandler.SetApplicationStatusFromAuthorityAsync(applicationId, status, cancellationToken);
         return Ok();
     }
+
+    /// <summary> Returns application </summary>
+    /// <remarks> Accessible only for applicant </remarks>
+    [HttpGet("/forApplicant/{applicationId:guid}/download")]
+    [Produces("application/octet-stream")]
+    [ProducesResponseType<object>(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Authorize(policy: PolicyConstants.ApplicantPolicy)]
+    public async Task<IActionResult> DownloadApplicationForApplicant(Guid applicationId, CancellationToken cancellationToken)
+    {
+        var result = await visaApplicationRequestsHandler.ApplicationToStreamAsync(applicationId, cancellationToken);
+        result.Position = 0;
+        return File(result, "application/octet-stream", "Application.xlsx");
+    }
 }

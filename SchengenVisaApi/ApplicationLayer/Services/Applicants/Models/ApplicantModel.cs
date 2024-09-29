@@ -61,4 +61,6 @@ public class ApplicantModel
     /// <inheritdoc cref="Applicant.IsNonResident" />
     [Required]
     public bool IsNonResident { get; set; }
+
+    public override string ToString() => Name.ToString();
 }

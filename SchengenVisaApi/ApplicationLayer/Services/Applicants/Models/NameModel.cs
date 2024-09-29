@@ -16,4 +16,6 @@ public class NameModel
 
     [MaxLength(ConfigurationConstraints.NameLength)]
     public string? Patronymic { get; set; }
+
+    public override string ToString() => $"{FirstName} {Surname} {Patronymic}".TrimEnd();
 }

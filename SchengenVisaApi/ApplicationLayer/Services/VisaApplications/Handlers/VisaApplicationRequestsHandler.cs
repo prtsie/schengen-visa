@@ -17,7 +17,8 @@ public class VisaApplicationRequestsHandler(
     IUnitOfWork unitOfWork,
     IMapper mapper,
     IDateTimeProvider dateTimeProvider,
-    IUserIdProvider userIdProvider) : IVisaApplicationRequestsHandler
+    IUserIdProvider userIdProvider,
+    IEntityWriter entityWriter) : IVisaApplicationRequestsHandler
 {
     async Task<List<VisaApplicationPreview>> IVisaApplicationRequestsHandler.GetPendingAsync(CancellationToken cancellationToken)
     {
@@ -34,7 +35,8 @@ public class VisaApplicationRequestsHandler(
         return mapper.Map<List<VisaApplicationPreview>>(visaApplications);
     }
 
-    async Task<VisaApplicationModel> IVisaApplicationRequestsHandler.GetApplicationForApplicantAsync(Guid id, CancellationToken cancellationToken)
+    /// <summary> <inheritdoc cref="IVisaApplicationRequestsHandler.GetApplicationForApplicantAsync"/> </summary>
+    public async Task<VisaApplicationModel> GetApplicationForApplicantAsync(Guid id, CancellationToken cancellationToken)
     {
         var applicant = await applicants.FindByUserIdAsync(userIdProvider.GetUserId(), cancellationToken);
         var application = await applications.GetByApplicantAndApplicationIdAsync(applicant.Id, id, cancellationToken);
@@ -103,5 +105,11 @@ public class VisaApplicationRequestsHandler(
         await applications.UpdateAsync(application, cancellationToken);
 
         await unitOfWork.SaveAsync(cancellationToken);
+    }
+
+    async Task<Stream> IVisaApplicationRequestsHandler.ApplicationToStreamAsync(Guid applicationId, CancellationToken cancellationToken)
+    {
+        var application = await GetApplicationForApplicantAsync(applicationId, cancellationToken);
+        return await entityWriter.WriteEntityToStream(application, cancellationToken);
     }
 }
