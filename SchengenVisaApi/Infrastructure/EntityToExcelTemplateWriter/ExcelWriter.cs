@@ -3,7 +3,6 @@ using System.Text;
 using ApplicationLayer.Services.VisaApplications.NeededServices;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
-using Microsoft.Extensions.Primitives;
 
 namespace Infrastructure.EntityToExcelTemplateWriter
 {

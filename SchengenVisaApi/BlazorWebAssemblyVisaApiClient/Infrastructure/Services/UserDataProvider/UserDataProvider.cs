@@ -5,7 +5,7 @@ using VisaApiClient;
 
 namespace BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvider;
 
-public class UserDataProvider(Client client) : IUserDataProvider
+public class UserDataProvider(IClient client) : IUserDataProvider
 {
     private readonly static JwtSecurityTokenHandler tokenHandler = new();
 

@@ -5,5 +5,5 @@
 {
     [CascadingParameter] protected GlobalErrorHandler ErrorHandler { get; set; } = null!;
 
-    [Inject] protected Client Client { get; set; } = null!;
+    [Inject] protected IClient Client { get; set; } = null!;
 }

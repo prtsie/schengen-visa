@@ -11,13 +11,13 @@
   },
   "codeGenerators": {
     "openApiToCSharpClient": {
-      "clientBaseClass": "ClientBase",
+      "clientBaseClass": "",
       "configurationClass": null,
       "generateClientClasses": true,
       "suppressClientClassesOutput": false,
-      "generateClientInterfaces": false,
+      "generateClientInterfaces": true,
       "suppressClientInterfacesOutput": false,
-      "clientBaseInterface": null,
+      "clientBaseInterface": "IClientBase",
       "injectHttpClient": true,
       "disposeHttpClient": true,
       "protectedMethods": [],

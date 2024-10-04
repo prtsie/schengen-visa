@@ -25,7 +25,309 @@ namespace VisaApiClient
     using System = global::System;
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Client : ClientBase
+    public partial interface IClient : IClientBase
+    {
+        /// <summary>
+        /// Adds applicant with user account
+        /// </summary>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task RegisterAsync(RegisterApplicantRequest? body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Adds applicant with user account
+        /// </summary>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task RegisterAsync(RegisterApplicantRequest? body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Adds approving authority with user account
+        /// </summary>
+        /// <remarks>
+        /// Accessible only for admins
+        /// </remarks>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task RegisterAuthorityAsync(RegisterRequest? body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Adds approving authority with user account
+        /// </summary>
+        /// <remarks>
+        /// Accessible only for admins
+        /// </remarks>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task RegisterAuthorityAsync(RegisterRequest? body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Returns list of authority accounts
+        /// </summary>
+        /// <remarks>
+        /// Accessible only for admins
+        /// </remarks>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<UserModel>> GetAuthorityAccountsAsync();
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Returns list of authority accounts
+        /// </summary>
+        /// <remarks>
+        /// Accessible only for admins
+        /// </remarks>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<UserModel>> GetAuthorityAccountsAsync(System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Changes authority's account authentication data
+        /// </summary>
+        /// <remarks>
+        /// Accessible only for admins
+        /// </remarks>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task ChangeAuthorityAuthDataAsync(ChangeUserAuthDataRequest? body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Changes authority's account authentication data
+        /// </summary>
+        /// <remarks>
+        /// Accessible only for admins
+        /// </remarks>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task ChangeAuthorityAuthDataAsync(ChangeUserAuthDataRequest? body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Returns JWT-token for authentication
+        /// </summary>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<AuthToken> LoginAsync(string? email, string? password);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Returns JWT-token for authentication
+        /// </summary>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<AuthToken> LoginAsync(string? email, string? password, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Removes authority's account
+        /// </summary>
+        /// <remarks>
+        /// Accessible only for admins
+        /// </remarks>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task RemoveAuthorityAccountAsync(System.Guid authorityAccountId);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Removes authority's account
+        /// </summary>
+        /// <remarks>
+        /// Accessible only for admins
+        /// </remarks>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task RemoveAuthorityAccountAsync(System.Guid authorityAccountId, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Returns applicant info
+        /// </summary>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<ApplicantModel> GetApplicantAsync();
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Returns applicant info
+        /// </summary>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<ApplicantModel> GetApplicantAsync(System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Returns pending applications
+        /// </summary>
+        /// <remarks>
+        /// Accessible only for approving authorities
+        /// </remarks>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<VisaApplicationPreview>> GetPendingAsync();
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Returns pending applications
+        /// </summary>
+        /// <remarks>
+        /// Accessible only for approving authorities
+        /// </remarks>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<VisaApplicationPreview>> GetPendingAsync(System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Returns application
+        /// </summary>
+        /// <remarks>
+        /// Accessible only for approving authorities
+        /// </remarks>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<VisaApplicationModel> GetApplicationForAuthorityAsync(System.Guid applicationId);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Returns application
+        /// </summary>
+        /// <remarks>
+        /// Accessible only for approving authorities
+        /// </remarks>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<VisaApplicationModel> GetApplicationForAuthorityAsync(System.Guid applicationId, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Returns application
+        /// </summary>
+        /// <remarks>
+        /// Accessible only for applicant
+        /// </remarks>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<VisaApplicationModel> GetApplicationForApplicantAsync(System.Guid applicationId);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Returns application
+        /// </summary>
+        /// <remarks>
+        /// Accessible only for applicant
+        /// </remarks>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<VisaApplicationModel> GetApplicationForApplicantAsync(System.Guid applicationId, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Returns all applications of one applicant
+        /// </summary>
+        /// <remarks>
+        /// Returns applications of authorized applicant
+        /// </remarks>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<VisaApplicationPreview>> GetApplicationsForApplicantAsync();
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Returns all applications of one applicant
+        /// </summary>
+        /// <remarks>
+        /// Returns applications of authorized applicant
+        /// </remarks>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<VisaApplicationPreview>> GetApplicationsForApplicantAsync(System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Adds new application
+        /// </summary>
+        /// <remarks>
+        /// Adds application for authorized applicant
+        /// </remarks>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task CreateApplicationAsync(VisaApplicationCreateRequest? body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Adds new application
+        /// </summary>
+        /// <remarks>
+        /// Adds application for authorized applicant
+        /// </remarks>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task CreateApplicationAsync(VisaApplicationCreateRequest? body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Sets application status to closed
+        /// </summary>
+        /// <remarks>
+        /// Accessible only for applicant
+        /// </remarks>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task CloseApplicationAsync(System.Guid applicationId);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Sets application status to closed
+        /// </summary>
+        /// <remarks>
+        /// Accessible only for applicant
+        /// </remarks>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task CloseApplicationAsync(System.Guid applicationId, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Approve or reject applications
+        /// </summary>
+        /// <remarks>
+        /// Accessible only for authorities
+        /// </remarks>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task SetStatusFromAuthorityAsync(System.Guid applicationId, AuthorityRequestStatuses? status);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Approve or reject applications
+        /// </summary>
+        /// <remarks>
+        /// Accessible only for authorities
+        /// </remarks>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task SetStatusFromAuthorityAsync(System.Guid applicationId, AuthorityRequestStatuses? status, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Returns application
+        /// </summary>
+        /// <remarks>
+        /// Accessible only for applicant
+        /// </remarks>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<FileResponse> DownloadApplicationForApplicantAsync(System.Guid applicationId);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Returns application
+        /// </summary>
+        /// <remarks>
+        /// Accessible only for applicant
+        /// </remarks>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<FileResponse> DownloadApplicationForApplicantAsync(System.Guid applicationId, System.Threading.CancellationToken cancellationToken);
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Client : IClient
     {
         #pragma warning disable 8618
         private string _baseUrl;
