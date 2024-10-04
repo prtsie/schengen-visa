@@ -28,7 +28,7 @@ public static class Program
         const string baseAddress = "https://localhost:44370";
         builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new(baseAddress) });
         builder.Services.AddBlazorBootstrap();
-        builder.Services.AddScoped<Client>(sp => new(baseAddress, sp.GetRequiredService<HttpClient>()));
+        builder.Services.AddScoped<IClient, Client>(sp => new(baseAddress, sp.GetRequiredService<HttpClient>()));
 
         builder.Services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
         builder.Services.AddScoped<IUserDataProvider, UserDataProvider>();

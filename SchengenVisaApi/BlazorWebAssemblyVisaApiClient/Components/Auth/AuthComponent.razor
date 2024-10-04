@@ -10,7 +10,7 @@
 
     [CascadingParameter] private Status? Status { get; set; }
 
-    [Inject] private Client Client { get; set; } = null!;
+    [Inject] private IClient Client { get; set; } = null!;
 
     [Inject] private NavigationManager Nav { get; set; } = null!;
 
