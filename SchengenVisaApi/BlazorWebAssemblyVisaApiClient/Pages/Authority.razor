@@ -1,11 +1,11 @@
 ﻿@page "/authorities/{authorityId}/{oldEmail}"
-@inherits BlazorWebAssemblyVisaApiClient.Components.Base.VisaClientComponentBase
 @using BlazorWebAssemblyVisaApiClient.Common.Exceptions
-@using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvider
-@using VisaApiClient
 @using BlazorWebAssemblyVisaApiClient.Components
 @using BlazorWebAssemblyVisaApiClient.Infrastructure.Helpers
+@using BlazorWebAssemblyVisaApiClient.Infrastructure.Services.UserDataProvider
 @using FluentValidation
+@using VisaApiClient
+@inherits BlazorWebAssemblyVisaApiClient.Components.Base.VisaClientComponentBase
 
 <EditForm Model="model" class="with-centered-content">
     <div >

@@ -23,7 +23,7 @@ public class VisaApplicationsRepositoryTests
     /// <summary> Returns <see cref="IVisaApplicationsRepository"/> </summary>
     /// <param name="context"> Database context </param>
     /// <returns>Repository</returns>
-    private static IVisaApplicationsRepository GetRepository(DbContext context)
+    private static IVisaApplicationsRepository GetRepository(DatabaseContext context)
         => new VisaApplicationsRepository(context, context);
 
     /// <summary> Returns <see cref="IDateTimeProvider"/> </summary>

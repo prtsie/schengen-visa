@@ -24,7 +24,7 @@ public class RegisterRequestValidatorTests
     /// </summary>
     /// <param name="context">db context</param>
     /// <returns>RegisterRequest validator</returns>
-    private static IValidator<RegisterRequest> GetValidator(DbContext context)
+    private static IValidator<RegisterRequest> GetValidator(DatabaseContext context)
     {
             var repository = new UsersRepository(context, context);
             return new RegisterRequestValidator(repository, authDataValidator);

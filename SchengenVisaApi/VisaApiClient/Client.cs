@@ -6,6 +6,17 @@
 
 #nullable enable
 
+using System.CodeDom.Compiler;
+using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
+using System.Globalization;
+using System.Net.Http.Headers;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Text;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
 #pragma warning disable 108 // Disable "CS0108 '{derivedDto}.ToJson()' hides inherited member '{dtoBase}.ToJson()'. Use the new keyword if hiding was intended."
 #pragma warning disable 114 // Disable "CS0114 '{derivedDto}.RaisePropertyChanged(String)' hides inherited member 'dtoBase.RaisePropertyChanged(String)'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword."
 #pragma warning disable 472 // Disable "CS0472 The result of the expression is always 'false' since a value of type 'Int32' is never equal to 'null' of type 'Int32?'
@@ -22,9 +33,9 @@
 
 namespace VisaApiClient
 {
-    using System = global::System;
+    using System = System;
 
-    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NSwag", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial interface IClient : IClientBase
     {
         /// <summary>
@@ -32,7 +43,7 @@ namespace VisaApiClient
         /// </summary>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task RegisterAsync(RegisterApplicantRequest? body);
+        Task RegisterAsync(RegisterApplicantRequest? body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -40,7 +51,7 @@ namespace VisaApiClient
         /// </summary>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task RegisterAsync(RegisterApplicantRequest? body, System.Threading.CancellationToken cancellationToken);
+        Task RegisterAsync(RegisterApplicantRequest? body, CancellationToken cancellationToken);
 
         /// <summary>
         /// Adds approving authority with user account
@@ -50,7 +61,7 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task RegisterAuthorityAsync(RegisterRequest? body);
+        Task RegisterAuthorityAsync(RegisterRequest? body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -61,7 +72,7 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task RegisterAuthorityAsync(RegisterRequest? body, System.Threading.CancellationToken cancellationToken);
+        Task RegisterAuthorityAsync(RegisterRequest? body, CancellationToken cancellationToken);
 
         /// <summary>
         /// Returns list of authority accounts
@@ -71,7 +82,7 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<UserModel>> GetAuthorityAccountsAsync();
+        Task<ICollection<UserModel>> GetAuthorityAccountsAsync();
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -82,7 +93,7 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<UserModel>> GetAuthorityAccountsAsync(System.Threading.CancellationToken cancellationToken);
+        Task<ICollection<UserModel>> GetAuthorityAccountsAsync(CancellationToken cancellationToken);
 
         /// <summary>
         /// Changes authority's account authentication data
@@ -92,7 +103,7 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ChangeAuthorityAuthDataAsync(ChangeUserAuthDataRequest? body);
+        Task ChangeAuthorityAuthDataAsync(ChangeUserAuthDataRequest? body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -103,14 +114,14 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ChangeAuthorityAuthDataAsync(ChangeUserAuthDataRequest? body, System.Threading.CancellationToken cancellationToken);
+        Task ChangeAuthorityAuthDataAsync(ChangeUserAuthDataRequest? body, CancellationToken cancellationToken);
 
         /// <summary>
         /// Returns JWT-token for authentication
         /// </summary>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AuthToken> LoginAsync(string? email, string? password);
+        Task<AuthToken> LoginAsync(string? email, string? password);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -118,7 +129,7 @@ namespace VisaApiClient
         /// </summary>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AuthToken> LoginAsync(string? email, string? password, System.Threading.CancellationToken cancellationToken);
+        Task<AuthToken> LoginAsync(string? email, string? password, CancellationToken cancellationToken);
 
         /// <summary>
         /// Removes authority's account
@@ -128,7 +139,7 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task RemoveAuthorityAccountAsync(System.Guid authorityAccountId);
+        Task RemoveAuthorityAccountAsync(Guid authorityAccountId);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -139,14 +150,14 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task RemoveAuthorityAccountAsync(System.Guid authorityAccountId, System.Threading.CancellationToken cancellationToken);
+        Task RemoveAuthorityAccountAsync(Guid authorityAccountId, CancellationToken cancellationToken);
 
         /// <summary>
         /// Returns applicant info
         /// </summary>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ApplicantModel> GetApplicantAsync();
+        Task<ApplicantModel> GetApplicantAsync();
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -154,7 +165,7 @@ namespace VisaApiClient
         /// </summary>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ApplicantModel> GetApplicantAsync(System.Threading.CancellationToken cancellationToken);
+        Task<ApplicantModel> GetApplicantAsync(CancellationToken cancellationToken);
 
         /// <summary>
         /// Returns pending applications
@@ -164,7 +175,7 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<VisaApplicationPreview>> GetPendingAsync();
+        Task<ICollection<VisaApplicationPreview>> GetPendingAsync();
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -175,7 +186,7 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<VisaApplicationPreview>> GetPendingAsync(System.Threading.CancellationToken cancellationToken);
+        Task<ICollection<VisaApplicationPreview>> GetPendingAsync(CancellationToken cancellationToken);
 
         /// <summary>
         /// Returns application
@@ -185,7 +196,7 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<VisaApplicationModel> GetApplicationForAuthorityAsync(System.Guid applicationId);
+        Task<VisaApplicationModel> GetApplicationForAuthorityAsync(Guid applicationId);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -196,7 +207,7 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<VisaApplicationModel> GetApplicationForAuthorityAsync(System.Guid applicationId, System.Threading.CancellationToken cancellationToken);
+        Task<VisaApplicationModel> GetApplicationForAuthorityAsync(Guid applicationId, CancellationToken cancellationToken);
 
         /// <summary>
         /// Returns application
@@ -206,7 +217,7 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<VisaApplicationModel> GetApplicationForApplicantAsync(System.Guid applicationId);
+        Task<VisaApplicationModel> GetApplicationForApplicantAsync(Guid applicationId);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -217,7 +228,7 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<VisaApplicationModel> GetApplicationForApplicantAsync(System.Guid applicationId, System.Threading.CancellationToken cancellationToken);
+        Task<VisaApplicationModel> GetApplicationForApplicantAsync(Guid applicationId, CancellationToken cancellationToken);
 
         /// <summary>
         /// Returns all applications of one applicant
@@ -227,7 +238,7 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<VisaApplicationPreview>> GetApplicationsForApplicantAsync();
+        Task<ICollection<VisaApplicationPreview>> GetApplicationsForApplicantAsync();
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -238,7 +249,7 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<VisaApplicationPreview>> GetApplicationsForApplicantAsync(System.Threading.CancellationToken cancellationToken);
+        Task<ICollection<VisaApplicationPreview>> GetApplicationsForApplicantAsync(CancellationToken cancellationToken);
 
         /// <summary>
         /// Adds new application
@@ -248,7 +259,7 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CreateApplicationAsync(VisaApplicationCreateRequest? body);
+        Task CreateApplicationAsync(VisaApplicationCreateRequest? body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -259,7 +270,7 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CreateApplicationAsync(VisaApplicationCreateRequest? body, System.Threading.CancellationToken cancellationToken);
+        Task CreateApplicationAsync(VisaApplicationCreateRequest? body, CancellationToken cancellationToken);
 
         /// <summary>
         /// Sets application status to closed
@@ -269,7 +280,7 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CloseApplicationAsync(System.Guid applicationId);
+        Task CloseApplicationAsync(Guid applicationId);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -280,7 +291,7 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CloseApplicationAsync(System.Guid applicationId, System.Threading.CancellationToken cancellationToken);
+        Task CloseApplicationAsync(Guid applicationId, CancellationToken cancellationToken);
 
         /// <summary>
         /// Approve or reject applications
@@ -290,7 +301,7 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task SetStatusFromAuthorityAsync(System.Guid applicationId, AuthorityRequestStatuses? status);
+        Task SetStatusFromAuthorityAsync(Guid applicationId, AuthorityRequestStatuses? status);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -301,7 +312,7 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task SetStatusFromAuthorityAsync(System.Guid applicationId, AuthorityRequestStatuses? status, System.Threading.CancellationToken cancellationToken);
+        Task SetStatusFromAuthorityAsync(Guid applicationId, AuthorityRequestStatuses? status, CancellationToken cancellationToken);
 
         /// <summary>
         /// Returns application
@@ -311,7 +322,7 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<FileResponse> DownloadApplicationForApplicantAsync(System.Guid applicationId);
+        Task<FileResponse> DownloadApplicationForApplicantAsync(Guid applicationId);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -322,23 +333,23 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<FileResponse> DownloadApplicationForApplicantAsync(System.Guid applicationId, System.Threading.CancellationToken cancellationToken);
+        Task<FileResponse> DownloadApplicationForApplicantAsync(Guid applicationId, CancellationToken cancellationToken);
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NSwag", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class Client : IClient
     {
         #pragma warning disable 8618
         private string _baseUrl;
         #pragma warning restore 8618
 
-        private System.Net.Http.HttpClient _httpClient;
-        private static System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _settings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(CreateSerializerSettings, true);
-        private Newtonsoft.Json.JsonSerializerSettings _instanceSettings;
+        private HttpClient _httpClient;
+        private static Lazy<JsonSerializerSettings> _settings = new Lazy<JsonSerializerSettings>(CreateSerializerSettings, true);
+        private JsonSerializerSettings _instanceSettings;
 
     #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-        public Client(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public Client(string baseUrl, HttpClient httpClient)
     #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             BaseUrl = baseUrl;
@@ -346,9 +357,9 @@ namespace VisaApiClient
             Initialize();
         }
 
-        private static Newtonsoft.Json.JsonSerializerSettings CreateSerializerSettings()
+        private static JsonSerializerSettings CreateSerializerSettings()
         {
-            var settings = new Newtonsoft.Json.JsonSerializerSettings();
+            var settings = new JsonSerializerSettings();
             UpdateJsonSerializerSettings(settings);
             return settings;
         }
@@ -364,9 +375,9 @@ namespace VisaApiClient
             }
         }
 
-        protected Newtonsoft.Json.JsonSerializerSettings JsonSerializerSettings { get { return _instanceSettings ?? _settings.Value; } }
+        protected JsonSerializerSettings JsonSerializerSettings { get { return _instanceSettings ?? _settings.Value; } }
 
-        static partial void UpdateJsonSerializerSettings(Newtonsoft.Json.JsonSerializerSettings settings);
+        static partial void UpdateJsonSerializerSettings(JsonSerializerSettings settings);
 
         partial void Initialize();
 
@@ -375,9 +386,9 @@ namespace VisaApiClient
         /// </summary>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task RegisterAsync(RegisterApplicantRequest? body)
+        public virtual Task RegisterAsync(RegisterApplicantRequest? body)
         {
-            return RegisterAsync(body, System.Threading.CancellationToken.None);
+            return RegisterAsync(body, CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -386,7 +397,7 @@ namespace VisaApiClient
         /// </summary>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task RegisterAsync(RegisterApplicantRequest? body, System.Threading.CancellationToken cancellationToken)
+        public virtual async Task RegisterAsync(RegisterApplicantRequest? body, CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -394,13 +405,13 @@ namespace VisaApiClient
             {
                 using (var request_ = await CreateHttpRequestMessageAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, JsonSerializerSettings);
-                    var content_ = new System.Net.Http.StringContent(json_);
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    var json_ = JsonConvert.SerializeObject(body, JsonSerializerSettings);
+                    var content_ = new StringContent(json_);
+                    content_.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
-                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Method = new HttpMethod("POST");
 
-                    var urlBuilder_ = new System.Text.StringBuilder();
+                    var urlBuilder_ = new StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
                     // Operation Path: "users/register"
                     urlBuilder_.Append("users/register");
@@ -408,15 +419,15 @@ namespace VisaApiClient
                     await PrepareRequestAsync(client_, request_, urlBuilder_, cancellationToken).ConfigureAwait(false);
 
                     var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    request_.RequestUri = new Uri(url_, UriKind.RelativeOrAbsolute);
 
                     await PrepareRequestAsync(client_, request_, url_, cancellationToken).ConfigureAwait(false);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = await client_.SendAsync(request_, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     var disposeResponse_ = true;
                     try
                     {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
                         foreach (var item_ in response_.Headers)
                             headers_[item_.Key] = item_.Value;
                         if (response_.Content != null && response_.Content.Headers != null)
@@ -470,9 +481,9 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task RegisterAuthorityAsync(RegisterRequest? body)
+        public virtual Task RegisterAuthorityAsync(RegisterRequest? body)
         {
-            return RegisterAuthorityAsync(body, System.Threading.CancellationToken.None);
+            return RegisterAuthorityAsync(body, CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -484,7 +495,7 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task RegisterAuthorityAsync(RegisterRequest? body, System.Threading.CancellationToken cancellationToken)
+        public virtual async Task RegisterAuthorityAsync(RegisterRequest? body, CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -492,13 +503,13 @@ namespace VisaApiClient
             {
                 using (var request_ = await CreateHttpRequestMessageAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, JsonSerializerSettings);
-                    var content_ = new System.Net.Http.StringContent(json_);
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    var json_ = JsonConvert.SerializeObject(body, JsonSerializerSettings);
+                    var content_ = new StringContent(json_);
+                    content_.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
-                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Method = new HttpMethod("POST");
 
-                    var urlBuilder_ = new System.Text.StringBuilder();
+                    var urlBuilder_ = new StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
                     // Operation Path: "users/authorities"
                     urlBuilder_.Append("users/authorities");
@@ -506,15 +517,15 @@ namespace VisaApiClient
                     await PrepareRequestAsync(client_, request_, urlBuilder_, cancellationToken).ConfigureAwait(false);
 
                     var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    request_.RequestUri = new Uri(url_, UriKind.RelativeOrAbsolute);
 
                     await PrepareRequestAsync(client_, request_, url_, cancellationToken).ConfigureAwait(false);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = await client_.SendAsync(request_, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     var disposeResponse_ = true;
                     try
                     {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
                         foreach (var item_ in response_.Headers)
                             headers_[item_.Key] = item_.Value;
                         if (response_.Content != null && response_.Content.Headers != null)
@@ -588,9 +599,9 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<UserModel>> GetAuthorityAccountsAsync()
+        public virtual Task<ICollection<UserModel>> GetAuthorityAccountsAsync()
         {
-            return GetAuthorityAccountsAsync(System.Threading.CancellationToken.None);
+            return GetAuthorityAccountsAsync(CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -602,7 +613,7 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<UserModel>> GetAuthorityAccountsAsync(System.Threading.CancellationToken cancellationToken)
+        public virtual async Task<ICollection<UserModel>> GetAuthorityAccountsAsync(CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -610,10 +621,10 @@ namespace VisaApiClient
             {
                 using (var request_ = await CreateHttpRequestMessageAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    request_.Method = new System.Net.Http.HttpMethod("GET");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
+                    request_.Method = new HttpMethod("GET");
+                    request_.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
-                    var urlBuilder_ = new System.Text.StringBuilder();
+                    var urlBuilder_ = new StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
                     // Operation Path: "users/authorities"
                     urlBuilder_.Append("users/authorities");
@@ -621,15 +632,15 @@ namespace VisaApiClient
                     await PrepareRequestAsync(client_, request_, urlBuilder_, cancellationToken).ConfigureAwait(false);
 
                     var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    request_.RequestUri = new Uri(url_, UriKind.RelativeOrAbsolute);
 
                     await PrepareRequestAsync(client_, request_, url_, cancellationToken).ConfigureAwait(false);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = await client_.SendAsync(request_, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     var disposeResponse_ = true;
                     try
                     {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
                         foreach (var item_ in response_.Headers)
                             headers_[item_.Key] = item_.Value;
                         if (response_.Content != null && response_.Content.Headers != null)
@@ -643,7 +654,7 @@ namespace VisaApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<UserModel>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<ICollection<UserModel>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -698,9 +709,9 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ChangeAuthorityAuthDataAsync(ChangeUserAuthDataRequest? body)
+        public virtual Task ChangeAuthorityAuthDataAsync(ChangeUserAuthDataRequest? body)
         {
-            return ChangeAuthorityAuthDataAsync(body, System.Threading.CancellationToken.None);
+            return ChangeAuthorityAuthDataAsync(body, CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -712,7 +723,7 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ChangeAuthorityAuthDataAsync(ChangeUserAuthDataRequest? body, System.Threading.CancellationToken cancellationToken)
+        public virtual async Task ChangeAuthorityAuthDataAsync(ChangeUserAuthDataRequest? body, CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -720,13 +731,13 @@ namespace VisaApiClient
             {
                 using (var request_ = await CreateHttpRequestMessageAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, JsonSerializerSettings);
-                    var content_ = new System.Net.Http.StringContent(json_);
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    var json_ = JsonConvert.SerializeObject(body, JsonSerializerSettings);
+                    var content_ = new StringContent(json_);
+                    content_.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
-                    request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Method = new HttpMethod("PUT");
 
-                    var urlBuilder_ = new System.Text.StringBuilder();
+                    var urlBuilder_ = new StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
                     // Operation Path: "users/authorities"
                     urlBuilder_.Append("users/authorities");
@@ -734,15 +745,15 @@ namespace VisaApiClient
                     await PrepareRequestAsync(client_, request_, urlBuilder_, cancellationToken).ConfigureAwait(false);
 
                     var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    request_.RequestUri = new Uri(url_, UriKind.RelativeOrAbsolute);
 
                     await PrepareRequestAsync(client_, request_, url_, cancellationToken).ConfigureAwait(false);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = await client_.SendAsync(request_, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     var disposeResponse_ = true;
                     try
                     {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
                         foreach (var item_ in response_.Headers)
                             headers_[item_.Key] = item_.Value;
                         if (response_.Content != null && response_.Content.Headers != null)
@@ -823,9 +834,9 @@ namespace VisaApiClient
         /// </summary>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<AuthToken> LoginAsync(string? email, string? password)
+        public virtual Task<AuthToken> LoginAsync(string? email, string? password)
         {
-            return LoginAsync(email, password, System.Threading.CancellationToken.None);
+            return LoginAsync(email, password, CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -834,7 +845,7 @@ namespace VisaApiClient
         /// </summary>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AuthToken> LoginAsync(string? email, string? password, System.Threading.CancellationToken cancellationToken)
+        public virtual async Task<AuthToken> LoginAsync(string? email, string? password, CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -842,36 +853,36 @@ namespace VisaApiClient
             {
                 using (var request_ = await CreateHttpRequestMessageAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    request_.Method = new System.Net.Http.HttpMethod("GET");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
+                    request_.Method = new HttpMethod("GET");
+                    request_.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
-                    var urlBuilder_ = new System.Text.StringBuilder();
+                    var urlBuilder_ = new StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
                     // Operation Path: "users/login"
                     urlBuilder_.Append("users/login");
                     urlBuilder_.Append('?');
                     if (email != null)
                     {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("email")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(email, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                        urlBuilder_.Append(Uri.EscapeDataString("email")).Append('=').Append(Uri.EscapeDataString(ConvertToString(email, CultureInfo.InvariantCulture))).Append('&');
                     }
                     if (password != null)
                     {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("password")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(password, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                        urlBuilder_.Append(Uri.EscapeDataString("password")).Append('=').Append(Uri.EscapeDataString(ConvertToString(password, CultureInfo.InvariantCulture))).Append('&');
                     }
                     urlBuilder_.Length--;
 
                     await PrepareRequestAsync(client_, request_, urlBuilder_, cancellationToken).ConfigureAwait(false);
 
                     var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    request_.RequestUri = new Uri(url_, UriKind.RelativeOrAbsolute);
 
                     await PrepareRequestAsync(client_, request_, url_, cancellationToken).ConfigureAwait(false);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = await client_.SendAsync(request_, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     var disposeResponse_ = true;
                     try
                     {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
                         foreach (var item_ in response_.Headers)
                             headers_[item_.Key] = item_.Value;
                         if (response_.Content != null && response_.Content.Headers != null)
@@ -930,9 +941,9 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task RemoveAuthorityAccountAsync(System.Guid authorityAccountId)
+        public virtual Task RemoveAuthorityAccountAsync(Guid authorityAccountId)
         {
-            return RemoveAuthorityAccountAsync(authorityAccountId, System.Threading.CancellationToken.None);
+            return RemoveAuthorityAccountAsync(authorityAccountId, CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -944,10 +955,10 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task RemoveAuthorityAccountAsync(System.Guid authorityAccountId, System.Threading.CancellationToken cancellationToken)
+        public virtual async Task RemoveAuthorityAccountAsync(Guid authorityAccountId, CancellationToken cancellationToken)
         {
             if (authorityAccountId == null)
-                throw new System.ArgumentNullException("authorityAccountId");
+                throw new ArgumentNullException("authorityAccountId");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -955,26 +966,26 @@ namespace VisaApiClient
             {
                 using (var request_ = await CreateHttpRequestMessageAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    request_.Method = new System.Net.Http.HttpMethod("DELETE");
+                    request_.Method = new HttpMethod("DELETE");
 
-                    var urlBuilder_ = new System.Text.StringBuilder();
+                    var urlBuilder_ = new StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
                     // Operation Path: "users/authorities/{authorityAccountId}"
                     urlBuilder_.Append("users/authorities/");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(authorityAccountId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append(Uri.EscapeDataString(ConvertToString(authorityAccountId, CultureInfo.InvariantCulture)));
 
                     await PrepareRequestAsync(client_, request_, urlBuilder_, cancellationToken).ConfigureAwait(false);
 
                     var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    request_.RequestUri = new Uri(url_, UriKind.RelativeOrAbsolute);
 
                     await PrepareRequestAsync(client_, request_, url_, cancellationToken).ConfigureAwait(false);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = await client_.SendAsync(request_, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     var disposeResponse_ = true;
                     try
                     {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
                         foreach (var item_ in response_.Headers)
                             headers_[item_.Key] = item_.Value;
                         if (response_.Content != null && response_.Content.Headers != null)
@@ -1045,9 +1056,9 @@ namespace VisaApiClient
         /// </summary>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ApplicantModel> GetApplicantAsync()
+        public virtual Task<ApplicantModel> GetApplicantAsync()
         {
-            return GetApplicantAsync(System.Threading.CancellationToken.None);
+            return GetApplicantAsync(CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -1056,7 +1067,7 @@ namespace VisaApiClient
         /// </summary>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ApplicantModel> GetApplicantAsync(System.Threading.CancellationToken cancellationToken)
+        public virtual async Task<ApplicantModel> GetApplicantAsync(CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1064,10 +1075,10 @@ namespace VisaApiClient
             {
                 using (var request_ = await CreateHttpRequestMessageAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    request_.Method = new System.Net.Http.HttpMethod("GET");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
+                    request_.Method = new HttpMethod("GET");
+                    request_.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
-                    var urlBuilder_ = new System.Text.StringBuilder();
+                    var urlBuilder_ = new StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
                     // Operation Path: "users/applicant"
                     urlBuilder_.Append("users/applicant");
@@ -1075,15 +1086,15 @@ namespace VisaApiClient
                     await PrepareRequestAsync(client_, request_, urlBuilder_, cancellationToken).ConfigureAwait(false);
 
                     var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    request_.RequestUri = new Uri(url_, UriKind.RelativeOrAbsolute);
 
                     await PrepareRequestAsync(client_, request_, url_, cancellationToken).ConfigureAwait(false);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = await client_.SendAsync(request_, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     var disposeResponse_ = true;
                     try
                     {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
                         foreach (var item_ in response_.Headers)
                             headers_[item_.Key] = item_.Value;
                         if (response_.Content != null && response_.Content.Headers != null)
@@ -1152,9 +1163,9 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<VisaApplicationPreview>> GetPendingAsync()
+        public virtual Task<ICollection<VisaApplicationPreview>> GetPendingAsync()
         {
-            return GetPendingAsync(System.Threading.CancellationToken.None);
+            return GetPendingAsync(CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -1166,7 +1177,7 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<VisaApplicationPreview>> GetPendingAsync(System.Threading.CancellationToken cancellationToken)
+        public virtual async Task<ICollection<VisaApplicationPreview>> GetPendingAsync(CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1174,10 +1185,10 @@ namespace VisaApiClient
             {
                 using (var request_ = await CreateHttpRequestMessageAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    request_.Method = new System.Net.Http.HttpMethod("GET");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
+                    request_.Method = new HttpMethod("GET");
+                    request_.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
-                    var urlBuilder_ = new System.Text.StringBuilder();
+                    var urlBuilder_ = new StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
                     // Operation Path: "visaApplications/pending"
                     urlBuilder_.Append("visaApplications/pending");
@@ -1185,15 +1196,15 @@ namespace VisaApiClient
                     await PrepareRequestAsync(client_, request_, urlBuilder_, cancellationToken).ConfigureAwait(false);
 
                     var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    request_.RequestUri = new Uri(url_, UriKind.RelativeOrAbsolute);
 
                     await PrepareRequestAsync(client_, request_, url_, cancellationToken).ConfigureAwait(false);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = await client_.SendAsync(request_, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     var disposeResponse_ = true;
                     try
                     {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
                         foreach (var item_ in response_.Headers)
                             headers_[item_.Key] = item_.Value;
                         if (response_.Content != null && response_.Content.Headers != null)
@@ -1207,7 +1218,7 @@ namespace VisaApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<VisaApplicationPreview>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<ICollection<VisaApplicationPreview>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1262,9 +1273,9 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<VisaApplicationModel> GetApplicationForAuthorityAsync(System.Guid applicationId)
+        public virtual Task<VisaApplicationModel> GetApplicationForAuthorityAsync(Guid applicationId)
         {
-            return GetApplicationForAuthorityAsync(applicationId, System.Threading.CancellationToken.None);
+            return GetApplicationForAuthorityAsync(applicationId, CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -1276,10 +1287,10 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<VisaApplicationModel> GetApplicationForAuthorityAsync(System.Guid applicationId, System.Threading.CancellationToken cancellationToken)
+        public virtual async Task<VisaApplicationModel> GetApplicationForAuthorityAsync(Guid applicationId, CancellationToken cancellationToken)
         {
             if (applicationId == null)
-                throw new System.ArgumentNullException("applicationId");
+                throw new ArgumentNullException("applicationId");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1287,27 +1298,27 @@ namespace VisaApiClient
             {
                 using (var request_ = await CreateHttpRequestMessageAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    request_.Method = new System.Net.Http.HttpMethod("GET");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
+                    request_.Method = new HttpMethod("GET");
+                    request_.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
-                    var urlBuilder_ = new System.Text.StringBuilder();
+                    var urlBuilder_ = new StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
                     // Operation Path: "forAuthority/{applicationId}"
                     urlBuilder_.Append("forAuthority/");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(applicationId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append(Uri.EscapeDataString(ConvertToString(applicationId, CultureInfo.InvariantCulture)));
 
                     await PrepareRequestAsync(client_, request_, urlBuilder_, cancellationToken).ConfigureAwait(false);
 
                     var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    request_.RequestUri = new Uri(url_, UriKind.RelativeOrAbsolute);
 
                     await PrepareRequestAsync(client_, request_, url_, cancellationToken).ConfigureAwait(false);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = await client_.SendAsync(request_, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     var disposeResponse_ = true;
                     try
                     {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
                         foreach (var item_ in response_.Headers)
                             headers_[item_.Key] = item_.Value;
                         if (response_.Content != null && response_.Content.Headers != null)
@@ -1396,9 +1407,9 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<VisaApplicationModel> GetApplicationForApplicantAsync(System.Guid applicationId)
+        public virtual Task<VisaApplicationModel> GetApplicationForApplicantAsync(Guid applicationId)
         {
-            return GetApplicationForApplicantAsync(applicationId, System.Threading.CancellationToken.None);
+            return GetApplicationForApplicantAsync(applicationId, CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -1410,10 +1421,10 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<VisaApplicationModel> GetApplicationForApplicantAsync(System.Guid applicationId, System.Threading.CancellationToken cancellationToken)
+        public virtual async Task<VisaApplicationModel> GetApplicationForApplicantAsync(Guid applicationId, CancellationToken cancellationToken)
         {
             if (applicationId == null)
-                throw new System.ArgumentNullException("applicationId");
+                throw new ArgumentNullException("applicationId");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1421,27 +1432,27 @@ namespace VisaApiClient
             {
                 using (var request_ = await CreateHttpRequestMessageAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    request_.Method = new System.Net.Http.HttpMethod("GET");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
+                    request_.Method = new HttpMethod("GET");
+                    request_.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
-                    var urlBuilder_ = new System.Text.StringBuilder();
+                    var urlBuilder_ = new StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
                     // Operation Path: "forApplicant/{applicationId}"
                     urlBuilder_.Append("forApplicant/");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(applicationId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append(Uri.EscapeDataString(ConvertToString(applicationId, CultureInfo.InvariantCulture)));
 
                     await PrepareRequestAsync(client_, request_, urlBuilder_, cancellationToken).ConfigureAwait(false);
 
                     var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    request_.RequestUri = new Uri(url_, UriKind.RelativeOrAbsolute);
 
                     await PrepareRequestAsync(client_, request_, url_, cancellationToken).ConfigureAwait(false);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = await client_.SendAsync(request_, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     var disposeResponse_ = true;
                     try
                     {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
                         foreach (var item_ in response_.Headers)
                             headers_[item_.Key] = item_.Value;
                         if (response_.Content != null && response_.Content.Headers != null)
@@ -1520,9 +1531,9 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<VisaApplicationPreview>> GetApplicationsForApplicantAsync()
+        public virtual Task<ICollection<VisaApplicationPreview>> GetApplicationsForApplicantAsync()
         {
-            return GetApplicationsForApplicantAsync(System.Threading.CancellationToken.None);
+            return GetApplicationsForApplicantAsync(CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -1534,7 +1545,7 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<VisaApplicationPreview>> GetApplicationsForApplicantAsync(System.Threading.CancellationToken cancellationToken)
+        public virtual async Task<ICollection<VisaApplicationPreview>> GetApplicationsForApplicantAsync(CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1542,10 +1553,10 @@ namespace VisaApiClient
             {
                 using (var request_ = await CreateHttpRequestMessageAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    request_.Method = new System.Net.Http.HttpMethod("GET");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
+                    request_.Method = new HttpMethod("GET");
+                    request_.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
-                    var urlBuilder_ = new System.Text.StringBuilder();
+                    var urlBuilder_ = new StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
                     // Operation Path: "visaApplications/ofApplicant"
                     urlBuilder_.Append("visaApplications/ofApplicant");
@@ -1553,15 +1564,15 @@ namespace VisaApiClient
                     await PrepareRequestAsync(client_, request_, urlBuilder_, cancellationToken).ConfigureAwait(false);
 
                     var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    request_.RequestUri = new Uri(url_, UriKind.RelativeOrAbsolute);
 
                     await PrepareRequestAsync(client_, request_, url_, cancellationToken).ConfigureAwait(false);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = await client_.SendAsync(request_, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     var disposeResponse_ = true;
                     try
                     {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
                         foreach (var item_ in response_.Headers)
                             headers_[item_.Key] = item_.Value;
                         if (response_.Content != null && response_.Content.Headers != null)
@@ -1575,7 +1586,7 @@ namespace VisaApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<VisaApplicationPreview>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<ICollection<VisaApplicationPreview>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1640,9 +1651,9 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task CreateApplicationAsync(VisaApplicationCreateRequest? body)
+        public virtual Task CreateApplicationAsync(VisaApplicationCreateRequest? body)
         {
-            return CreateApplicationAsync(body, System.Threading.CancellationToken.None);
+            return CreateApplicationAsync(body, CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -1654,7 +1665,7 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task CreateApplicationAsync(VisaApplicationCreateRequest? body, System.Threading.CancellationToken cancellationToken)
+        public virtual async Task CreateApplicationAsync(VisaApplicationCreateRequest? body, CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1662,13 +1673,13 @@ namespace VisaApiClient
             {
                 using (var request_ = await CreateHttpRequestMessageAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, JsonSerializerSettings);
-                    var content_ = new System.Net.Http.StringContent(json_);
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    var json_ = JsonConvert.SerializeObject(body, JsonSerializerSettings);
+                    var content_ = new StringContent(json_);
+                    content_.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
-                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Method = new HttpMethod("POST");
 
-                    var urlBuilder_ = new System.Text.StringBuilder();
+                    var urlBuilder_ = new StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
                     // Operation Path: "visaApplications"
                     urlBuilder_.Append("visaApplications");
@@ -1676,15 +1687,15 @@ namespace VisaApiClient
                     await PrepareRequestAsync(client_, request_, urlBuilder_, cancellationToken).ConfigureAwait(false);
 
                     var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    request_.RequestUri = new Uri(url_, UriKind.RelativeOrAbsolute);
 
                     await PrepareRequestAsync(client_, request_, url_, cancellationToken).ConfigureAwait(false);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = await client_.SendAsync(request_, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     var disposeResponse_ = true;
                     try
                     {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
                         foreach (var item_ in response_.Headers)
                             headers_[item_.Key] = item_.Value;
                         if (response_.Content != null && response_.Content.Headers != null)
@@ -1768,9 +1779,9 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task CloseApplicationAsync(System.Guid applicationId)
+        public virtual Task CloseApplicationAsync(Guid applicationId)
         {
-            return CloseApplicationAsync(applicationId, System.Threading.CancellationToken.None);
+            return CloseApplicationAsync(applicationId, CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -1782,10 +1793,10 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task CloseApplicationAsync(System.Guid applicationId, System.Threading.CancellationToken cancellationToken)
+        public virtual async Task CloseApplicationAsync(Guid applicationId, CancellationToken cancellationToken)
         {
             if (applicationId == null)
-                throw new System.ArgumentNullException("applicationId");
+                throw new ArgumentNullException("applicationId");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1793,27 +1804,27 @@ namespace VisaApiClient
             {
                 using (var request_ = await CreateHttpRequestMessageAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
-                    request_.Method = new System.Net.Http.HttpMethod("PATCH");
+                    request_.Content = new StringContent(string.Empty, Encoding.UTF8, "application/json");
+                    request_.Method = new HttpMethod("PATCH");
 
-                    var urlBuilder_ = new System.Text.StringBuilder();
+                    var urlBuilder_ = new StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
                     // Operation Path: "visaApplications/{applicationId}"
                     urlBuilder_.Append("visaApplications/");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(applicationId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append(Uri.EscapeDataString(ConvertToString(applicationId, CultureInfo.InvariantCulture)));
 
                     await PrepareRequestAsync(client_, request_, urlBuilder_, cancellationToken).ConfigureAwait(false);
 
                     var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    request_.RequestUri = new Uri(url_, UriKind.RelativeOrAbsolute);
 
                     await PrepareRequestAsync(client_, request_, url_, cancellationToken).ConfigureAwait(false);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = await client_.SendAsync(request_, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     var disposeResponse_ = true;
                     try
                     {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
                         foreach (var item_ in response_.Headers)
                             headers_[item_.Key] = item_.Value;
                         if (response_.Content != null && response_.Content.Headers != null)
@@ -1897,9 +1908,9 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task SetStatusFromAuthorityAsync(System.Guid applicationId, AuthorityRequestStatuses? status)
+        public virtual Task SetStatusFromAuthorityAsync(Guid applicationId, AuthorityRequestStatuses? status)
         {
-            return SetStatusFromAuthorityAsync(applicationId, status, System.Threading.CancellationToken.None);
+            return SetStatusFromAuthorityAsync(applicationId, status, CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -1911,10 +1922,10 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task SetStatusFromAuthorityAsync(System.Guid applicationId, AuthorityRequestStatuses? status, System.Threading.CancellationToken cancellationToken)
+        public virtual async Task SetStatusFromAuthorityAsync(Guid applicationId, AuthorityRequestStatuses? status, CancellationToken cancellationToken)
         {
             if (applicationId == null)
-                throw new System.ArgumentNullException("applicationId");
+                throw new ArgumentNullException("applicationId");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1922,33 +1933,33 @@ namespace VisaApiClient
             {
                 using (var request_ = await CreateHttpRequestMessageAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
-                    request_.Method = new System.Net.Http.HttpMethod("PATCH");
+                    request_.Content = new StringContent(string.Empty, Encoding.UTF8, "application/json");
+                    request_.Method = new HttpMethod("PATCH");
 
-                    var urlBuilder_ = new System.Text.StringBuilder();
+                    var urlBuilder_ = new StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
                     // Operation Path: "visaApplications/approving/{applicationId}"
                     urlBuilder_.Append("visaApplications/approving/");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(applicationId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append(Uri.EscapeDataString(ConvertToString(applicationId, CultureInfo.InvariantCulture)));
                     urlBuilder_.Append('?');
                     if (status != null)
                     {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("status")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(status, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                        urlBuilder_.Append(Uri.EscapeDataString("status")).Append('=').Append(Uri.EscapeDataString(ConvertToString(status, CultureInfo.InvariantCulture))).Append('&');
                     }
                     urlBuilder_.Length--;
 
                     await PrepareRequestAsync(client_, request_, urlBuilder_, cancellationToken).ConfigureAwait(false);
 
                     var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    request_.RequestUri = new Uri(url_, UriKind.RelativeOrAbsolute);
 
                     await PrepareRequestAsync(client_, request_, url_, cancellationToken).ConfigureAwait(false);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = await client_.SendAsync(request_, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     var disposeResponse_ = true;
                     try
                     {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
                         foreach (var item_ in response_.Headers)
                             headers_[item_.Key] = item_.Value;
                         if (response_.Content != null && response_.Content.Headers != null)
@@ -2032,9 +2043,9 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<FileResponse> DownloadApplicationForApplicantAsync(System.Guid applicationId)
+        public virtual Task<FileResponse> DownloadApplicationForApplicantAsync(Guid applicationId)
         {
-            return DownloadApplicationForApplicantAsync(applicationId, System.Threading.CancellationToken.None);
+            return DownloadApplicationForApplicantAsync(applicationId, CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -2046,10 +2057,10 @@ namespace VisaApiClient
         /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<FileResponse> DownloadApplicationForApplicantAsync(System.Guid applicationId, System.Threading.CancellationToken cancellationToken)
+        public virtual async Task<FileResponse> DownloadApplicationForApplicantAsync(Guid applicationId, CancellationToken cancellationToken)
         {
             if (applicationId == null)
-                throw new System.ArgumentNullException("applicationId");
+                throw new ArgumentNullException("applicationId");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2057,28 +2068,28 @@ namespace VisaApiClient
             {
                 using (var request_ = await CreateHttpRequestMessageAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    request_.Method = new System.Net.Http.HttpMethod("GET");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/octet-stream"));
+                    request_.Method = new HttpMethod("GET");
+                    request_.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse("application/octet-stream"));
 
-                    var urlBuilder_ = new System.Text.StringBuilder();
+                    var urlBuilder_ = new StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
                     // Operation Path: "forApplicant/{applicationId}/download"
                     urlBuilder_.Append("forApplicant/");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(applicationId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append(Uri.EscapeDataString(ConvertToString(applicationId, CultureInfo.InvariantCulture)));
                     urlBuilder_.Append("/download");
 
                     await PrepareRequestAsync(client_, request_, urlBuilder_, cancellationToken).ConfigureAwait(false);
 
                     var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    request_.RequestUri = new Uri(url_, UriKind.RelativeOrAbsolute);
 
                     await PrepareRequestAsync(client_, request_, url_, cancellationToken).ConfigureAwait(false);
 
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var response_ = await client_.SendAsync(request_, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     var disposeResponse_ = true;
                     try
                     {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
                         foreach (var item_ in response_.Headers)
                             headers_[item_.Key] = item_.Value;
                         if (response_.Content != null && response_.Content.Headers != null)
@@ -2092,7 +2103,7 @@ namespace VisaApiClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200 || status_ == 206)
                         {
-                            var responseStream_ = response_.Content == null ? System.IO.Stream.Null : await response_.Content.ReadAsStreamAsync().ConfigureAwait(false);
+                            var responseStream_ = response_.Content == null ? Stream.Null : await response_.Content.ReadAsStreamAsync().ConfigureAwait(false);
                             var fileResponse_ = new FileResponse(status_, headers_, responseStream_, null, response_);
                             disposeClient_ = false; disposeResponse_ = false; // response and client are disposed by FileResponse
                             return fileResponse_;
@@ -2162,7 +2173,7 @@ namespace VisaApiClient
 
         public bool ReadResponseAsString { get; set; }
 
-        protected virtual async System.Threading.Tasks.Task<ObjectResponseResult<T>> ReadObjectResponseAsync<T>(System.Net.Http.HttpResponseMessage response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.Threading.CancellationToken cancellationToken)
+        protected virtual async Task<ObjectResponseResult<T>> ReadObjectResponseAsync<T>(HttpResponseMessage response, IReadOnlyDictionary<string, IEnumerable<string>> headers, CancellationToken cancellationToken)
         {
             if (response == null || response.Content == null)
             {
@@ -2174,10 +2185,10 @@ namespace VisaApiClient
                 var responseText = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    var typedBody = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(responseText, JsonSerializerSettings);
+                    var typedBody = JsonConvert.DeserializeObject<T>(responseText, JsonSerializerSettings);
                     return new ObjectResponseResult<T>(typedBody!, responseText);
                 }
-                catch (Newtonsoft.Json.JsonException exception)
+                catch (JsonException exception)
                 {
                     var message = "Could not deserialize the response body string as " + typeof(T).FullName + ".";
                     throw new ApiException(message, (int)response.StatusCode, responseText, headers, exception);
@@ -2188,15 +2199,15 @@ namespace VisaApiClient
                 try
                 {
                     using (var responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
-                    using (var streamReader = new System.IO.StreamReader(responseStream))
-                    using (var jsonTextReader = new Newtonsoft.Json.JsonTextReader(streamReader))
+                    using (var streamReader = new StreamReader(responseStream))
+                    using (var jsonTextReader = new JsonTextReader(streamReader))
                     {
-                        var serializer = Newtonsoft.Json.JsonSerializer.Create(JsonSerializerSettings);
+                        var serializer = JsonSerializer.Create(JsonSerializerSettings);
                         var typedBody = serializer.Deserialize<T>(jsonTextReader);
                         return new ObjectResponseResult<T>(typedBody!, string.Empty);
                     }
                 }
-                catch (Newtonsoft.Json.JsonException exception)
+                catch (JsonException exception)
                 {
                     var message = "Could not deserialize the response body stream as " + typeof(T).FullName + ".";
                     throw new ApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
@@ -2204,40 +2215,40 @@ namespace VisaApiClient
             }
         }
 
-        private string ConvertToString(object? value, System.Globalization.CultureInfo cultureInfo)
+        private string ConvertToString(object? value, CultureInfo cultureInfo)
         {
             if (value == null)
             {
                 return "";
             }
 
-            if (value is System.Enum)
+            if (value is Enum)
             {
-                var name = System.Enum.GetName(value.GetType(), value);
+                var name = Enum.GetName(value.GetType(), value);
                 if (name != null)
                 {
-                    var field = System.Reflection.IntrospectionExtensions.GetTypeInfo(value.GetType()).GetDeclaredField(name);
+                    var field = IntrospectionExtensions.GetTypeInfo(value.GetType()).GetDeclaredField(name);
                     if (field != null)
                     {
-                        var attribute = System.Reflection.CustomAttributeExtensions.GetCustomAttribute(field, typeof(System.Runtime.Serialization.EnumMemberAttribute))
-                            as System.Runtime.Serialization.EnumMemberAttribute;
+                        var attribute = CustomAttributeExtensions.GetCustomAttribute(field, typeof(EnumMemberAttribute))
+                            as EnumMemberAttribute;
                         if (attribute != null)
                         {
                             return attribute.Value != null ? attribute.Value : name;
                         }
                     }
 
-                    var converted = System.Convert.ToString(System.Convert.ChangeType(value, System.Enum.GetUnderlyingType(value.GetType()), cultureInfo));
+                    var converted = Convert.ToString(Convert.ChangeType(value, Enum.GetUnderlyingType(value.GetType()), cultureInfo));
                     return converted == null ? string.Empty : converted;
                 }
             }
             else if (value is bool)
             {
-                return System.Convert.ToString((bool)value, cultureInfo).ToLowerInvariant();
+                return Convert.ToString((bool)value, cultureInfo).ToLowerInvariant();
             }
             else if (value is byte[])
             {
-                return System.Convert.ToBase64String((byte[]) value);
+                return Convert.ToBase64String((byte[]) value);
             }
             else if (value is string[])
             {
@@ -2245,7 +2256,7 @@ namespace VisaApiClient
             }
             else if (value.GetType().IsArray)
             {
-                var valueArray = (System.Array)value;
+                var valueArray = (Array)value;
                 var valueTextArray = new string[valueArray.Length];
                 for (var i = 0; i < valueArray.Length; i++)
                 {
@@ -2254,638 +2265,638 @@ namespace VisaApiClient
                 return string.Join(",", valueTextArray);
             }
 
-            var result = System.Convert.ToString(value, cultureInfo);
+            var result = Convert.ToString(value, cultureInfo);
             return result == null ? "" : result;
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class AddressModel
     {
-        [Newtonsoft.Json.JsonProperty("country", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(70, MinimumLength = 1)]
+        [JsonProperty("country", Required = Required.Always)]
+        [Required]
+        [StringLength(70, MinimumLength = 1)]
         public string Country { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("city", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(70, MinimumLength = 1)]
+        [JsonProperty("city", Required = Required.Always)]
+        [Required]
+        [StringLength(70, MinimumLength = 1)]
         public string City { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("street", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(100, MinimumLength = 1)]
+        [JsonProperty("street", Required = Required.Always)]
+        [Required]
+        [StringLength(100, MinimumLength = 1)]
         public string Street { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("building", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(10, MinimumLength = 1)]
+        [JsonProperty("building", Required = Required.Always)]
+        [Required]
+        [StringLength(10, MinimumLength = 1)]
         public string Building { get; set; } = default!;
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ApplicantModel
     {
-        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [JsonProperty("name", Required = Required.Always)]
+        [Required]
         public NameModel Name { get; set; } = new NameModel();
 
-        [Newtonsoft.Json.JsonProperty("passport", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [JsonProperty("passport", Required = Required.Always)]
+        [Required]
         public PassportModel Passport { get; set; } = new PassportModel();
 
-        [Newtonsoft.Json.JsonProperty("birthDate", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.DateTimeOffset BirthDate { get; set; } = default!;
+        [JsonProperty("birthDate", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public DateTimeOffset BirthDate { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("countryOfBirth", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [JsonProperty("countryOfBirth", Required = Required.Always)]
+        [Required]
         public string CountryOfBirth { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("cityOfBirth", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [JsonProperty("cityOfBirth", Required = Required.Always)]
+        [Required]
         public string CityOfBirth { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("citizenship", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [JsonProperty("citizenship", Required = Required.Always)]
+        [Required]
         public string Citizenship { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("citizenshipByBirth", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [JsonProperty("citizenshipByBirth", Required = Required.Always)]
+        [Required]
         public string CitizenshipByBirth { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("gender", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [JsonProperty("gender", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        [JsonConverter(typeof(StringEnumConverter))]
         public Gender Gender { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("maritalStatus", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [JsonProperty("maritalStatus", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        [JsonConverter(typeof(StringEnumConverter))]
         public MaritalStatus MaritalStatus { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("fatherName", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [JsonProperty("fatherName", Required = Required.Always)]
+        [Required]
         public NameModel FatherName { get; set; } = new NameModel();
 
-        [Newtonsoft.Json.JsonProperty("motherName", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [JsonProperty("motherName", Required = Required.Always)]
+        [Required]
         public NameModel MotherName { get; set; } = new NameModel();
 
-        [Newtonsoft.Json.JsonProperty("jobTitle", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [JsonProperty("jobTitle", Required = Required.Always)]
+        [Required]
         public string JobTitle { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("placeOfWork", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [JsonProperty("placeOfWork", Required = Required.Always)]
+        [Required]
         public PlaceOfWorkModel PlaceOfWork { get; set; } = new PlaceOfWorkModel();
 
-        [Newtonsoft.Json.JsonProperty("isNonResident", Required = Newtonsoft.Json.Required.Always)]
+        [JsonProperty("isNonResident", Required = Required.Always)]
         public bool IsNonResident { get; set; } = default!;
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public enum ApplicationStatus
     {
 
-        [System.Runtime.Serialization.EnumMember(Value = @"Pending")]
+        [EnumMember(Value = @"Pending")]
         Pending = 0,
 
-        [System.Runtime.Serialization.EnumMember(Value = @"Approved")]
+        [EnumMember(Value = @"Approved")]
         Approved = 1,
 
-        [System.Runtime.Serialization.EnumMember(Value = @"Rejected")]
+        [EnumMember(Value = @"Rejected")]
         Rejected = 2,
 
-        [System.Runtime.Serialization.EnumMember(Value = @"Closed")]
+        [EnumMember(Value = @"Closed")]
         Closed = 3,
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class AuthData
     {
-        [Newtonsoft.Json.JsonProperty("email", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(254, MinimumLength = 1)]
+        [JsonProperty("email", Required = Required.Always)]
+        [Required]
+        [StringLength(254, MinimumLength = 1)]
         public string Email { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("password", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(50, MinimumLength = 1)]
+        [JsonProperty("password", Required = Required.Always)]
+        [Required]
+        [StringLength(50, MinimumLength = 1)]
         public string Password { get; set; } = default!;
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class AuthToken
     {
-        [Newtonsoft.Json.JsonProperty("token", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [JsonProperty("token", Required = Required.Always)]
+        [Required]
         public string Token { get; set; } = default!;
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public enum AuthorityRequestStatuses
     {
 
-        [System.Runtime.Serialization.EnumMember(Value = @"Approved")]
+        [EnumMember(Value = @"Approved")]
         Approved = 0,
 
-        [System.Runtime.Serialization.EnumMember(Value = @"Rejected")]
+        [EnumMember(Value = @"Rejected")]
         Rejected = 1,
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ChangeAuthData
     {
-        [Newtonsoft.Json.JsonProperty("email", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(254, MinimumLength = 1)]
+        [JsonProperty("email", Required = Required.Always)]
+        [Required]
+        [StringLength(254, MinimumLength = 1)]
         public string Email { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("password", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.StringLength(50)]
+        [JsonProperty("password", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        [StringLength(50)]
         public string? Password { get; set; } = default!;
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ChangeUserAuthDataRequest
     {
-        [Newtonsoft.Json.JsonProperty("userId", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.Guid UserId { get; set; } = default!;
+        [JsonProperty("userId", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public Guid UserId { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("newAuthData", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [JsonProperty("newAuthData", Required = Required.Always)]
+        [Required]
         public ChangeAuthData NewAuthData { get; set; } = new ChangeAuthData();
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public enum Gender
     {
 
-        [System.Runtime.Serialization.EnumMember(Value = @"Unknown")]
+        [EnumMember(Value = @"Unknown")]
         Unknown = 0,
 
-        [System.Runtime.Serialization.EnumMember(Value = @"Male")]
+        [EnumMember(Value = @"Male")]
         Male = 1,
 
-        [System.Runtime.Serialization.EnumMember(Value = @"Female")]
+        [EnumMember(Value = @"Female")]
         Female = 2,
 
-        [System.Runtime.Serialization.EnumMember(Value = @"Turkish")]
+        [EnumMember(Value = @"Turkish")]
         Turkish = 3,
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public enum MaritalStatus
     {
 
-        [System.Runtime.Serialization.EnumMember(Value = @"Other")]
+        [EnumMember(Value = @"Other")]
         Other = 0,
 
-        [System.Runtime.Serialization.EnumMember(Value = @"Married")]
+        [EnumMember(Value = @"Married")]
         Married = 1,
 
-        [System.Runtime.Serialization.EnumMember(Value = @"Unmarried")]
+        [EnumMember(Value = @"Unmarried")]
         Unmarried = 2,
 
-        [System.Runtime.Serialization.EnumMember(Value = @"Separated")]
+        [EnumMember(Value = @"Separated")]
         Separated = 3,
 
-        [System.Runtime.Serialization.EnumMember(Value = @"WidowOrWidower")]
+        [EnumMember(Value = @"WidowOrWidower")]
         WidowOrWidower = 4,
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class NameModel
     {
-        [Newtonsoft.Json.JsonProperty("firstName", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(50, MinimumLength = 1)]
+        [JsonProperty("firstName", Required = Required.Always)]
+        [Required]
+        [StringLength(50, MinimumLength = 1)]
         public string FirstName { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("surname", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(50, MinimumLength = 1)]
+        [JsonProperty("surname", Required = Required.Always)]
+        [Required]
+        [StringLength(50, MinimumLength = 1)]
         public string Surname { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("patronymic", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.StringLength(50)]
+        [JsonProperty("patronymic", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        [StringLength(50)]
         public string? Patronymic { get; set; } = default!;
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class PassportModel
     {
-        [Newtonsoft.Json.JsonProperty("number", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(20, MinimumLength = 1)]
+        [JsonProperty("number", Required = Required.Always)]
+        [Required]
+        [StringLength(20, MinimumLength = 1)]
         public string Number { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("issuer", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(200, MinimumLength = 1)]
+        [JsonProperty("issuer", Required = Required.Always)]
+        [Required]
+        [StringLength(200, MinimumLength = 1)]
         public string Issuer { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("issueDate", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.DateTimeOffset IssueDate { get; set; } = default!;
+        [JsonProperty("issueDate", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public DateTimeOffset IssueDate { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("expirationDate", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.DateTimeOffset ExpirationDate { get; set; } = default!;
+        [JsonProperty("expirationDate", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public DateTimeOffset ExpirationDate { get; set; } = default!;
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class PastVisaModel
     {
-        [Newtonsoft.Json.JsonProperty("issueDate", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.DateTimeOffset IssueDate { get; set; } = default!;
+        [JsonProperty("issueDate", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public DateTimeOffset IssueDate { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(70, MinimumLength = 1)]
+        [JsonProperty("name", Required = Required.Always)]
+        [Required]
+        [StringLength(70, MinimumLength = 1)]
         public string Name { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("expirationDate", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.DateTimeOffset ExpirationDate { get; set; } = default!;
+        [JsonProperty("expirationDate", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public DateTimeOffset ExpirationDate { get; set; } = default!;
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class PastVisitModel
     {
-        [Newtonsoft.Json.JsonProperty("startDate", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.DateTimeOffset StartDate { get; set; } = default!;
+        [JsonProperty("startDate", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public DateTimeOffset StartDate { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("endDate", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.DateTimeOffset EndDate { get; set; } = default!;
+        [JsonProperty("endDate", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public DateTimeOffset EndDate { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("destinationCountry", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(70, MinimumLength = 1)]
+        [JsonProperty("destinationCountry", Required = Required.Always)]
+        [Required]
+        [StringLength(70, MinimumLength = 1)]
         public string DestinationCountry { get; set; } = default!;
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class PermissionToDestCountryModel
     {
-        [Newtonsoft.Json.JsonProperty("expirationDate", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.DateTimeOffset ExpirationDate { get; set; } = default!;
+        [JsonProperty("expirationDate", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public DateTimeOffset ExpirationDate { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("issuer", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(200, MinimumLength = 1)]
+        [JsonProperty("issuer", Required = Required.Always)]
+        [Required]
+        [StringLength(200, MinimumLength = 1)]
         public string Issuer { get; set; } = default!;
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class PlaceOfWorkModel
     {
-        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(200, MinimumLength = 1)]
+        [JsonProperty("name", Required = Required.Always)]
+        [Required]
+        [StringLength(200, MinimumLength = 1)]
         public string Name { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("address", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [JsonProperty("address", Required = Required.Always)]
+        [Required]
         public AddressModel Address { get; set; } = new AddressModel();
 
-        [Newtonsoft.Json.JsonProperty("phoneNum", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(13, MinimumLength = 11)]
+        [JsonProperty("phoneNum", Required = Required.Always)]
+        [Required]
+        [StringLength(13, MinimumLength = 11)]
         public string PhoneNum { get; set; } = default!;
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ProblemDetails
     {
-        [Newtonsoft.Json.JsonProperty("type", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [JsonProperty("type", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public string? Type { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("title", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [JsonProperty("title", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public string? Title { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [JsonProperty("status", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public int? Status { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("detail", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [JsonProperty("detail", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public string? Detail { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("instance", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [JsonProperty("instance", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public string? Instance { get; set; } = default!;
 
-        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+        private IDictionary<string, object>? _additionalProperties;
 
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties
         {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            get { return _additionalProperties ?? (_additionalProperties = new Dictionary<string, object>()); }
             set { _additionalProperties = value; }
         }
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ReentryPermitModel
     {
-        [Newtonsoft.Json.JsonProperty("number", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
+        [JsonProperty("number", Required = Required.Always)]
+        [Required]
+        [StringLength(25, MinimumLength = 1)]
         public string Number { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("expirationDate", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.DateTimeOffset ExpirationDate { get; set; } = default!;
+        [JsonProperty("expirationDate", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public DateTimeOffset ExpirationDate { get; set; } = default!;
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class RegisterApplicantRequest
     {
-        [Newtonsoft.Json.JsonProperty("registerRequest", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [JsonProperty("registerRequest", Required = Required.Always)]
+        [Required]
         public RegisterRequest RegisterRequest { get; set; } = new RegisterRequest();
 
-        [Newtonsoft.Json.JsonProperty("applicantName", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [JsonProperty("applicantName", Required = Required.Always)]
+        [Required]
         public NameModel ApplicantName { get; set; } = new NameModel();
 
-        [Newtonsoft.Json.JsonProperty("passport", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [JsonProperty("passport", Required = Required.Always)]
+        [Required]
         public PassportModel Passport { get; set; } = new PassportModel();
 
-        [Newtonsoft.Json.JsonProperty("birthDate", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.DateTimeOffset BirthDate { get; set; } = default!;
+        [JsonProperty("birthDate", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public DateTimeOffset BirthDate { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("cityOfBirth", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(70, MinimumLength = 1)]
+        [JsonProperty("cityOfBirth", Required = Required.Always)]
+        [Required]
+        [StringLength(70, MinimumLength = 1)]
         public string CityOfBirth { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("countryOfBirth", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(70, MinimumLength = 1)]
+        [JsonProperty("countryOfBirth", Required = Required.Always)]
+        [Required]
+        [StringLength(70, MinimumLength = 1)]
         public string CountryOfBirth { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("citizenship", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(30, MinimumLength = 1)]
+        [JsonProperty("citizenship", Required = Required.Always)]
+        [Required]
+        [StringLength(30, MinimumLength = 1)]
         public string Citizenship { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("citizenshipByBirth", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(30, MinimumLength = 1)]
+        [JsonProperty("citizenshipByBirth", Required = Required.Always)]
+        [Required]
+        [StringLength(30, MinimumLength = 1)]
         public string CitizenshipByBirth { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("gender", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [JsonProperty("gender", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        [JsonConverter(typeof(StringEnumConverter))]
         public Gender Gender { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("maritalStatus", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [JsonProperty("maritalStatus", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        [JsonConverter(typeof(StringEnumConverter))]
         public MaritalStatus MaritalStatus { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("fatherName", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [JsonProperty("fatherName", Required = Required.Always)]
+        [Required]
         public NameModel FatherName { get; set; } = new NameModel();
 
-        [Newtonsoft.Json.JsonProperty("motherName", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [JsonProperty("motherName", Required = Required.Always)]
+        [Required]
         public NameModel MotherName { get; set; } = new NameModel();
 
-        [Newtonsoft.Json.JsonProperty("jobTitle", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(50, MinimumLength = 1)]
+        [JsonProperty("jobTitle", Required = Required.Always)]
+        [Required]
+        [StringLength(50, MinimumLength = 1)]
         public string JobTitle { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("placeOfWork", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [JsonProperty("placeOfWork", Required = Required.Always)]
+        [Required]
         public PlaceOfWorkModel PlaceOfWork { get; set; } = new PlaceOfWorkModel();
 
-        [Newtonsoft.Json.JsonProperty("isNonResident", Required = Newtonsoft.Json.Required.Always)]
+        [JsonProperty("isNonResident", Required = Required.Always)]
         public bool IsNonResident { get; set; } = default!;
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class RegisterRequest
     {
-        [Newtonsoft.Json.JsonProperty("authData", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [JsonProperty("authData", Required = Required.Always)]
+        [Required]
         public AuthData AuthData { get; set; } = new AuthData();
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public enum RequestedNumberOfEntries
     {
 
-        [System.Runtime.Serialization.EnumMember(Value = @"Many")]
+        [EnumMember(Value = @"Many")]
         Many = 0,
 
-        [System.Runtime.Serialization.EnumMember(Value = @"One")]
+        [EnumMember(Value = @"One")]
         One = 1,
 
-        [System.Runtime.Serialization.EnumMember(Value = @"Two")]
+        [EnumMember(Value = @"Two")]
         Two = 2,
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class UserModel
     {
-        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.Guid Id { get; set; } = default!;
+        [JsonProperty("id", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public Guid Id { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("email", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(254, MinimumLength = 1)]
+        [JsonProperty("email", Required = Required.Always)]
+        [Required]
+        [StringLength(254, MinimumLength = 1)]
         public string Email { get; set; } = default!;
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class VisaApplicationCreateRequest
     {
-        [Newtonsoft.Json.JsonProperty("reentryPermit", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [JsonProperty("reentryPermit", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public ReentryPermitModel? ReentryPermit { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("destinationCountry", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(70, MinimumLength = 1)]
+        [JsonProperty("destinationCountry", Required = Required.Always)]
+        [Required]
+        [StringLength(70, MinimumLength = 1)]
         public string DestinationCountry { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("visaCategory", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [JsonProperty("visaCategory", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        [JsonConverter(typeof(StringEnumConverter))]
         public VisaCategory VisaCategory { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("isForGroup", Required = Newtonsoft.Json.Required.Always)]
+        [JsonProperty("isForGroup", Required = Required.Always)]
         public bool IsForGroup { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("requestedNumberOfEntries", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [JsonProperty("requestedNumberOfEntries", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        [JsonConverter(typeof(StringEnumConverter))]
         public RequestedNumberOfEntries RequestedNumberOfEntries { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("validDaysRequested", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Range(0, 90)]
+        [JsonProperty("validDaysRequested", Required = Required.Always)]
+        [Range(0, 90)]
         public int ValidDaysRequested { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("pastVisas", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.ICollection<PastVisaModel> PastVisas { get; set; } = new System.Collections.ObjectModel.Collection<PastVisaModel>();
+        [JsonProperty("pastVisas", Required = Required.Always)]
+        [Required]
+        public ICollection<PastVisaModel> PastVisas { get; set; } = new Collection<PastVisaModel>();
 
-        [Newtonsoft.Json.JsonProperty("permissionToDestCountry", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [JsonProperty("permissionToDestCountry", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public PermissionToDestCountryModel? PermissionToDestCountry { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("pastVisits", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.ICollection<PastVisitModel> PastVisits { get; set; } = new System.Collections.ObjectModel.Collection<PastVisitModel>();
+        [JsonProperty("pastVisits", Required = Required.Always)]
+        [Required]
+        public ICollection<PastVisitModel> PastVisits { get; set; } = new Collection<PastVisitModel>();
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class VisaApplicationModel
     {
-        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.Guid Id { get; set; } = default!;
+        [JsonProperty("id", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public Guid Id { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("applicant", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [JsonProperty("applicant", Required = Required.Always)]
+        [Required]
         public ApplicantModel Applicant { get; set; } = new ApplicantModel();
 
-        [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [JsonProperty("status", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        [JsonConverter(typeof(StringEnumConverter))]
         public ApplicationStatus Status { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("reentryPermit", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [JsonProperty("reentryPermit", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public ReentryPermitModel? ReentryPermit { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("destinationCountry", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [JsonProperty("destinationCountry", Required = Required.Always)]
+        [Required]
         public string DestinationCountry { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("pastVisas", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.ICollection<PastVisaModel> PastVisas { get; set; } = new System.Collections.ObjectModel.Collection<PastVisaModel>();
+        [JsonProperty("pastVisas", Required = Required.Always)]
+        [Required]
+        public ICollection<PastVisaModel> PastVisas { get; set; } = new Collection<PastVisaModel>();
 
-        [Newtonsoft.Json.JsonProperty("permissionToDestCountry", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [JsonProperty("permissionToDestCountry", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public PermissionToDestCountryModel? PermissionToDestCountry { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("pastVisits", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.ICollection<PastVisitModel> PastVisits { get; set; } = new System.Collections.ObjectModel.Collection<PastVisitModel>();
+        [JsonProperty("pastVisits", Required = Required.Always)]
+        [Required]
+        public ICollection<PastVisitModel> PastVisits { get; set; } = new Collection<PastVisitModel>();
 
-        [Newtonsoft.Json.JsonProperty("visaCategory", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [JsonProperty("visaCategory", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        [JsonConverter(typeof(StringEnumConverter))]
         public VisaCategory VisaCategory { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("forGroup", Required = Newtonsoft.Json.Required.Always)]
+        [JsonProperty("forGroup", Required = Required.Always)]
         public bool ForGroup { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("requestedNumberOfEntries", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [JsonProperty("requestedNumberOfEntries", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        [JsonConverter(typeof(StringEnumConverter))]
         public RequestedNumberOfEntries RequestedNumberOfEntries { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("requestDate", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.DateTimeOffset RequestDate { get; set; } = default!;
+        [JsonProperty("requestDate", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public DateTimeOffset RequestDate { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("validDaysRequested", Required = Newtonsoft.Json.Required.Always)]
+        [JsonProperty("validDaysRequested", Required = Required.Always)]
         public int ValidDaysRequested { get; set; } = default!;
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class VisaApplicationPreview
     {
-        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.Guid Id { get; set; } = default!;
+        [JsonProperty("id", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public Guid Id { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [JsonProperty("status", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        [JsonConverter(typeof(StringEnumConverter))]
         public ApplicationStatus Status { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("destinationCountry", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [JsonProperty("destinationCountry", Required = Required.Always)]
+        [Required]
         public string DestinationCountry { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("visaCategory", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [JsonProperty("visaCategory", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        [JsonConverter(typeof(StringEnumConverter))]
         public VisaCategory VisaCategory { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("requestDate", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.DateTimeOffset RequestDate { get; set; } = default!;
+        [JsonProperty("requestDate", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public DateTimeOffset RequestDate { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("validDaysRequested", Required = Newtonsoft.Json.Required.Always)]
+        [JsonProperty("validDaysRequested", Required = Required.Always)]
         public int ValidDaysRequested { get; set; } = default!;
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public enum VisaCategory
     {
 
-        [System.Runtime.Serialization.EnumMember(Value = @"Transit")]
+        [EnumMember(Value = @"Transit")]
         Transit = 0,
 
-        [System.Runtime.Serialization.EnumMember(Value = @"ShortDated")]
+        [EnumMember(Value = @"ShortDated")]
         ShortDated = 1,
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class FileResponse : System.IDisposable
+    [GeneratedCode("NSwag", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class FileResponse : IDisposable
     {
-        private System.IDisposable? _client;
-        private System.IDisposable? _response;
+        private IDisposable? _client;
+        private IDisposable? _response;
 
         public int StatusCode { get; private set; }
 
-        public System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> Headers { get; private set; }
+        public IReadOnlyDictionary<string, IEnumerable<string>> Headers { get; private set; }
 
-        public System.IO.Stream Stream { get; private set; }
+        public Stream Stream { get; private set; }
 
         public bool IsPartial
         {
             get { return StatusCode == 206; }
         }
 
-        public FileResponse(int statusCode, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.IO.Stream stream, System.IDisposable? client, System.IDisposable? response)
+        public FileResponse(int statusCode, IReadOnlyDictionary<string, IEnumerable<string>> headers, Stream stream, IDisposable? client, IDisposable? response)
         {
             StatusCode = statusCode;
             Headers = headers;
@@ -2905,16 +2916,16 @@ namespace VisaApiClient
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ApiException : System.Exception
+    [GeneratedCode("NSwag", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ApiException : Exception
     {
         public int StatusCode { get; private set; }
 
         public string? Response { get; private set; }
 
-        public System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> Headers { get; private set; }
+        public IReadOnlyDictionary<string, IEnumerable<string>> Headers { get; private set; }
 
-        public ApiException(string message, int statusCode, string? response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.Exception? innerException)
+        public ApiException(string message, int statusCode, string? response, IReadOnlyDictionary<string, IEnumerable<string>> headers, Exception? innerException)
             : base(message + "\n\nStatus: " + statusCode + "\nResponse: \n" + ((response == null) ? "(null)" : response.Substring(0, response.Length >= 512 ? 512 : response.Length)), innerException)
         {
             StatusCode = statusCode;
@@ -2928,12 +2939,12 @@ namespace VisaApiClient
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NSwag", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ApiException<TResult> : ApiException
     {
         public TResult Result { get; private set; }
 
-        public ApiException(string message, int statusCode, string? response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, TResult result, System.Exception? innerException)
+        public ApiException(string message, int statusCode, string? response, IReadOnlyDictionary<string, IEnumerable<string>> headers, TResult result, Exception? innerException)
             : base(message, statusCode, response, headers, innerException)
         {
             Result = result;

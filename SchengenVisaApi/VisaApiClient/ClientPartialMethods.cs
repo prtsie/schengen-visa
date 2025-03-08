@@ -1,4 +1,5 @@
 ﻿using System.Text;
+
 // ReSharper disable UnusedParameter.Local
 
 namespace VisaApiClient;

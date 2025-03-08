@@ -20,7 +20,7 @@ public class ApplicantsRepositoryTests
     /// <summary> Returns <see cref="IApplicantsRepository"/> </summary>
     /// <param name="context"> Database context </param>
     /// <returns>Repository</returns>
-    private static IApplicantsRepository GetRepository(DbContext context)
+    private static IApplicantsRepository GetRepository(DatabaseContext context)
         => new ApplicantsRepository(context, context);
 
     /// <summary> Returns <see cref="IDateTimeProvider"/> </summary>

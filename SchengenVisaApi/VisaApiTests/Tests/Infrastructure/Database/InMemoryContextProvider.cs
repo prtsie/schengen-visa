@@ -1,19 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Infrastructure.Database;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using DbContext = Infrastructure.Database.DbContext;
 
 namespace VisaApi.Tests.Infrastructure.Database;
 
 public static class InMemoryContextProvider
 {
-    private static DbContextOptions<DbContext> opts = new DbContextOptionsBuilder<DbContext>()
+    private static DbContextOptions<DatabaseContext> opts = new DbContextOptionsBuilder<DatabaseContext>()
         .UseInMemoryDatabase("VisaApiDB")
         .ConfigureWarnings(b => b.Ignore(InMemoryEventId.TransactionIgnoredWarning))
         .Options;
 
-    public static DbContext GetDbContext()
+    public static DatabaseContext GetDbContext()
     {
-            var result = new DbContext(opts);
+            var result = new DatabaseContext(opts);
 
             result.Database.EnsureDeleted();
             result.Database.EnsureCreated();

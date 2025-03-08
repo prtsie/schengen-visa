@@ -1,7 +1,7 @@
-﻿@using System.Linq.Expressions
+﻿@typeparam TItem where TItem : class
+@using System.Linq.Expressions
 @using System.Reflection
 @using BlazorWebAssemblyVisaApiClient.Infrastructure.Helpers
-@typeparam TItem where TItem : class
 @typeparam TMember where TMember : struct, Enum
 
 <InputSelect TValue="TMember" @bind-Value="selected">

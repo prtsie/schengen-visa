@@ -17,7 +17,7 @@ public class UsersRepositoryTests
     /// <summary> Returns <see cref="IVisaApplicationsRepository"/> </summary>
     /// <param name="context"> Database context </param>
     /// <returns>Repository</returns>
-    private static IUsersRepository GetRepository(DbContext context)
+    private static IUsersRepository GetRepository(DatabaseContext context)
         => new UsersRepository(context, context);
 
     /// <summary>

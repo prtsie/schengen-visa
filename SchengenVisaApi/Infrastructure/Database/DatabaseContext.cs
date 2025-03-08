@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database;
 
-public class DbContext(DbContextOptions<DbContext> opts) : Microsoft.EntityFrameworkCore.DbContext(opts), IGenericWriter, IGenericReader, IUnitOfWork
+public class DatabaseContext(DbContextOptions<DatabaseContext> opts) : DbContext(opts), IGenericWriter, IGenericReader, IUnitOfWork
 {
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -4,6 +4,7 @@ using ApplicationLayer.Services.Applicants.NeededServices;
 using ApplicationLayer.Services.AuthServices.NeededServices;
 using ApplicationLayer.Services.VisaApplications.NeededServices;
 using Infrastructure.Common;
+using Infrastructure.Database;
 using Infrastructure.Database.Applicants.Repositories;
 using Infrastructure.Database.Generic;
 using Infrastructure.Database.Users.Repositories;
@@ -12,7 +13,6 @@ using Infrastructure.EntityToExcelTemplateWriter;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using DbContext = Infrastructure.Database.DbContext;
 
 namespace Infrastructure;
 
@@ -26,12 +26,12 @@ public static class DependencyInjection
     {
         var databaseName = isDevelopment ? "developmentDB" : "normal'naya database";
 
-        services.AddDbContext<DbContext>(opts =>
-            opts.UseSqlServer(configurationManager.GetConnectionString(databaseName)));
+        services.AddDbContext<DatabaseContext>(opts =>
+            opts.UseNpgsql(configurationManager.GetConnectionString(databaseName)));
 
-        services.AddScoped<IGenericReader>(serviceProvider => serviceProvider.GetRequiredService<DbContext>());
-        services.AddScoped<IGenericWriter>(serviceProvider => serviceProvider.GetRequiredService<DbContext>());
-        services.AddScoped<IUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<DbContext>());
+        services.AddScoped<IGenericReader>(serviceProvider => serviceProvider.GetRequiredService<DatabaseContext>());
+        services.AddScoped<IGenericWriter>(serviceProvider => serviceProvider.GetRequiredService<DatabaseContext>());
+        services.AddScoped<IUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<DatabaseContext>());
 
         services.AddScoped<IApplicantsRepository, ApplicantsRepository>();
         services.AddScoped<IVisaApplicationsRepository, VisaApplicationsRepository>();
