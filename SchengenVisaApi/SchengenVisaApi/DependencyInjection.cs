@@ -28,7 +28,7 @@ public static class DependencyInjection
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
         builder.Services
-            .AddInfrastructure(config, environment.IsDevelopment())
+            .AddInfrastructure(config)
             .AddApplicationLayer(environment.IsDevelopment())
             .AddAuth(config)
             .AddPresentation(environment);

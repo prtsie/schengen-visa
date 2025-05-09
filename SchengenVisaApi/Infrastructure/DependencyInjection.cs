@@ -21,13 +21,11 @@ public static class DependencyInjection
 {
     /// Add services needed for Infrastructure layer
     public static IServiceCollection AddInfrastructure(this IServiceCollection services,
-        IConfigurationManager configurationManager,
-        bool isDevelopment)
+        IConfigurationManager configurationManager)
     {
-        var databaseName = isDevelopment ? "developmentDB" : "normal'naya database";
 
         services.AddDbContext<DatabaseContext>(opts =>
-            opts.UseNpgsql(configurationManager.GetConnectionString(databaseName)));
+            opts.UseNpgsql(configurationManager.GetConnectionString("connectionString")));
 
         services.AddScoped<IGenericReader>(serviceProvider => serviceProvider.GetRequiredService<DatabaseContext>());
         services.AddScoped<IGenericWriter>(serviceProvider => serviceProvider.GetRequiredService<DatabaseContext>());
