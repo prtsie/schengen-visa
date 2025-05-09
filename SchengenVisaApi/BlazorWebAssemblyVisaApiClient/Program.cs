@@ -25,7 +25,7 @@ public static class Program
 
     private static void AddInfrastructure(this WebAssemblyHostBuilder builder)
     {
-        const string baseAddress = "https://localhost:44370";
+        const string baseAddress = "https://localhost:7168";
         builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new(baseAddress) });
         builder.Services.AddBlazorBootstrap();
         builder.Services.AddScoped<IClient, Client>(sp => new(baseAddress, sp.GetRequiredService<HttpClient>()));

@@ -35,7 +35,7 @@ public class VisaApplicationRequestsHandler(
         return mapper.Map<List<VisaApplicationPreview>>(visaApplications);
     }
 
-    /// <summary> <inheritdoc cref="IVisaApplicationRequestsHandler.GetApplicationForApplicantAsync"/> </summary>
+    /// <inheritdoc cref="IVisaApplicationRequestsHandler.GetApplicationForApplicantAsync"/>
     public async Task<VisaApplicationModel> GetApplicationForApplicantAsync(Guid id, CancellationToken cancellationToken)
     {
         var applicant = await applicants.FindByUserIdAsync(userIdProvider.GetUserId(), cancellationToken);
