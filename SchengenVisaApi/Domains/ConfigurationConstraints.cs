@@ -4,7 +4,7 @@ public static class ConfigurationConstraints
 {
     public const int CityNameLength = 70;
     public const int CountryNameLength = 70;
-    public const int CitizenshipLength = 30;
+    public const int CitizenshipLength = 50;
     public const int ReentryPermitNumberLength = 25;
     public const int IssuerNameLength = 200;
     public const int VisaNameLength = 70;

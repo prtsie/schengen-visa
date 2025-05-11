@@ -15,7 +15,7 @@ public class PassportModelValidatorTests
 {
     private readonly static IDateTimeProvider dateTimeProvider = new TestDateTimeProvider();
     private readonly static IValidator<PassportModel> validator = new PassportModelValidator(dateTimeProvider);
-    private readonly static PassportModelFaker faker = new(dateTimeProvider);
+    private readonly static PassportModelFaker faker = new();
 
     /// <summary>
     /// Test for <see cref="PassportModel"/> validator that should return error for empty number

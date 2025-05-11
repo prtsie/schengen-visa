@@ -10,5 +10,5 @@ public sealed class RegisterRequestFaker : Faker<RegisterRequest>
     public RegisterRequestFaker()
     {
             RuleFor(r => r.AuthData, () => authDataFaker.Generate());
-        }
+    }
 }
